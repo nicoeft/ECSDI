@@ -1,0 +1,412 @@
+<?xml version="1.0"?>
+
+<jacob version="3.0">
+
+<object type="PrometheusProject" id="0">
+    <field name="projectData">
+	<object type="ProjectData" id="1">
+	    <field name="name">default</field>
+	    <field name="fileNameLastSavedAs">default.pd</field>
+	    <field name="filePathLastSavedIn">/home2/users/alumnes/1202127/dades</field>
+	    <field name="applicationVersion">3.3b_internal</field>
+	</object>
+    </field>
+    <field name="diagramSettings"><list>
+	<object type="DiagramSettings" id="2">
+	    <field name="diagramId">
+		<object type="DiagramId" id="3">
+		    <field name="stringId">Data Coupling</field>
+		</object>
+	    </field>
+	    <field name="entitySettings"><list>
+		<object type="DiagramEntitySetting" id="4">
+		    <field name="entity">
+			<object type="Role" id="5">
+			    <base type="Entity">
+				<field name="name">Procesador de Productos Disponibles</field>
+				<field name="description">Se encarga de obtener la información de los productos disponibles coincidentes con los criterios de búsqueda del usuario y enviarsela</field>
+				<field name="uniqueId">5</field>
+			    </base>
+
+			    <field name="goals"><list>
+				<object type="Goal" id="6">
+				    <base type="Entity">
+					<field name="name">Ver productos disponibles</field>
+					<field name="description">Obtener los productos disponibles que coincidan con unos criterios</field>
+					<field name="uniqueId">1</field>
+				    </base>
+
+				    <field name="subGoals"><list>
+					<object type="Goal" id="7">
+					    <base type="Entity">
+						<field name="name">Buscar Productos</field>
+						<field name="uniqueId">3</field>
+					    </base>
+
+					</object>
+
+					<object type="Goal" id="8">
+					    <base type="Entity">
+						<field name="name">Comprobar En Stock</field>
+						<field name="uniqueId">4</field>
+					    </base>
+
+					</object>
+					</list>
+				    </field>
+				</object>
+				</list>
+			    </field>
+			    <field name="actions"><list>
+				<object type="Action" id="9">
+				    <base type="Interaction">
+					<base type="Entity">
+					    <field name="name">Enviar Información de los Productos Disponibles</field>
+					    <field name="description">Envia la información resultante de aplicar los criterios de búsqueda sobre los productos disponibles</field>
+					    <field name="uniqueId">7</field>
+					</base>
+
+				    </base>
+
+				    <field name="parameters">Información de los productos</field>
+				    <field name="durationDescription"></field>
+				    <field name="failureNotificationDescription"></field>
+				    <field name="partialChange"></field>
+				    <field name="sideEffects"></field>
+				</object>
+				</list>
+			    </field>
+			    <field name="percepts"><list>
+				<object type="Percept" id="10">
+				    <base type="Interaction">
+					<base type="Entity">
+					    <field name="name">Peticion Productos Disponibles</field>
+					    <field name="description">Evento que permite obtener información de los parámetros de búsqueda introduciods por el usuario</field>
+					    <field name="uniqueId">6</field>
+					</base>
+
+				    </base>
+
+				    <field name="source">Usuario Comprador</field>
+				    <field name="informationCarried">Criterios de búsqueda</field>
+				    <field name="knowledgeUpdated">Ninguno</field>
+				    <field name="processing"></field>
+				    <field name="frequency">Desconocido</field>
+				    <field name="externalPath"></field>
+				</object>
+				</list>
+			    </field>
+			</object>
+		    </field>
+		    <field name="location">
+			<object type="Coordinate" id="11">
+			    <field name="x">37</field>
+			    <field name="y">25</field>
+			</object>
+		    </field>
+		    <field name="userApproved">:false</field>
+		</object>
+		</list>
+	    </field>
+	</object>
+
+	<object type="DiagramSettings" id="12">
+	    <field name="diagramId">
+		<object type="DiagramId" id="13">
+		    <field name="stringId">Goal Overview</field>
+		</object>
+	    </field>
+	    <field name="entitySettings"><list>
+		<object type="DiagramEntitySetting" id="14">
+		    <field name="entity">
+			<object ref="6"/>
+		    </field>
+		    <field name="location">
+			<object type="Coordinate" id="15">
+			    <field name="x">136</field>
+			    <field name="y">42</field>
+			</object>
+		    </field>
+		</object>
+
+		<object type="DiagramEntitySetting" id="16">
+		    <field name="entity">
+			<object ref="7"/>
+		    </field>
+		    <field name="location">
+			<object type="Coordinate" id="17">
+			    <field name="x">91</field>
+			    <field name="y">105</field>
+			</object>
+		    </field>
+		</object>
+
+		<object type="DiagramEntitySetting" id="18">
+		    <field name="entity">
+			<object ref="8"/>
+		    </field>
+		    <field name="location">
+			<object type="Coordinate" id="19">
+			    <field name="x">229</field>
+			    <field name="y">107</field>
+			</object>
+		    </field>
+		</object>
+		</list>
+	    </field>
+	</object>
+
+	<object type="DiagramSettings" id="20">
+	    <field name="diagramId">
+		<object type="DiagramId" id="21">
+		    <field name="stringId">Agent-Role Coupling</field>
+		</object>
+	    </field>
+	    <field name="entitySettings"><list>
+		<object type="DiagramEntitySetting" id="22">
+		    <field name="entity">
+			<object ref="5"/>
+		    </field>
+		    <field name="location">
+			<object type="Coordinate" id="23">
+			    <field name="x">37</field>
+			    <field name="y">25</field>
+			</object>
+		    </field>
+		    <field name="userApproved">:false</field>
+		</object>
+		</list>
+	    </field>
+	</object>
+
+	<object type="DiagramSettings" id="24">
+	    <field name="diagramId">
+		<object type="DiagramId" id="25">
+		    <field name="stringId">System Roles</field>
+		</object>
+	    </field>
+	    <field name="entitySettings"><list>
+		<object type="DiagramEntitySetting" id="26">
+		    <field name="entity">
+			<object ref="6"/>
+		    </field>
+		    <field name="location">
+			<object type="Coordinate" id="27">
+			    <field name="x">482</field>
+			    <field name="y">93</field>
+			</object>
+		    </field>
+		</object>
+
+		<object type="DiagramEntitySetting" id="28">
+		    <field name="entity">
+			<object ref="5"/>
+		    </field>
+		    <field name="location">
+			<object type="Coordinate" id="29">
+			    <field name="x">128</field>
+			    <field name="y">149</field>
+			</object>
+		    </field>
+		</object>
+
+		<object type="DiagramEntitySetting" id="30">
+		    <field name="entity">
+			<object ref="10"/>
+		    </field>
+		    <field name="location">
+			<object type="Coordinate" id="31">
+			    <field name="x">125</field>
+			    <field name="y">27</field>
+			</object>
+		    </field>
+		</object>
+
+		<object type="DiagramEntitySetting" id="32">
+		    <field name="entity">
+			<object ref="9"/>
+		    </field>
+		    <field name="location">
+			<object type="Coordinate" id="33">
+			    <field name="x">300</field>
+			    <field name="y">262</field>
+			</object>
+		    </field>
+		</object>
+		</list>
+	    </field>
+	</object>
+
+	<object type="DiagramSettings" id="34">
+	    <field name="diagramId">
+		<object type="DiagramId" id="35">
+		    <field name="stringId">Scenarios</field>
+		</object>
+	    </field>
+	    <field name="entitySettings"><list>
+		<object type="DiagramEntitySetting" id="36">
+		    <field name="entity">
+			<object type="Scenario" id="37">
+			    <base type="Entity">
+				<field name="name">Ver productos disponibles scenario</field>
+				<field name="description">Cuando el usuario comprador quiere ver los productos disponibles
+</field>
+				<field name="uniqueId">2</field>
+			    </base>
+
+			    <field name="context"></field>
+			    <field name="variation"></field>
+			    <field name="linkedGoals"><list>
+				<object ref="6"/>
+				</list>
+			    </field>
+			    <field name="roles"><list>
+				<object ref="5"/>
+				</list>
+			    </field>
+			</object>
+		    </field>
+		    <field name="location">
+			<object type="Coordinate" id="38">
+			    <field name="x">141</field>
+			    <field name="y">98</field>
+			</object>
+		    </field>
+		</object>
+		</list>
+	    </field>
+	</object>
+
+	<object type="DiagramSettings" id="39">
+	    <field name="diagramId">
+		<object type="DiagramId" id="40">
+		    <field name="stringId">System Overview</field>
+		</object>
+	    </field>
+	    <field name="entitySettings"><list>
+		<object type="DiagramEntitySetting" id="41">
+		    <field name="entity">
+			<object ref="10"/>
+		    </field>
+		    <field name="location">
+			<object type="Coordinate" id="42">
+			    <field name="x">117</field>
+			    <field name="y">25</field>
+			</object>
+		    </field>
+		    <field name="userApproved">:false</field>
+		</object>
+
+		<object type="DiagramEntitySetting" id="43">
+		    <field name="entity">
+			<object ref="9"/>
+		    </field>
+		    <field name="location">
+			<object type="Coordinate" id="44">
+			    <field name="x">37</field>
+			    <field name="y">25</field>
+			</object>
+		    </field>
+		    <field name="userApproved">:false</field>
+		</object>
+		</list>
+	    </field>
+	</object>
+	</list>
+    </field>
+    <field name="model">
+	<object type="PrometheusModelData" id="45">
+	    <field name="projectData">
+		<object ref="1"/>
+	    </field>
+	    <field name="actions"><list>
+		<object ref="9"/>
+		</list>
+	    </field>
+	    <field name="roles"><list>
+		<object ref="5"/>
+		</list>
+	    </field>
+	    <field name="goals"><list>
+		<object ref="6"/>
+
+		<object ref="7"/>
+
+		<object ref="8"/>
+		</list>
+	    </field>
+	    <field name="percepts"><list>
+		<object ref="10"/>
+		</list>
+	    </field>
+	    <field name="scenarios"><list>
+		<object ref="37"/>
+		</list>
+	    </field>
+	    <field name="systemOverviewDiagramData">
+		<object type="SystemOverviewDiagramData" id="46">
+		    <field name="percepts"><list>
+			<object ref="10"/>
+			</list>
+		    </field>
+		    <field name="actions"><list>
+			<object ref="9"/>
+			</list>
+		    </field>
+		</object>
+	    </field>
+	    <field name="rolesDiagramData">
+		<object type="RolesDiagramData" id="47">
+		    <field name="goals"><list>
+			<object ref="6"/>
+			</list>
+		    </field>
+		    <field name="actions"><list>
+			<object ref="9"/>
+			</list>
+		    </field>
+		    <field name="percepts"><list>
+			<object ref="10"/>
+			</list>
+		    </field>
+		</object>
+	    </field>
+	    <field name="analysisOverviewDiagramData">
+		<object type="AnalysisOverviewDiagramData" id="48">
+		</object>
+	    </field>
+	    <field name="scenariosDiagramData">
+		<object type="ScenariosDiagramData" id="49">
+		</object>
+	    </field>
+	    <field name="goalOverviewDiagramData">
+		<object type="GoalOverviewDiagramData" id="50">
+		</object>
+	    </field>
+	    <field name="dataCouplingDiagramData">
+		<object type="DataCouplingDiagramData" id="51">
+		</object>
+	    </field>
+	    <field name="agentRoleCouplingDiagramData">
+		<object type="AgentRoleCouplingDiagramData" id="52">
+		</object>
+	    </field>
+	    <field name="agentOverviewDiagramData">
+		<object type="AgentOverviewDiagramData" id="53">
+		</object>
+	    </field>
+	    <field name="capabilityOverviewDiagramData">
+		<object type="CapabilityOverviewDiagramData" id="54">
+		</object>
+	    </field>
+	    <field name="deletedEntitiesForCodeGen"><list>
+		<object type="Entity" id="55">
+		    <field name="name">asdasd</field>
+		</object>
+		</list>
+	    </field>
+	</object>
+    </field>
+</object>
+
+</jacob>
