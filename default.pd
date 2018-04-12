@@ -335,7 +335,7 @@
 										<object type="Data" id="33">
 										    <base type="Entity">
 											<field name="name">Info Almacen</field>
-											<field name="description"></field>
+											<field name="description">Información sobre los almacenes</field>
 											<field name="uniqueId">106</field>
 										    </base>
 
@@ -367,10 +367,15 @@
 										<object type="Data" id="35">
 										    <base type="Entity">
 											<field name="name">Info Vendedores Externos</field>
+											<field name="description">Información sobre los vendedores externos al sistema</field>
 											<field name="uniqueId">151</field>
 										    </base>
 
 										    <field name="dataType">Vendedor</field>
+										    <field name="includedFields"></field>
+										    <field name="initialisation"></field>
+										    <field name="writtenWhen"></field>
+										    <field name="externalPath"></field>
 										</object>
 										</list>
 									    </field>
@@ -525,8 +530,8 @@
 													    <field name="dataWritten"><list>
 														<object type="Data" id="47">
 														    <base type="Entity">
-															<field name="name">Info Envios Almacen</field>
-															<field name="description">Información de los envíos realizados y pendientes</field>
+															<field name="name">Historial Envios Almacen</field>
+															<field name="description">Información de los envíos realizados por el almacén</field>
 															<field name="uniqueId">60</field>
 														    </base>
 
@@ -896,11 +901,16 @@
 																	    <field name="dataRead"><list>
 																		<object type="Data" id="75">
 																		    <base type="Entity">
-																			<field name="name">Info Usuarios</field>
+																			<field name="name">Info Clientes</field>
+																			<field name="description">Información sobre los clientes del sistema</field>
 																			<field name="uniqueId">68</field>
 																		    </base>
 
 																		    <field name="dataType">Usuario</field>
+																		    <field name="includedFields"></field>
+																		    <field name="initialisation"></field>
+																		    <field name="writtenWhen"></field>
+																		    <field name="externalPath"></field>
 																		</object>
 																		</list>
 																	    </field>
@@ -2189,8 +2199,8 @@ finish</field>
 		    </field>
 		    <field name="location">
 			<object type="Coordinate" id="209">
-			    <field name="x">632</field>
-			    <field name="y">65</field>
+			    <field name="x">518</field>
+			    <field name="y">68</field>
 			</object>
 		    </field>
 		</object>
@@ -2201,8 +2211,8 @@ finish</field>
 		    </field>
 		    <field name="location">
 			<object type="Coordinate" id="211">
-			    <field name="x">790</field>
-			    <field name="y">111</field>
+			    <field name="x">700</field>
+			    <field name="y">104</field>
 			</object>
 		    </field>
 		</object>
@@ -3780,7 +3790,7 @@ finish</field>
 		    <field name="location">
 			<object type="Coordinate" id="460">
 			    <field name="x">29</field>
-			    <field name="y">165</field>
+			    <field name="y">179</field>
 			</object>
 		    </field>
 		</object>
