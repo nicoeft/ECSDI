@@ -8,9 +8,9 @@
 	    <field name="name">Amazon2</field>
 	    <field name="description">Sistema distribuido Amazon2 </field>
 	    <field name="version">v1</field>
-	    <field name="fileNameLastSavedAs">default.pd</field>
-	    <field name="filePathLastSavedIn">E:\Users\alexh\Desktop\ECSDI\ECSDI_git</field>
-	    <field name="openedAs">E:\Users\alexh\Desktop\ECSDI\ECSDI_git\default.pd</field>
+	    <field name="fileNameLastSavedAs">Amazon2.pd</field>
+	    <field name="filePathLastSavedIn">E:\Users\alexh\Desktop\ECSDI\ECSDI_git\Entrega1</field>
+	    <field name="openedAs">E:\Users\alexh\Desktop\ECSDI\ECSDI_git\Entrega1\Amazon2.pd</field>
 	    <field name="author">Alex Huang, Nico Francisquelo, Eloi Roca</field>
 	    <field name="applicationVersion">3.3b_internal</field>
 	</object>
@@ -1074,8 +1074,8 @@ finish</field>
 					<object type="Action" id="74">
 					    <base type="Interaction">
 						<base type="Entity">
-						    <field name="name">Se confirma la devolucion del producto</field>
-						    <field name="description">La devolucion ha sido efectuada correctamente y se envia un mensaje al usuario</field>
+						    <field name="name">Se informa del resultado de la devolución</field>
+						    <field name="description">Se manda un mensaje al cliente informando de si se ha aceptado o denegado su petición de devolución, en caso afirmativo se le informa de como debe realizar esta devolución</field>
 						    <field name="uniqueId">35</field>
 						</base>
 
@@ -1536,7 +1536,7 @@ finish</field>
 			<object type="Percept" id="112">
 			    <base type="Interaction">
 				<base type="Entity">
-				    <field name="name">Usuario quiere vender producto</field>
+				    <field name="name">Vendedor externo quiere vender producto</field>
 				    <field name="description">El usuario quiere poner uno o mas productos a la venta a traves de nuestra tienda</field>
 				    <field name="uniqueId">42</field>
 				</base>
@@ -3010,8 +3010,8 @@ finish</field>
 		    </field>
 		    <field name="location">
 			<object type="Coordinate" id="340">
-			    <field name="x">407</field>
-			    <field name="y">307</field>
+			    <field name="x">319</field>
+			    <field name="y">316</field>
 			</object>
 		    </field>
 		</object>
@@ -3047,8 +3047,8 @@ finish</field>
 		    </field>
 		    <field name="location">
 			<object type="Coordinate" id="345">
-			    <field name="x">668</field>
-			    <field name="y">249</field>
+			    <field name="x">667</field>
+			    <field name="y">193</field>
 			</object>
 		    </field>
 		</object>
@@ -3068,11 +3068,26 @@ finish</field>
 					    <field name="name">Compra de productos scenario</field>
 					    <field name="description"></field>
 					    <field name="uniqueId">12</field>
+					    <field name="connectTo"><list>
+						<object type="Actor" id="349">
+						    <base type="Entity">
+							<field name="name">Vendedor externo</field>
+							<field name="description">Actor vendedor externo que quiere vender sus propios productos a partir de nuestro sistema</field>
+							<field name="uniqueId">205</field>
+							<field name="connectTo"><list>
+							    <object ref="344"/>
+							    </list>
+							</field>
+						    </base>
+
+						</object>
+						</list>
+					    </field>
 					</base>
 
 					<field name="context"></field>
 					<field name="steps"><list>
-					    <object type="Step" id="349">
+					    <object type="Step" id="350">
 						<base type="Entity">
 						    <field name="name">&lt;Prometheus unique entity name au.edu.rmit.cs.prometheus.datamodel.jacob.Step ID=79&gt;</field>
 						    <field name="description">Interactua con el usuario para efectuar una compra</field>
@@ -3080,7 +3095,7 @@ finish</field>
 						</base>
 
 						<field name="step">
-						    <object type="Scenario" id="350">
+						    <object type="Scenario" id="351">
 							<base type="Entity">
 							    <field name="name">Interaccion con usuario scenario</field>
 							    <field name="uniqueId">78</field>
@@ -3094,14 +3109,14 @@ finish</field>
 						</field>
 					    </object>
 
-					    <object type="Step" id="351">
+					    <object type="Step" id="352">
 						<base type="Entity">
 						    <field name="name">&lt;Prometheus unique entity name au.edu.rmit.cs.prometheus.datamodel.jacob.Step ID=82&gt;</field>
 						    <field name="uniqueId">82</field>
 						</base>
 
 						<field name="step">
-						    <object type="Scenario" id="352">
+						    <object type="Scenario" id="353">
 							<base type="Entity">
 							    <field name="name">Envio de producto scenario</field>
 							    <field name="description"></field>
@@ -3118,7 +3133,7 @@ finish</field>
 						</field>
 					    </object>
 
-					    <object type="Step" id="353">
+					    <object type="Step" id="354">
 						<base type="Entity">
 						    <field name="name">&lt;Prometheus unique entity name au.edu.rmit.cs.prometheus.datamodel.jacob.Step ID=87&gt;</field>
 						    <field name="description"></field>
@@ -3126,7 +3141,7 @@ finish</field>
 						</base>
 
 						<field name="step">
-						    <object type="Scenario" id="354">
+						    <object type="Scenario" id="355">
 							<base type="Entity">
 							    <field name="name">Efectuar cobro scenario</field>
 							    <field name="description"></field>
@@ -3151,7 +3166,7 @@ finish</field>
 					</field>
 				    </object>
 
-				    <object type="Scenario" id="355">
+				    <object type="Scenario" id="356">
 					<base type="Entity">
 					    <field name="name">Devolucion de productos scenario</field>
 					    <field name="description"></field>
@@ -3166,7 +3181,7 @@ finish</field>
 					</field>
 				    </object>
 
-				    <object type="Scenario" id="356">
+				    <object type="Scenario" id="357">
 					<base type="Entity">
 					    <field name="name">Obtencion feedback del usuario scenario</field>
 					    <field name="description">Se ha de poder recibir feedback de productos vendidos</field>
@@ -3189,67 +3204,57 @@ finish</field>
 			</object>
 		    </field>
 		    <field name="location">
-			<object type="Coordinate" id="357">
+			<object type="Coordinate" id="358">
 			    <field name="x">396</field>
 			    <field name="y">215</field>
 			</object>
 		    </field>
 		</object>
 
-		<object type="DiagramEntitySetting" id="358">
+		<object type="DiagramEntitySetting" id="359">
 		    <field name="entity">
-			<object ref="355"/>
+			<object ref="356"/>
 		    </field>
 		    <field name="location">
-			<object type="Coordinate" id="359">
-			    <field name="x">604</field>
-			    <field name="y">119</field>
+			<object type="Coordinate" id="360">
+			    <field name="x">666</field>
+			    <field name="y">312</field>
 			</object>
 		    </field>
 		</object>
 
-		<object type="DiagramEntitySetting" id="360">
+		<object type="DiagramEntitySetting" id="361">
 		    <field name="entity">
 			<object ref="348"/>
 		    </field>
 		    <field name="location">
-			<object type="Coordinate" id="361">
+			<object type="Coordinate" id="362">
 			    <field name="x">351</field>
 			    <field name="y">119</field>
 			</object>
 		    </field>
 		</object>
 
-		<object type="DiagramEntitySetting" id="362">
+		<object type="DiagramEntitySetting" id="363">
 		    <field name="entity">
-			<object type="Actor" id="363">
-			    <base type="Entity">
-				<field name="name">Vendedor externo</field>
-				<field name="uniqueId">205</field>
-				<field name="connectTo"><list>
-				    <object ref="344"/>
-				    </list>
-				</field>
-			    </base>
-
-			</object>
+			<object ref="349"/>
 		    </field>
 		    <field name="location">
 			<object type="Coordinate" id="364">
-			    <field name="x">736</field>
-			    <field name="y">184</field>
+			    <field name="x">694</field>
+			    <field name="y">71</field>
 			</object>
 		    </field>
 		</object>
 
 		<object type="DiagramEntitySetting" id="365">
 		    <field name="entity">
-			<object ref="356"/>
+			<object ref="357"/>
 		    </field>
 		    <field name="location">
 			<object type="Coordinate" id="366">
-			    <field name="x">74</field>
-			    <field name="y">308</field>
+			    <field name="x">8</field>
+			    <field name="y">296</field>
 			</object>
 		    </field>
 		</object>
@@ -3259,6 +3264,7 @@ finish</field>
 			<object type="Actor" id="368">
 			    <base type="Entity">
 				<field name="name">Entidad bancaria</field>
+				<field name="description">Actor externo que se ocupa de todas las transacciones de dinero.</field>
 				<field name="uniqueId">206</field>
 				<field name="connectTo"><list>
 				    <object ref="348"/>
@@ -3281,7 +3287,7 @@ finish</field>
 			<object type="Actor" id="371">
 			    <base type="Entity">
 				<field name="name">Transportista</field>
-				<field name="description"></field>
+				<field name="description">Actor que representa el transportista de los paquetes</field>
 				<field name="uniqueId">207</field>
 				<field name="connectTo"><list>
 				    <object ref="348"/>
@@ -3470,8 +3476,8 @@ finish</field>
 		    </field>
 		    <field name="location">
 			<object type="Coordinate" id="402">
-			    <field name="x">11</field>
-			    <field name="y">67</field>
+			    <field name="x">17</field>
+			    <field name="y">71</field>
 			</object>
 		    </field>
 		</object>
@@ -3637,7 +3643,7 @@ finish</field>
 	    <field name="entitySettings"><list>
 		<object type="DiagramEntitySetting" id="430">
 		    <field name="entity">
-			<object ref="352"/>
+			<object ref="353"/>
 		    </field>
 		    <field name="location">
 			<object type="Coordinate" id="431">
@@ -3673,7 +3679,7 @@ finish</field>
 
 		<object type="DiagramEntitySetting" id="436">
 		    <field name="entity">
-			<object ref="354"/>
+			<object ref="355"/>
 		    </field>
 		    <field name="location">
 			<object type="Coordinate" id="437">
@@ -3697,7 +3703,7 @@ finish</field>
 
 		<object type="DiagramEntitySetting" id="440">
 		    <field name="entity">
-			<object ref="355"/>
+			<object ref="356"/>
 		    </field>
 		    <field name="location">
 			<object type="Coordinate" id="441">
@@ -3721,7 +3727,7 @@ finish</field>
 
 		<object type="DiagramEntitySetting" id="444">
 		    <field name="entity">
-			<object ref="356"/>
+			<object ref="357"/>
 		    </field>
 		    <field name="location">
 			<object type="Coordinate" id="445">
@@ -3733,7 +3739,7 @@ finish</field>
 
 		<object type="DiagramEntitySetting" id="446">
 		    <field name="entity">
-			<object ref="350"/>
+			<object ref="351"/>
 		    </field>
 		    <field name="location">
 			<object type="Coordinate" id="447">
@@ -4285,25 +4291,25 @@ finish</field>
 
 		<object ref="348"/>
 
-		<object ref="355"/>
+		<object ref="356"/>
 
 		<object ref="344"/>
 
-		<object ref="356"/>
+		<object ref="357"/>
 
 		<object ref="339"/>
 
-		<object ref="350"/>
+		<object ref="351"/>
 
-		<object ref="352"/>
+		<object ref="353"/>
 
-		<object ref="354"/>
+		<object ref="355"/>
 		</list>
 	    </field>
 	    <field name="actors"><list>
 		<object ref="347"/>
 
-		<object ref="363"/>
+		<object ref="349"/>
 
 		<object ref="368"/>
 
@@ -4311,11 +4317,11 @@ finish</field>
 		</list>
 	    </field>
 	    <field name="steps"><list>
-		<object ref="349"/>
+		<object ref="350"/>
 
-		<object ref="351"/>
+		<object ref="352"/>
 
-		<object ref="353"/>
+		<object ref="354"/>
 		</list>
 	    </field>
 	    <field name="protocolDistributionPairs"><list>
@@ -4453,15 +4459,15 @@ finish</field>
 
 			<object ref="347"/>
 
-			<object ref="363"/>
+			<object ref="349"/>
 
 			<object ref="344"/>
 
-			<object ref="356"/>
+			<object ref="357"/>
 
 			<object ref="348"/>
 
-			<object ref="355"/>
+			<object ref="356"/>
 
 			<object ref="368"/>
 
