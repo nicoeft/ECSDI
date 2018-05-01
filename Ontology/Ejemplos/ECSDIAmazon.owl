@@ -1,0 +1,423 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+    xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
+    xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+    xmlns="http://www.owl-ontologies.com/ECSDIAmazon.owl#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+  xml:base="http://www.owl-ontologies.com/ECSDIAmazon.owl">
+  <owl:Ontology rdf:about=""/>
+  <owl:Class rdf:ID="Recoger_venta">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Accion"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Valoracion"/>
+  <owl:Class rdf:ID="Centro_logistico"/>
+  <owl:Class rdf:ID="Lote_producto"/>
+  <owl:Class rdf:ID="Cerca_productes">
+    <rdfs:subClassOf rdf:resource="#Accion"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Rango_precio">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Restriccions"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Producto">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >&lt;p style="margin-top: 0"&gt;
+      Classe del productes
+    &lt;/p&gt;</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="Restriccion_Valoracion">
+    <rdfs:subClassOf rdf:resource="#Restriccions"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Compra"/>
+  <owl:Class rdf:ID="Peticiona_transport">
+    <rdfs:subClassOf rdf:resource="#Accion"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Contraoferta">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Oferta_transporte"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Respuesta"/>
+  <owl:Class rdf:ID="Plazos_entrega">
+    <rdfs:subClassOf rdf:resource="#Restriccions"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Envio"/>
+  <owl:Class rdf:ID="Respuesta_disponibilidad">
+    <rdfs:subClassOf rdf:resource="#Respuesta"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Existencia"/>
+  <owl:Class rdf:ID="Pedir_disponibilidad">
+    <rdfs:subClassOf rdf:resource="#Accion"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Restriccion_modelo">
+    <rdfs:subClassOf rdf:resource="#Restriccions"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Restriccion_Marca">
+    <rdfs:subClassOf rdf:resource="#Restriccions"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Producto_externo">
+    <rdfs:subClassOf rdf:resource="#Producto"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Enviar_venda">
+    <rdfs:subClassOf rdf:resource="#Accion"/>
+  </owl:Class>
+  <owl:Class rdf:ID="RestriccioNom">
+    <rdfs:subClassOf rdf:resource="#Restriccions"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Transportista"/>
+  <owl:Class rdf:ID="Vendedor"/>
+  <owl:Class rdf:ID="Respuesta_transferencia">
+    <rdfs:subClassOf rdf:resource="#Respuesta"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Pedir_oferta_transporte">
+    <rdfs:subClassOf rdf:resource="#Accion"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Ciudad"/>
+  <owl:Class rdf:ID="Peticion_transferencia">
+    <rdfs:subClassOf rdf:resource="#Accion"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Vull_comprar">
+    <rdfs:subClassOf rdf:resource="#Accion"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Enviar_lot">
+    <rdfs:subClassOf rdf:resource="#Accion"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Registra_productes">
+    <rdfs:subClassOf rdf:resource="#Accion"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Peticion_compra">
+    <rdfs:subClassOf rdf:resource="#Accion"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Respuesta_busqueda">
+    <rdfs:subClassOf rdf:resource="#Respuesta"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Peticion_retorno">
+    <rdfs:subClassOf rdf:resource="#Accion"/>
+  </owl:Class>
+  <owl:ObjectProperty rdf:ID="compra_a_retornar">
+    <rdfs:range rdf:resource="#Compra"/>
+    <rdfs:domain rdf:resource="#Recoger_venta"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Enviar_a">
+    <rdfs:range rdf:resource="#Ciudad"/>
+    <rdfs:domain rdf:resource="#Compra"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="identificador_Compra">
+    <rdfs:range rdf:resource="#Compra"/>
+    <rdfs:domain rdf:resource="#Enviar_venda"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Tiene">
+    <rdfs:range rdf:resource="#Producto"/>
+    <rdfs:domain rdf:resource="#Existencia"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Responde_a">
+    <rdfs:range rdf:resource="#Oferta_transporte"/>
+    <rdfs:domain rdf:resource="#Contraoferta"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="fecha"/>
+  <owl:ObjectProperty rdf:ID="compra">
+    <rdfs:domain rdf:resource="#Vull_comprar"/>
+    <rdfs:range rdf:resource="#Compra"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="CompraRetornada">
+    <rdfs:domain rdf:resource="#Peticion_retorno"/>
+    <rdfs:range rdf:resource="#Compra"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="productos">
+    <rdfs:range rdf:resource="#Producto"/>
+    <rdfs:domain rdf:resource="#Lote_producto"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Valora">
+    <rdfs:range rdf:resource="#Producto"/>
+    <rdfs:domain rdf:resource="#Valoracion"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Existe">
+    <rdfs:domain rdf:resource="#Pedir_disponibilidad"/>
+    <rdfs:range rdf:resource="#Existencia"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Vendido">
+    <rdfs:domain rdf:resource="#Producto_externo"/>
+    <rdfs:range rdf:resource="#Vendedor"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="a_enviar">
+    <rdfs:domain rdf:resource="#Enviar_lot"/>
+    <rdfs:range rdf:resource="#Lote_producto"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Oferta">
+    <rdfs:domain rdf:resource="#Transportista"/>
+    <rdfs:range rdf:resource="#Oferta_transporte"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Transporta">
+    <rdfs:range rdf:resource="#Compra"/>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Pedir_oferta_transporte"/>
+          <owl:Class rdf:about="#Oferta_transporte"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="producto">
+    <rdfs:range rdf:resource="#Producto_externo"/>
+    <rdfs:domain rdf:resource="#Registra_productes"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Productos">
+    <rdfs:domain rdf:resource="#Compra"/>
+    <rdfs:range rdf:resource="#Producto"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Anunciado_por"/>
+  <owl:ObjectProperty rdf:ID="Envia">
+    <rdfs:range rdf:resource="#Lote_producto"/>
+    <rdfs:domain rdf:resource="#Envio"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Cerca">
+    <rdfs:range rdf:resource="#Ciudad"/>
+    <rdfs:domain rdf:resource="#Centro_logistico"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Sobre">
+    <rdfs:range rdf:resource="#Compra"/>
+    <rdfs:domain rdf:resource="#Peticion_compra"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Guarda">
+    <rdfs:range rdf:resource="#Existencia"/>
+    <rdfs:domain rdf:resource="#Centro_logistico"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Anuncia">
+    <rdfs:range rdf:resource="#Producto"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="idCompra">
+    <rdfs:range rdf:resource="#Compra"/>
+    <rdfs:domain rdf:resource="#Peticion_transferencia"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Restringe">
+    <rdfs:range rdf:resource="#Restriccions"/>
+    <rdfs:domain rdf:resource="#Cerca_productes"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Destino">
+    <rdfs:domain rdf:resource="#Pedir_oferta_transporte"/>
+    <rdfs:range rdf:resource="#Ciudad"/>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:ID="Longitud">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <rdfs:domain rdf:resource="#Ciudad"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Fecha_de_entrega">
+    <rdfs:domain rdf:resource="#Envio"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Id">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Precio_min">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <rdfs:domain rdf:resource="#Rango_precio"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Precio_envio">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <rdfs:domain rdf:resource="#Oferta_transporte"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Puntuacion">
+    <rdfs:domain rdf:resource="#Valoracion"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Prioridad">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Peticion_compra"/>
+          <owl:Class rdf:about="#Lote_producto"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Precio_max">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <rdfs:domain rdf:resource="#Rango_precio"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Marca">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Producto"/>
+          <owl:Class rdf:about="#Restriccion_Marca"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Plazo_maximo_entrega">
+    <rdfs:domain rdf:resource="#Pedir_oferta_transporte"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Nombre">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Ciudad"/>
+          <owl:Class rdf:about="#Vendedor"/>
+          <owl:Class rdf:about="#Producto"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="lista_de_productos">
+    <rdfs:domain rdf:resource="#Respuesta_busqueda"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Latitud">
+    <rdfs:domain rdf:resource="#Ciudad"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Entrega">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <rdfs:domain rdf:resource="#Oferta_transporte"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Fecha_maxima">
+    <rdfs:domain rdf:resource="#Plazos_entrega"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#"/>
+  <owl:DatatypeProperty rdf:ID="Peso">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    <rdfs:domain rdf:resource="#Producto"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Prio"/>
+  <owl:DatatypeProperty rdf:ID="Fecha_minima">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <rdfs:domain rdf:resource="#Plazos_entrega"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Fecha">
+    <rdfs:domain rdf:resource="#Peticiona_transport"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Transportista_actual">
+    <rdfs:domain rdf:resource="#Transportista"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Puntucacion_minima">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    <rdfs:domain rdf:resource="#Restriccion_Valoracion"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Precio_base">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Nom">
+    <rdfs:domain rdf:resource="#RestriccioNom"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Modelo">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Producto"/>
+          <owl:Class rdf:about="#Restriccion_modelo"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Peso_envio">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#Pedir_oferta_transporte"/>
+          <owl:Class rdf:about="#Peticiona_transport"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Propuesta_precio"/>
+  <owl:DatatypeProperty rdf:ID="Precio">
+    <rdfs:domain rdf:resource="#Producto"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Precio_total">
+    <rdfs:domain rdf:resource="#Compra"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Existe_existencias">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:domain rdf:resource="#Respuesta_disponibilidad"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Pagat">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:domain rdf:resource="#Compra"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="Cantidad">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    <rdfs:domain rdf:resource="#Existencia"/>
+  </owl:DatatypeProperty>
+  <Producto rdf:ID="Producto_2">
+    <Nombre rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Garmin 325</Nombre>
+    <Marca rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Garmin</Marca>
+    <Precio rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >308.0</Precio>
+    <Modelo rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >325</Modelo>
+    <Id rdf:datatype="http://www.w3.org/2001/XMLSchema#int">2</Id>
+  </Producto>
+  <Producto rdf:ID="Producto_3">
+    <Nombre rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Pioneer</Nombre>
+    <Precio rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >200.0</Precio>
+    <Id rdf:datatype="http://www.w3.org/2001/XMLSchema#int">3</Id>
+    <Marca rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Elephone</Marca>
+    <Modelo rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >P7000</Modelo>
+  </Producto>
+  <Producto rdf:ID="Producto_4">
+    <Modelo rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Nexus 5</Modelo>
+    <Nombre rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Google Nexus 5</Nombre>
+    <Id rdf:datatype="http://www.w3.org/2001/XMLSchema#int">4</Id>
+    <Precio rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >350.0</Precio>
+    <Marca rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Google</Marca>
+  </Producto>
+  <Producto rdf:ID="Producto_1">
+    <Marca rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Nintendo</Marca>
+    <Id rdf:datatype="http://www.w3.org/2001/XMLSchema#int">1</Id>
+    <Modelo rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Choripan 3DS</Modelo>
+    <Nombre rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Nintendo Choripan</Nombre>
+    <Precio rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >100.0</Precio>
+  </Producto>
+  <Ciudad rdf:ID="Ciudad_1">
+    <Longitud rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >2.188247</Longitud>
+    <Nombre rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Barcelona</Nombre>
+    <Latitud rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+    >41.398373</Latitud>
+  </Ciudad>
+  <Cerca_productes rdf:ID="Cerca_productes_1">
+    <Restringe>
+      <Restriccion_Marca rdf:ID="Restriccion_Marca_2">
+        <Marca rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >Garmin</Marca>
+      </Restriccion_Marca>
+    </Restringe>
+  </Cerca_productes>
+</rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.4.8, Build 629)  http://protege.stanford.edu -->

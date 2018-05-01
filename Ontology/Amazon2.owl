@@ -1,0 +1,193 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE Ontology [
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY xml "http://www.w3.org/XML/1998/namespace" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www.semanticweb.org/alexh/ontologies/2018/4/untitled-ontology-5"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     ontologyIRI="http://www.semanticweb.org/alexh/ontologies/2018/4/untitled-ontology-5">
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Declaration>
+        <Class IRI="#Centro_logistico"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Contraoferta"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Defectuoso"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Devolucion"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Envio"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Equivocados"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Factura_de_compra"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Feedback"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Marca"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Modelo"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#No_satisfactorio"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Oferta_transportista"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Pedido"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Plazos_entrega"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Producto"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Producto_externo"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Rango_precio"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Razon_devolucion"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Recomendacion"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Restricciones_usuario"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Transportista"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Valoracion"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Vendedor"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#calidad"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#fecha_prevista_de_entrega"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#forma_de_pago"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#precio"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#prioridad_de_entrega"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#razon_devolucion"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#transportitsta"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#valoraciones"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="#Contraoferta"/>
+        <Class IRI="#Oferta_transportista"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Defectuoso"/>
+        <Class IRI="#Razon_devolucion"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Equivocados"/>
+        <Class IRI="#Razon_devolucion"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Marca"/>
+        <Class IRI="#Restricciones_usuario"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Modelo"/>
+        <Class IRI="#Restricciones_usuario"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#No_satisfactorio"/>
+        <Class IRI="#Razon_devolucion"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Plazos_entrega"/>
+        <Class IRI="#Restricciones_usuario"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Producto_externo"/>
+        <Class IRI="#Producto"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Rango_precio"/>
+        <Class IRI="#Restricciones_usuario"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Valoracion"/>
+        <Class IRI="#Restricciones_usuario"/>
+    </SubClassOf>
+    <ClassAssertion>
+        <Class IRI="#Producto"/>
+        <NamedIndividual IRI="#calidad"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Factura_de_compra"/>
+        <NamedIndividual IRI="#fecha_prevista_de_entrega"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Pedido"/>
+        <NamedIndividual IRI="#forma_de_pago"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Producto"/>
+        <NamedIndividual IRI="#precio"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Pedido"/>
+        <NamedIndividual IRI="#prioridad_de_entrega"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Devolucion"/>
+        <NamedIndividual IRI="#razon_devolucion"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Factura_de_compra"/>
+        <NamedIndividual IRI="#transportitsta"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Producto"/>
+        <NamedIndividual IRI="#valoraciones"/>
+    </ClassAssertion>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net -->
+
