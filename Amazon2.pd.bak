@@ -9,8 +9,8 @@
 	    <field name="description">Sistema distribuido Amazon2 </field>
 	    <field name="version">v1</field>
 	    <field name="fileNameLastSavedAs">Amazon2.pd</field>
-	    <field name="filePathLastSavedIn">/home2/users/alumnes/1202073/dades/ECSDI</field>
-	    <field name="openedAs">/home2/users/alumnes/1202073/dades/ECSDI/Amazon2.pd</field>
+	    <field name="filePathLastSavedIn">E:\Users\alexh\Desktop\ECSDI\ECSDI_git</field>
+	    <field name="openedAs">E:\Users\alexh\Desktop\ECSDI\ECSDI_git\Amazon2.pd</field>
 	    <field name="author">Alex Huang, Nico Francisquelo, Eloi Roca</field>
 	    <field name="applicationVersion">3.3b_internal</field>
 	</object>
@@ -265,7 +265,7 @@
 															    <field name="includedCapabilities"><list>
 																<object type="Capability" id="27">
 																    <base type="Entity">
-																	<field name="name">Cp Negociar Trasnportistas</field>
+																	<field name="name">Cp Negociar Transportistas</field>
 																	<field name="description"></field>
 																	<field name="uniqueId">302</field>
 																    </base>
@@ -7411,8 +7411,8 @@ finish</field>
 		    </field>
 		    <field name="location">
 			<object type="Coordinate" id="790">
-			    <field name="x">205</field>
-			    <field name="y">86</field>
+			    <field name="x">195</field>
+			    <field name="y">61</field>
 			</object>
 		    </field>
 		</object>
