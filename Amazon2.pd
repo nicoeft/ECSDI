@@ -9,8 +9,8 @@
 	    <field name="description">Sistema distribuido Amazon2 </field>
 	    <field name="version">v1</field>
 	    <field name="fileNameLastSavedAs">Amazon2.pd</field>
-	    <field name="filePathLastSavedIn">/home/nico/workspace/ECSDI</field>
-	    <field name="openedAs">/home/nico/workspace/ECSDI/Amazon2.pd</field>
+	    <field name="filePathLastSavedIn">/home2/users/alumnes/1202073/dades/ECSDI</field>
+	    <field name="openedAs">/home2/users/alumnes/1202073/dades/ECSDI/Amazon2.pd</field>
 	    <field name="author">Alex Huang, Nico Francisquelo, Eloi Roca</field>
 	    <field name="applicationVersion">3.3b_internal</field>
 	</object>
