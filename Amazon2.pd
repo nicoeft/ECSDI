@@ -606,7 +606,7 @@
 																															<object type="Action" id="50">
 																															    <base type="Interaction">
 																																<base type="Entity">
-																																    <field name="name">Comunicar producto a enviar</field>
+																																    <field name="name">Comunicar pedido a enviar</field>
 																																    <field name="description">Comunica al vendedor externo los datos del usuario y del producto vendido para que efectue la entrega</field>
 																																    <field name="uniqueId">150</field>
 																																</base>
@@ -4864,8 +4864,8 @@ finish</field>
 		    </field>
 		    <field name="location">
 			<object type="Coordinate" id="360">
-			    <field name="x">233</field>
-			    <field name="y">116</field>
+			    <field name="x">26</field>
+			    <field name="y">82</field>
 			</object>
 		    </field>
 		</object>
@@ -4923,8 +4923,8 @@ finish</field>
 		    </field>
 		    <field name="location">
 			<object type="Coordinate" id="369">
-			    <field name="x">37</field>
-			    <field name="y">25</field>
+			    <field name="x">238</field>
+			    <field name="y">81</field>
 			</object>
 		    </field>
 		</object>

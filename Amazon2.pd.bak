@@ -138,11 +138,17 @@
 							    <base type="Interaction">
 								<base type="Entity">
 								    <field name="name">Ingresar dinero al vendedor tercero</field>
+								    <field name="description">Se ingresa el dinero a la cuenta del vendedor tercero</field>
 								    <field name="uniqueId">221</field>
 								</base>
 
 							    </base>
 
+							    <field name="parameters"></field>
+							    <field name="durationDescription"></field>
+							    <field name="failureNotificationDescription"></field>
+							    <field name="partialChange"></field>
+							    <field name="sideEffects"></field>
 							</object>
 
 							<object type="Action" id="17">
@@ -277,7 +283,7 @@
 																	    <base type="Interaction">
 																		<base type="Entity">
 																		    <field name="name">Pedir precio envio</field>
-																		    <field name="description">Obtiene el precio y las características de envio de los transportistas</field>
+																		    <field name="description">Obtiene el precio y las caracteristicas de envio de los transportistas</field>
 																		    <field name="uniqueId">105</field>
 																		</base>
 
@@ -296,7 +302,7 @@
 																	    <base type="Interaction">
 																		<base type="Entity">
 																		    <field name="name">Precios envio</field>
-																		    <field name="description"></field>
+																		    <field name="description">Se recibe los precios pedidos por el agente de los transportistas</field>
 																		    <field name="uniqueId">285</field>
 																		</base>
 
@@ -385,8 +391,8 @@
 																								<object type="Message" id="37">
 																								    <base type="Interaction">
 																									<base type="Entity">
-																									    <field name="name">solicitud envio</field>
-																									    <field name="description">donde y qué productos tengo que enviar y si es o no un envio gestionado</field>
+																									    <field name="name">Solicitud envio</field>
+																									    <field name="description">Donde y que productos tengo que enviar y si es o no un envio gestionado</field>
 																									    <field name="uniqueId">186</field>
 																									</base>
 
@@ -503,7 +509,7 @@
 																												<object type="Message" id="44">
 																												    <base type="Interaction">
 																													<base type="Entity">
-																													    <field name="name">confirmacion envio externo</field>
+																													    <field name="name">Confirmacion envio externo</field>
 																													    <field name="description">Ya se ha avisado al vendedor que realice el envio, se puede cobrar</field>
 																													    <field name="uniqueId">200</field>
 																													</base>
@@ -600,7 +606,7 @@
 																															<object type="Action" id="50">
 																															    <base type="Interaction">
 																																<base type="Entity">
-																																    <field name="name">Comunicar producto a enviar</field>
+																																    <field name="name">Comunicar pedido a enviar</field>
 																																    <field name="description">Comunica al vendedor externo los datos del usuario y del producto vendido para que efectue la entrega</field>
 																																    <field name="uniqueId">150</field>
 																																</base>
@@ -626,7 +632,7 @@
 																																<object type="Message" id="52">
 																																    <base type="Interaction">
 																																	<base type="Entity">
-																																	    <field name="name">es envio externo</field>
+																																	    <field name="name">Es envio externo</field>
 																																	    <field name="description">Si el envio lo debe realizar el vendedor</field>
 																																	    <field name="uniqueId">281</field>
 																																	</base>
@@ -730,7 +736,7 @@
 																																<object type="Data" id="57">
 																																    <base type="Entity">
 																																	<field name="name">Info Vendedores Externos</field>
-																																	<field name="description">Información sobre los vendedores externos al sistema</field>
+																																	<field name="description">Informacion sobre los vendedores externos al sistema</field>
 																																	<field name="uniqueId">151</field>
 																																    </base>
 
@@ -907,11 +913,17 @@
 																																			    <base type="Interaction">
 																																				<base type="Entity">
 																																				    <field name="name">Confirmar producto puesto a la venta</field>
+																																				    <field name="description">Se envia un mensaje al vendedor externo de que su producto ha sido puesto a la venta</field>
 																																				    <field name="uniqueId">290</field>
 																																				</base>
 
 																																			    </base>
 
+																																			    <field name="parameters"></field>
+																																			    <field name="durationDescription"></field>
+																																			    <field name="failureNotificationDescription"></field>
+																																			    <field name="partialChange"></field>
+																																			    <field name="sideEffects"></field>
 																																			</object>
 																																			</list>
 																																		    </field>
@@ -1020,7 +1032,7 @@
 																																						<object type="Data" id="75">
 																																						    <base type="Entity">
 																																							<field name="name">Info Productos</field>
-																																							<field name="description">Información sobre todos los productos que vende la tienda</field>
+																																							<field name="description">Informacion sobre todos los productos que vende la tienda</field>
 																																							<field name="uniqueId">59</field>
 																																						    </base>
 
@@ -1405,7 +1417,7 @@ finish</field>
 																								<object type="Data" id="90">
 																								    <base type="Entity">
 																									<field name="name">Info Almacen</field>
-																									<field name="description">Información sobre los almacenes</field>
+																									<field name="description">Informacion sobre los almacenes</field>
 																									<field name="uniqueId">106</field>
 																								    </base>
 
@@ -1645,7 +1657,7 @@ finish</field>
 																			<object type="Data" id="100">
 																			    <base type="Entity">
 																				<field name="name">Info Envios Almacen</field>
-																				<field name="description">Información de los envíos realizados por el almacén</field>
+																				<field name="description">Informacion de los envios realizados por el almacen</field>
 																				<field name="uniqueId">60</field>
 																			    </base>
 
@@ -1815,7 +1827,7 @@ finish</field>
 																												<object type="Data" id="112">
 																												    <base type="Entity">
 																													<field name="name">Info Transportistas Almacen</field>
-																													<field name="description"></field>
+																													<field name="description">Informacion de las transportistas (precios)</field>
 																													<field name="uniqueId">141</field>
 																												    </base>
 
@@ -2266,7 +2278,7 @@ finish</field>
 													<object type="Data" id="124">
 													    <base type="Entity">
 														<field name="name">Info Clientes</field>
-														<field name="description">Información sobre los clientes del sistema</field>
+														<field name="description">Informacion sobre los clientes del sistema</field>
 														<field name="uniqueId">68</field>
 													    </base>
 
@@ -2379,7 +2391,7 @@ finish</field>
 																				<field name="uniqueId">61</field>
 																			    </base>
 
-																			    <field name="dataType">Reseñas</field>
+																			    <field name="dataType">Resenyas</field>
 																			    <field name="includedFields"></field>
 																			    <field name="readBy"><list>
 																				<object ref="125"/>
@@ -2525,7 +2537,7 @@ finish</field>
 																							<object type="Data" id="141">
 																							    <base type="Entity">
 																								<field name="name">Historial de compras/pedidos</field>
-																								<field name="description">Información sobre las compras realizadas</field>
+																								<field name="description">Informacion sobre las compras realizadas</field>
 																								<field name="uniqueId">62</field>
 																							    </base>
 
@@ -2626,8 +2638,8 @@ finish</field>
 																													<object type="Action" id="149">
 																													    <base type="Interaction">
 																														<base type="Entity">
-																														    <field name="name">Se informa del resultado de la devolución</field>
-																														    <field name="description">Se manda un mensaje al cliente informando de si se ha aceptado o denegado su petición de devolución, en caso afirmativo se le informa de como debe realizar esta devolución </field>
+																														    <field name="name">Se informa del resultado de la devolucion</field>
+																														    <field name="description">Se manda un mensaje al cliente informando de si se ha aceptado o denegado su peticion de devolucion, en caso afirmativo se le informa de como debe realizar esta devolucion </field>
 																														    <field name="uniqueId">35</field>
 																														</base>
 
@@ -2644,7 +2656,7 @@ finish</field>
 																													    <base type="Interaction">
 																														<base type="Entity">
 																														    <field name="name">Devolver dinero al cliente</field>
-																														    <field name="description"></field>
+																														    <field name="description">Se ingresa el dinero en la cuenta del cliente</field>
 																														    <field name="uniqueId">222</field>
 																														</base>
 
@@ -2665,7 +2677,7 @@ finish</field>
 																													    <base type="Interaction">
 																														<base type="Entity">
 																														    <field name="name">Producto recibido</field>
-																														    <field name="description"></field>
+																														    <field name="description">El producto ha sido recibido</field>
 																														    <field name="uniqueId">236</field>
 																														</base>
 
@@ -3622,7 +3634,7 @@ finish</field>
 			    <base type="Interaction">
 				<base type="Entity">
 				    <field name="name">Peticion Productos Disponibles</field>
-				    <field name="description">Evento que permite obtener informacion de los parametros de busqueda introduciods por el usuario</field>
+				    <field name="description">Evento que permite obtener informacion de los parametros de busqueda introducios por el usuario</field>
 				    <field name="uniqueId">6</field>
 				</base>
 
@@ -4852,8 +4864,8 @@ finish</field>
 		    </field>
 		    <field name="location">
 			<object type="Coordinate" id="360">
-			    <field name="x">233</field>
-			    <field name="y">116</field>
+			    <field name="x">26</field>
+			    <field name="y">82</field>
 			</object>
 		    </field>
 		</object>
@@ -4911,8 +4923,8 @@ finish</field>
 		    </field>
 		    <field name="location">
 			<object type="Coordinate" id="369">
-			    <field name="x">37</field>
-			    <field name="y">25</field>
+			    <field name="x">238</field>
+			    <field name="y">81</field>
 			</object>
 		    </field>
 		</object>
@@ -7256,8 +7268,8 @@ finish</field>
 		    </field>
 		    <field name="location">
 			<object type="Coordinate" id="764">
-			    <field name="x">334</field>
-			    <field name="y">56</field>
+			    <field name="x">257</field>
+			    <field name="y">96</field>
 			</object>
 		    </field>
 		</object>
@@ -7268,11 +7280,10 @@ finish</field>
 		    </field>
 		    <field name="location">
 			<object type="Coordinate" id="766">
-			    <field name="x">255</field>
-			    <field name="y">246</field>
+			    <field name="x">242</field>
+			    <field name="y">270</field>
 			</object>
 		    </field>
-		    <field name="userApproved">:false</field>
 		</object>
 
 		<object type="DiagramEntitySetting" id="767">
