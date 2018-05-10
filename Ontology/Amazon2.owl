@@ -16,6 +16,12 @@
         <Class IRI="#Plazos_entrega"/>
     </Declaration>
     <Declaration>
+        <Class IRI="#Producto_devuelto"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#devolucionContiene"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#Transportista"/>
     </Declaration>
     <Declaration>
@@ -23,6 +29,12 @@
     </Declaration>
     <Declaration>
         <ObjectProperty IRI="#perteneceA"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#tieneFecha"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Comunicacion_resultado_devolucion"/>
     </Declaration>
     <Declaration>
         <DataProperty IRI="#tieneEmail"/>
@@ -37,16 +49,52 @@
         <ObjectProperty IRI="#esEnviadoPor"/>
     </Declaration>
     <Declaration>
+        <Class IRI="#Pedir_precio_envio"/>
+    </Declaration>
+    <Declaration>
         <ObjectProperty IRI="#tienePedidos"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Añadir_producto_externo"/>
     </Declaration>
     <Declaration>
         <ObjectProperty IRI="#almacenAgrupa"/>
     </Declaration>
     <Declaration>
+        <Class IRI="#Nueva_compra_producto"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Peticion_devolucion"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Confirmacion_cesta"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#Devolucion"/>
     </Declaration>
     <Declaration>
+        <ObjectProperty IRI="#peticionDevolucionTiene"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Enviar_recomendacion"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Ingresar_dinero_vendedor_externo"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#Centro_logistico"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Nueva_reseña"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Cobrar_pedido"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Devolver_dinero_cliente"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#almacenEligeTransportista"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Vendedor"/>
@@ -58,22 +106,34 @@
         <Class IRI="#Oferta_transportista"/>
     </Declaration>
     <Declaration>
+        <Class IRI="#Solicitud_envio"/>
+    </Declaration>
+    <Declaration>
         <ObjectProperty IRI="#esLocalizadoEn"/>
     </Declaration>
     <Declaration>
         <ObjectProperty IRI="#almacena"/>
     </Declaration>
     <Declaration>
+        <Class IRI="#Toca_enviar_recomendacion"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#Ropa"/>
     </Declaration>
     <Declaration>
-        <ObjectProperty IRI="#pedidoContiene"/>
+        <Class IRI="#Precios_envio"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Defectuoso"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Equivocados"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#pedidoContiene"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Mensajes_internos"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Valoracion"/>
@@ -85,13 +145,13 @@
         <ObjectProperty IRI="#cumpleRestriccion"/>
     </Declaration>
     <Declaration>
+        <Class IRI="#Peticion_productos_disponibles"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#Modelo"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Feedback"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#Restricciones_cliente"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Cliente"/>
@@ -100,7 +160,16 @@
         <ObjectProperty IRI="#pedidoDestinadoA"/>
     </Declaration>
     <Declaration>
+        <Class IRI="#Restricciones_cliente"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Mensajes_externos"/>
+    </Declaration>
+    <Declaration>
         <ObjectProperty IRI="#pedidoPerteneceA"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Comunicar_pedido_enviar"/>
     </Declaration>
     <Declaration>
         <ObjectProperty IRI="#esProcesadoPorExt"/>
@@ -112,6 +181,9 @@
         <ObjectProperty IRI="#creaEnvios"/>
     </Declaration>
     <Declaration>
+        <Class IRI="#Emitir_factura"/>
+    </Declaration>
+    <Declaration>
         <ObjectProperty IRI="#esProcesadoPor"/>
     </Declaration>
     <Declaration>
@@ -124,13 +196,25 @@
         <Class IRI="#Envio_propio"/>
     </Declaration>
     <Declaration>
+        <Class IRI="#Mensajes"/>
+    </Declaration>
+    <Declaration>
         <ObjectProperty IRI="#negociaCon"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#devolucionAsociada"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Lote"/>
     </Declaration>
     <Declaration>
+        <ObjectProperty IRI="#tieneRazon"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#Localizacion"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Confirmacion_venta_externo"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Almacen"/>
@@ -142,13 +226,22 @@
         <Class IRI="#Rango_precio"/>
     </Declaration>
     <Declaration>
+        <Class IRI="#Confirmacion_envio"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#Producto"/>
     </Declaration>
     <Declaration>
         <ObjectProperty IRI="#loteTiene"/>
     </Declaration>
     <Declaration>
+        <Class IRI="#Informacion_productos_disponibles"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#Contraoferta"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Realiza_envio"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Producto_externo"/>
@@ -157,16 +250,25 @@
         <ObjectProperty IRI="#recibeOferta"/>
     </Declaration>
     <Declaration>
+        <Class IRI="#Acciones"/>
+    </Declaration>
+    <Declaration>
         <ObjectProperty IRI="#tieneRestriccion"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Avisar_transportista_envio"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Devolucion_denegada"/>
     </Declaration>
     <Declaration>
-        <Class IRI="#Factura_de_compra"/>
+        <Class IRI="#Percepciones"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Envio"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Factura_de_compra"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Razon_devolucion"/>
@@ -174,6 +276,49 @@
     <Declaration>
         <Class IRI="#Devolucion_pendiente"/>
     </Declaration>
+    <Declaration>
+        <Class IRI="#Confirmacion_envio_externo"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="#Acciones"/>
+        <Class IRI="#Mensajes_externos"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Avisar_transportista_envio"/>
+        <Class IRI="#Acciones"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Añadir_producto_externo"/>
+        <Class IRI="#Percepciones"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Cobrar_pedido"/>
+        <Class IRI="#Acciones"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Comunicacion_resultado_devolucion"/>
+        <Class IRI="#Acciones"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Comunicar_pedido_enviar"/>
+        <Class IRI="#Acciones"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Confirmacion_cesta"/>
+        <Class IRI="#Acciones"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Confirmacion_envio"/>
+        <Class IRI="#Mensajes_internos"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Confirmacion_envio_externo"/>
+        <Class IRI="#Mensajes_internos"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Confirmacion_venta_externo"/>
+        <Class IRI="#Acciones"/>
+    </SubClassOf>
     <SubClassOf>
         <Class IRI="#Contraoferta"/>
         <Class IRI="#Oferta_transportista"/>
@@ -195,8 +340,20 @@
         <Class IRI="#Devolucion"/>
     </SubClassOf>
     <SubClassOf>
+        <Class IRI="#Devolver_dinero_cliente"/>
+        <Class IRI="#Acciones"/>
+    </SubClassOf>
+    <SubClassOf>
         <Class IRI="#Electronica"/>
         <Class IRI="#Categorias"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Emitir_factura"/>
+        <Class IRI="#Acciones"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Enviar_recomendacion"/>
+        <Class IRI="#Acciones"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Envio_externo"/>
@@ -211,8 +368,24 @@
         <Class IRI="#Razon_devolucion"/>
     </SubClassOf>
     <SubClassOf>
+        <Class IRI="#Informacion_productos_disponibles"/>
+        <Class IRI="#Acciones"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Ingresar_dinero_vendedor_externo"/>
+        <Class IRI="#Acciones"/>
+    </SubClassOf>
+    <SubClassOf>
         <Class IRI="#Marca"/>
         <Class IRI="#Restricciones_cliente"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Mensajes_externos"/>
+        <Class IRI="#Mensajes"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Mensajes_internos"/>
+        <Class IRI="#Mensajes"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Modelo"/>
@@ -223,8 +396,40 @@
         <Class IRI="#Razon_devolucion"/>
     </SubClassOf>
     <SubClassOf>
+        <Class IRI="#Nueva_compra_producto"/>
+        <Class IRI="#Percepciones"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Nueva_reseña"/>
+        <Class IRI="#Percepciones"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Pedir_precio_envio"/>
+        <Class IRI="#Acciones"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Percepciones"/>
+        <Class IRI="#Mensajes_externos"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Peticion_devolucion"/>
+        <Class IRI="#Percepciones"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Peticion_productos_disponibles"/>
+        <Class IRI="#Percepciones"/>
+    </SubClassOf>
+    <SubClassOf>
         <Class IRI="#Plazos_entrega"/>
         <Class IRI="#Restricciones_cliente"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Precios_envio"/>
+        <Class IRI="#Percepciones"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Producto_devuelto"/>
+        <Class IRI="#Percepciones"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Producto_externo"/>
@@ -235,8 +440,20 @@
         <Class IRI="#Restricciones_cliente"/>
     </SubClassOf>
     <SubClassOf>
+        <Class IRI="#Realiza_envio"/>
+        <Class IRI="#Mensajes_internos"/>
+    </SubClassOf>
+    <SubClassOf>
         <Class IRI="#Ropa"/>
         <Class IRI="#Categorias"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Solicitud_envio"/>
+        <Class IRI="#Mensajes_internos"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Toca_enviar_recomendacion"/>
+        <Class IRI="#Percepciones"/>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="#Valoracion"/>
@@ -244,6 +461,10 @@
     </SubClassOf>
     <ObjectPropertyDomain>
         <ObjectProperty IRI="#almacenAgrupa"/>
+        <Class IRI="#Almacen"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#almacenEligeTransportista"/>
         <Class IRI="#Almacen"/>
     </ObjectPropertyDomain>
     <ObjectPropertyDomain>
@@ -257,6 +478,14 @@
     <ObjectPropertyDomain>
         <ObjectProperty IRI="#cumpleRestriccion"/>
         <Class IRI="#Producto"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#devolucionAsociada"/>
+        <Class IRI="#Devolucion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#devolucionContiene"/>
+        <Class IRI="#Devolucion"/>
     </ObjectPropertyDomain>
     <ObjectPropertyDomain>
         <ObjectProperty IRI="#esEnviadoPor"/>
@@ -303,6 +532,10 @@
         <Class IRI="#Producto"/>
     </ObjectPropertyDomain>
     <ObjectPropertyDomain>
+        <ObjectProperty IRI="#peticionDevolucionTiene"/>
+        <Class IRI="#Peticion_devolucion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
         <ObjectProperty IRI="#recibeOferta"/>
         <Class IRI="#Almacen"/>
     </ObjectPropertyDomain>
@@ -311,12 +544,20 @@
         <Class IRI="#Centro_logistico"/>
     </ObjectPropertyDomain>
     <ObjectPropertyDomain>
+        <ObjectProperty IRI="#tieneRazon"/>
+        <Class IRI="#Devolucion"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
         <ObjectProperty IRI="#tieneRestriccion"/>
         <Class IRI="#Cliente"/>
     </ObjectPropertyDomain>
     <ObjectPropertyRange>
         <ObjectProperty IRI="#almacenAgrupa"/>
         <Class IRI="#Lote"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#almacenEligeTransportista"/>
+        <Class IRI="#Transportista"/>
     </ObjectPropertyRange>
     <ObjectPropertyRange>
         <ObjectProperty IRI="#almacena"/>
@@ -329,6 +570,14 @@
     <ObjectPropertyRange>
         <ObjectProperty IRI="#cumpleRestriccion"/>
         <Class IRI="#Restricciones_cliente"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#devolucionAsociada"/>
+        <Class IRI="#Producto"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#devolucionContiene"/>
+        <Class IRI="#Factura_de_compra"/>
     </ObjectPropertyRange>
     <ObjectPropertyRange>
         <ObjectProperty IRI="#esEnviadoPor"/>
@@ -375,12 +624,20 @@
         <Class IRI="#Categorias"/>
     </ObjectPropertyRange>
     <ObjectPropertyRange>
+        <ObjectProperty IRI="#peticionDevolucionTiene"/>
+        <Class IRI="#Devolucion"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
         <ObjectProperty IRI="#recibeOferta"/>
         <Class IRI="#Oferta_transportista"/>
     </ObjectPropertyRange>
     <ObjectPropertyRange>
         <ObjectProperty IRI="#tienePedidos"/>
         <Class IRI="#Pedido"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#tieneRazon"/>
+        <Class IRI="#Razon_devolucion"/>
     </ObjectPropertyRange>
     <ObjectPropertyRange>
         <ObjectProperty IRI="#tieneRestriccion"/>
@@ -394,9 +651,17 @@
         <DataProperty IRI="#tieneEmail"/>
         <Class IRI="#Vendedor"/>
     </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#tieneFecha"/>
+        <Class IRI="#Devolucion"/>
+    </DataPropertyDomain>
     <DataPropertyRange>
         <DataProperty IRI="#tieneEmail"/>
         <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#tieneFecha"/>
+        <Datatype abbreviatedIRI="xsd:dateTime"/>
     </DataPropertyRange>
 </Ontology>
 
