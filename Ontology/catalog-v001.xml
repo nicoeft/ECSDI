@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
     <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
-        <uri id="Automatically generated entry, Timestamp=1525852525359" name="http://www.owl-ontologies.com/ECSDIAmazon.owl" uri="Ejemplos/ECSDIAmazon.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1525852525359" name="duplicate:http://www.semanticweb.org/alexh/ontologies/2018/4/untitled-ontology-5" uri="Amazon2.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1525852525359" name="duplicate:http://www.semanticweb.org/alexh/ontologies/2018/4/untitled-ontology-5" uri="bakupAmazon.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1525852525359" name="http://www.semanticweb.org/jou/ontologies/2017/4/untitled-ontology-6" uri="Ejemplos/Ontologia_3.5.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1525950191087" name="http://www.owl-ontologies.com/ECSDIAmazon.owl" uri="Ejemplos/ECSDIAmazon.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1525950191087" name="duplicate:http://www.semanticweb.org/alexh/ontologies/2018/4/untitled-ontology-5" uri="Amazon2.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1525950191087" name="duplicate:http://www.semanticweb.org/alexh/ontologies/2018/4/untitled-ontology-5" uri="bakupAmazon.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1525950191087" name="http://www.semanticweb.org/jou/ontologies/2017/4/untitled-ontology-6" uri="Ejemplos/Ontologia_3.5.owl"/>
     </group>
 </catalog>
