@@ -39,6 +39,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--open', help="Define si el servidor est abierto al exterior o no", action='store_true',
                     default=False)
 parser.add_argument('--port', type=int, help="Puerto de comunicacion del agente")
+parser.add_argument('--host', type=str, help="Host de la maquina" )
 
 # Logging
 logger = config_logger(level=1)
@@ -54,6 +55,8 @@ else:
 
 if args.open:
     hostname = '0.0.0.0'
+elif args.host:
+    hostname = args.host
 else:
     hostname = socket.gethostname()
 
