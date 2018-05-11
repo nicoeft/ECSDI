@@ -19,6 +19,9 @@
         <ObjectProperty IRI="#devolucionContiene"/>
     </Declaration>
     <Declaration>
+        <DataProperty IRI="#precioTotal"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#Producto_devuelto"/>
     </Declaration>
     <Declaration>
@@ -172,6 +175,9 @@
         <Class IRI="#Restricciones_cliente"/>
     </Declaration>
     <Declaration>
+        <ObjectProperty IRI="#realizaEnvioPedido"/>
+    </Declaration>
+    <Declaration>
         <ObjectProperty IRI="#pedidoPerteneceA"/>
     </Declaration>
     <Declaration>
@@ -257,6 +263,9 @@
     </Declaration>
     <Declaration>
         <ObjectProperty IRI="#cobrarPedido"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#fechaPedido"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Acciones"/>
@@ -552,6 +561,10 @@
         <Class IRI="#Peticion_devolucion"/>
     </ObjectPropertyDomain>
     <ObjectPropertyDomain>
+        <ObjectProperty IRI="#realizaEnvioPedido"/>
+        <Class IRI="#Realiza_envio"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
         <ObjectProperty IRI="#recibeOferta"/>
         <Class IRI="#Almacen"/>
     </ObjectPropertyDomain>
@@ -664,6 +677,10 @@
         <Class IRI="#Devolucion"/>
     </ObjectPropertyRange>
     <ObjectPropertyRange>
+        <ObjectProperty IRI="#realizaEnvioPedido"/>
+        <Class IRI="#Pedido"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
         <ObjectProperty IRI="#recibeOferta"/>
         <Class IRI="#Oferta_transportista"/>
     </ObjectPropertyRange>
@@ -696,12 +713,28 @@
         <Class IRI="#Vendedor"/>
     </DataPropertyDomain>
     <DataPropertyDomain>
+        <DataProperty IRI="#fechaPedido"/>
+        <Class IRI="#Pedido"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#precioTotal"/>
+        <Class IRI="#Pedido"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
         <DataProperty IRI="#tieneFecha"/>
         <Class IRI="#Devolucion"/>
     </DataPropertyDomain>
     <DataPropertyRange>
         <DataProperty IRI="#Email"/>
         <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#fechaPedido"/>
+        <Datatype abbreviatedIRI="xsd:dateTime"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#precioTotal"/>
+        <Datatype abbreviatedIRI="xsd:double"/>
     </DataPropertyRange>
     <DataPropertyRange>
         <DataProperty IRI="#tieneFecha"/>
