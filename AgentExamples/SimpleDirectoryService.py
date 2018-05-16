@@ -58,7 +58,8 @@ if args.open:
 elif args.host:
     hostname = args.host
 else:
-    hostname = socket.gethostname()
+    hostname = 'localhost'
+    # hostname = socket.gethostname()
 
 # Directory Service Graph
 dsgraph = Graph()
