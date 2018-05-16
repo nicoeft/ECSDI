@@ -94,7 +94,7 @@ dsgraph = Graph()
 def directory_search_message(type):
     """
     Busca en el servicio de registro mandando un
-    mensaje de request con una accion Seach del servicio de directorio
+    mensaje de request con una accion Search del servicio de directorio
 
     Podria ser mas adecuado mandar un query-ref y una descripcion de registo
     con variables
@@ -109,9 +109,9 @@ def directory_search_message(type):
 
     gmess.bind('foaf', FOAF)
     gmess.bind('dso', DSO)
-    reg_obj = agn[AgenteCliente.name + '-search']
-    gmess.add((reg_obj, RDF.type, DSO.Search))
-    gmess.add((reg_obj, DSO.AgentType, type))
+    reg_obj = agn[AgenteCliente.name + '-search'] #nombre del graph -> AgenteCliente-search
+    gmess.add((reg_obj, RDF.type, DSO.Search))  #añadimos el tipo de RDF-> Serach
+    gmess.add((reg_obj, DSO.AgentType, type)) #añadimos el tipo de agente que estamos pidiendo es el parm de la funcion (DSO.AgenteMostrarProductos)
 
     msg = build_message(gmess, perf=ACL.request,
                         sender=AgenteCliente.uri,
@@ -208,7 +208,7 @@ def agentbehavior1():
 
     # Obtenemos la direccion del agente de la respuesta
     # No hacemos ninguna comprobacion sobre si es un mensaje valido
-    msg = gr.value(predicate=RDF.type, object=ACL.FipaAclMessage)
+    msg = gr.value(predicate=RDF.type, object=ACL.FipaAclMessage) 
     content = gr.value(subject=msg, predicate=ACL.content)
     ragn_addr = gr.value(subject=content, predicate=DSO.Address)
     ragn_uri = gr.value(subject=content, predicate=DSO.Uri)
@@ -216,7 +216,7 @@ def agentbehavior1():
     # Ahora mandamos un objeto de tipo request mandando una accion de tipo Search
     # que esta en una supuesta ontologia de acciones de agentes
     infoagent_search_message(ragn_addr, ragn_uri)
-
+    
     # r = requests.get(ra_stop)
     # print r.text
 
