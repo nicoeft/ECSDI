@@ -118,8 +118,7 @@ def register_message():
     # Lo metemos en un envoltorio FIPA-ACL y lo enviamos
     gr = send_message(
         build_message(gmess, perf=ACL.request,
-                      sender=MostrarProductosAgent
-                e.uri,
+                      sender=MostrarProductosAgente.uri,
                       receiver=DirectoryAgent.uri,
                       content=reg_obj,
                       msgcnt=mss_cnt),
@@ -177,16 +176,14 @@ def comunicacion():
     # Comprobamos que sea un mensaje FIPA ACL
     if msgdic is None:
         # Si no es, respondemos que no hemos entendido el mensaje
-        gr = build_message(Graph(), ACL['not-understood'], sender=MostrarProductosAgent
-e.uri, msgcnt=mss_cnt)
+        gr = build_message(Graph(), ACL['not-understood'], sender=MostrarProductosAgente.uri, msgcnt=mss_cnt)
     else:
         # Obtenemos la performativa
         perf = msgdic['performative']
 
         if perf != ACL.request:
             # Si no es un request, respondemos que no hemos entendido el mensaje
-            gr = build_message(Graph(), ACL['not-understood'], sender=MostrarProductosAgent
-    e.uri, msgcnt=mss_cnt)
+            gr = build_message(Graph(), ACL['not-understood'], sender=MostrarProductosAgente.uri, msgcnt=mss_cnt)
         else:
             # Extraemos el objeto del contenido que ha de ser una accion de la ontologia de acciones del agente
             # de registro
@@ -200,8 +197,7 @@ e.uri, msgcnt=mss_cnt)
             # Por ahora simplemente retornamos un Inform-done
             gr = build_message(Graph(),
                 ACL['inform-done'],
-                sender=MostrarProductosAgent
-        e.uri,
+                sender=MostrarProductosAgente.uri,
                 msgcnt=mss_cnt,
                 receiver=msgdic['sender'], )
     mss_cnt += 1
@@ -241,8 +237,7 @@ def agentbehavior1(cola):
             print(v)
 
             # Selfdestruct
-            # requests.get(MostrarProductosAgent
-            e.stop)
+            # requests.get(MostrarProductosAgente.stop)
 
 
 if __name__ == '__main__':
