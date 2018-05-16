@@ -108,17 +108,17 @@ def register_message():
     # Construimos el mensaje de registro
     gmess.bind('foaf', FOAF)
     gmess.bind('dso', DSO)
-    reg_obj = agn[MostrarProductosAgente.name + '-Register']
+    reg_obj = agn[AgenteMostrarProductos.name + '-Register']
     gmess.add((reg_obj, RDF.type, DSO.Register))
-    gmess.add((reg_obj, DSO.Uri, MostrarProductosAgente.uri))
-    gmess.add((reg_obj, FOAF.Name, Literal(MostrarProductosAgente.name)))
-    gmess.add((reg_obj, DSO.Address, Literal(MostrarProductosAgente.address)))
+    gmess.add((reg_obj, DSO.Uri, AgenteMostrarProductos.uri))
+    gmess.add((reg_obj, FOAF.Name, Literal(AgenteMostrarProductos.name)))
+    gmess.add((reg_obj, DSO.Address, Literal(AgenteMostrarProductos.address)))
     gmess.add((reg_obj, DSO.AgentType, DSO.AgenteMostrarProductos))
 
     # Lo metemos en un envoltorio FIPA-ACL y lo enviamos
     gr = send_message(
         build_message(gmess, perf=ACL.request,
-                      sender=MostrarProductosAgente.uri,
+                      sender=AgenteMostrarProductos.uri,
                       receiver=DirectoryAgent.uri,
                       content=reg_obj,
                       msgcnt=mss_cnt),
@@ -176,14 +176,14 @@ def comunicacion():
     # Comprobamos que sea un mensaje FIPA ACL
     if msgdic is None:
         # Si no es, respondemos que no hemos entendido el mensaje
-        gr = build_message(Graph(), ACL['not-understood'], sender=MostrarProductosAgente.uri, msgcnt=mss_cnt)
+        gr = build_message(Graph(), ACL['not-understood'], sender=AgenteMostrarProductos.uri, msgcnt=mss_cnt)
     else:
         # Obtenemos la performativa
         perf = msgdic['performative']
 
         if perf != ACL.request:
             # Si no es un request, respondemos que no hemos entendido el mensaje
-            gr = build_message(Graph(), ACL['not-understood'], sender=MostrarProductosAgente.uri, msgcnt=mss_cnt)
+            gr = build_message(Graph(), ACL['not-understood'], sender=AgenteMostrarProductos.uri, msgcnt=mss_cnt)
         else:
             # Extraemos el objeto del contenido que ha de ser una accion de la ontologia de acciones del agente
             # de registro
@@ -197,7 +197,7 @@ def comunicacion():
             # Por ahora simplemente retornamos un Inform-done
             gr = build_message(Graph(),
                 ACL['inform-done'],
-                sender=MostrarProductosAgente.uri,
+                sender=AgenteMostrarProductos.uri,
                 msgcnt=mss_cnt,
                 receiver=msgdic['sender'], )
     mss_cnt += 1
@@ -237,8 +237,7 @@ def agentbehavior1(cola):
             print(v)
 
             # Selfdestruct
-            # requests.get(MostrarProductosAgente.stop)
-
+            # requests.get(AgenteMostrarProductos.stop)
 
 if __name__ == '__main__':
     # Ponemos en marcha los behaviors

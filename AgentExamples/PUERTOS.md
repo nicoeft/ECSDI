@@ -1,2 +1,2 @@
 # Puertos utilizados
-- 9001 SimpleDirectoryService
+- 9000 SimpleDirectoryService
