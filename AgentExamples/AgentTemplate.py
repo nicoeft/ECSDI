@@ -17,18 +17,60 @@ Asume que el agente de registro esta en el puerto 9000
 from __future__ import print_function
 from multiprocessing import Process, Queue
 import socket
+import argparse
 
 from rdflib import Namespace, Graph
 from flask import Flask
 
 from AgentUtil.FlaskServer import shutdown_server
 from AgentUtil.Agent import Agent
+from AgentUtil.Logging import config_logger
+
 __author__ = 'javier'
 
+
+# Definimos los parametros de la linea de comandos
+parser = argparse.ArgumentParser()
+parser.add_argument('--open', help="Define si el servidor esta abierto al exterior o no", action='store_true',
+                    default=False)
+parser.add_argument('--port', type=int, help="Puerto de comunicacion del agente")
+parser.add_argument('--dhost', default='localhost', help="Host del agente de directorio")
+parser.add_argument('--dport', type=int, help="Puerto de comunicacion del agente de directorio")
+
+# Logging
+logger = config_logger(level=1)
 
 # Configuration stuff
 hostname = socket.gethostname()
 port = 9010
+
+# parsing de los parametros de la linea de comandos
+args = parser.parse_args()
+
+# Configuration stuff
+if args.port is None:
+    port = 9000
+else:
+    port = args.port
+
+if args.open is None:
+    hostname = '0.0.0.0'
+else:
+    hostname = "localhost"
+    # hostname = socket.gethostname()
+
+if args.dport is None:
+    dport = 9000
+else:
+    dport = args.dport
+
+    # dhostname = "localhost"
+if args.dhost is None:
+    dhostname = socket.gethostname()
+else:
+    dhostname = args.dhost
+
+
 
 agn = Namespace("http://www.agentes.org#")
 
