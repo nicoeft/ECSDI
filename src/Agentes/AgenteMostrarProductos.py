@@ -128,6 +128,28 @@ def register_message():
     return gr
 
 
+def getProducts(gr):
+    productsGraph = Graph()
+
+    subjectProducto = AM2['DVD']
+    productsGraph.add((subjectProducto, RDF.type, AM2.Producto))
+    productsGraph.add((subjectProducto, AM2.Nombre, Literal("DVD")))
+    productsGraph.add((subjectProducto, AM2.TipoProducto, Literal("Electronica")))
+
+    subjectProducto = AM2['Televisor']
+    productsGraph.add((subjectProducto, RDF.type, AM2.Producto))
+    productsGraph.add((subjectProducto, AM2.Nombre, Literal("Televisor")))
+    productsGraph.add((subjectProducto, AM2.TipoProducto, Literal("Electronica")))
+
+    subjectProducto = AM2['Camisa']
+    productsGraph.add((subjectProducto, RDF.type, AM2.Producto))
+    productsGraph.add((subjectProducto, AM2.Nombre, Literal("Camisa")))
+    productsGraph.add((subjectProducto, AM2.TipoProducto, Literal("Ropa")))
+
+    return productsGraph
+
+
+
 @app.route("/iface", methods=['GET', 'POST'])
 def browser_iface():
     """
@@ -171,8 +193,8 @@ def comunicacion():
     gm = Graph()
     gm.parse(data=message)
 
-    for s,p,o in gm:
-        logger.info('[-->]sujeto:%s | predicado: %s | objeto: %s', s, p,o)
+    # for s,p,o in gm:
+    #     logger.info('[-->]sujeto:%s | predicado: %s | objeto: %s', s, p,o)
     
     msgdic = get_message_properties(gm)
 
@@ -183,29 +205,30 @@ def comunicacion():
     else:
         # Obtenemos la performativa
         perf = msgdic['performative']
-        logger.info("OOOEOEOEOE %s", perf)
+        # logger.info("OOOEOEOEOE %s", perf)
         if perf != ACL.request:
-            logger.info("NOT UNDERSTOOD!")
+            # logger.info("NOT UNDERSTOOD!")
             # Si no es un request, respondemos que no hemos entendido el mensaje
             gr = build_message(Graph(), ACL['not-understood'], sender=AgenteMostrarProductos.uri, msgcnt=mss_cnt)
         else:
             # Extraemos el objeto del contenido que ha de ser una accion de la ontologia de acciones del agente
             # de registro
             # Averiguamos el tipo de la accion
-            logger.info("GOT this one %s", msgdic)
+            # logger.info("GOT this one %s", msgdic)
             if 'content' in msgdic:
                 content = msgdic['content']
                 accion = gm.value(subject=content, predicate=RDF.type)
-                logger.info("PPPPvPPPPPPPPP %s %s",accion, AM2.Peticion_productos_disponibles )
+                # logger.info("PPPPvPPPPPPPPP %s %s",accion, AM2.Peticion_productos_disponibles )
 
                 # Aqui realizariamos lo que pide la accion
                 if accion == AM2.Peticion_productos_disponibles:
-                    gr = build_message(Graph(),
+                    productsGraph = getProducts(gm)
+                    gr = build_message(productsGraph,
                         ACL['inform-done'],
                         sender=AgenteMostrarProductos.uri,
                         msgcnt=mss_cnt,
                         receiver=msgdic['sender'], )
-                    logger.info("AQUI!")
+                    # logger.info("AQUI!")
                 else:
                     gr = build_message(Graph(), ACL['not-understood'], sender=AgenteMostrarProductos.uri, msgcnt=mss_cnt)
             else:

@@ -117,8 +117,8 @@ def infoagent_search_message(addr, ragn_uri):
 
 
 
-    for s,p,o in gmess:
-        logger.info('[gmess] sujeto:%s | predicado: %s | objeto: %s', s, p,o)
+    # for s,p,o in gmess:
+    #     logger.info('[gmess] sujeto:%s | predicado: %s | objeto: %s', s, p,o)
 
     msg = build_message(gmess, perf=ACL.request,
                         sender=AgenteCliente.uri,
@@ -192,9 +192,12 @@ def agentbehavior1():
     # que esta en una supuesta ontologia de acciones de agentes
     gr = infoagent_search_message(AgenteMostrarProductos.address,AgenteMostrarProductos.uri)
 
-    for s,p,o in gr:
-        logger.info('sujeto:%s | predicado: %s | objeto: %s', s, p,o)
+    # for s,p,o in gr:
+    #     logger.info('sujeto:%s | predicado: %s | objeto: %s', s, p,o)
 
+    for s,p,o in gr.triples( (None,  RDF.type, AM2.Producto) ):
+        logger.info('Producto: sujeto:%s | predicado: %s | objeto: %s', s, p,o)
+        
     # gr2 = infoagent_search_message(AgenteMostrarProductos.address,AgenteMostrarProductos.uri)
     # gr3 = infoagent_search_message(AgenteMostrarProductos.address,AgenteMostrarProductos.uri)
     
