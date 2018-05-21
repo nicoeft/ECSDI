@@ -17,7 +17,7 @@ from flask import Flask, request
 from rdflib import Graph, Namespace, Literal
 from rdflib.namespace import FOAF, RDF
 
-from AgentUtil.OntoNamespaces import ACL, DSO, AM2
+from AgentUtil.OntoNamespaces import ACL, DSO, AM2, RESTRICTION
 from AgentUtil.FlaskServer import shutdown_server
 from AgentUtil.ACLMessages import build_message, send_message, get_message_properties
 from AgentUtil.Agent import Agent
@@ -88,6 +88,8 @@ dsgraph = Graph()
 # Cola de comunicacion entre procesos
 cola1 = Queue()
 
+# Productos
+products = Graph()
 
 def register_message():
     """
@@ -129,26 +131,57 @@ def register_message():
 
 
 def getProducts(gr):
+    global products
+
+    model = None
+    for s,p,o in gr.triples((None,RDF.type, AM2['Restriccion'])):
+        for s2,p2,o2 in gr.triples((s, AM2.tieneModelo, None)):
+            print('restricciones: %s | %s | %s'%(s2,p2,o2))
+            model = o2
+
     productsGraph = Graph()
 
-    subjectProducto = AM2['DVD']
-    productsGraph.add((subjectProducto, RDF.type, AM2.Producto))
-    productsGraph.add((subjectProducto, AM2.Nombre, Literal("DVD")))
-    productsGraph.add((subjectProducto, AM2.TipoProducto, Literal("Electronica")))
+    for s,p,o in products.triples((None,AM2.Modelo,model)):
+        # print ('--> %s %s %s'%(s,p,o))
+        for s2,p2,o2 in products.triples((s,None,None)):
+            productsGraph.add((s2,p2,o2))
 
-    subjectProducto = AM2['Televisor']
-    productsGraph.add((subjectProducto, RDF.type, AM2.Producto))
-    productsGraph.add((subjectProducto, AM2.Nombre, Literal("Televisor")))
-    productsGraph.add((subjectProducto, AM2.TipoProducto, Literal("Electronica")))
+    for s,p,o in productsGraph:
+        print ('kkkk -> %s %s %s'%(s,p,o))
+        productsGraph.add((s,p,o))
 
-    subjectProducto = AM2['Camisa']
-    productsGraph.add((subjectProducto, RDF.type, AM2.Producto))
-    productsGraph.add((subjectProducto, AM2.Nombre, Literal("Camisa")))
-    productsGraph.add((subjectProducto, AM2.TipoProducto, Literal("Ropa")))
+    # logger.info("EOO" + productsGraph)
 
     return productsGraph
 
+def initProducts():
+    global products
 
+    subjectProducto = AM2['DVD']
+    products.add((subjectProducto, RDF.type, AM2.Producto))
+    products.add((subjectProducto, AM2.Nombre, Literal("DVD")))
+    products.add((subjectProducto, AM2.TipoProducto, Literal("Electronica")))
+    products.add((subjectProducto, AM2.Precio, Literal(50)))
+
+    subjectProducto2 = AM2['Televisor']
+    products.add((subjectProducto2, RDF.type, AM2.Producto))
+    products.add((subjectProducto2, AM2.Nombre, Literal("Televisor")))
+    products.add((subjectProducto2, AM2.TipoProducto, Literal("Electronica")))
+    products.add((subjectProducto2, AM2.Precio, Literal(300)))
+    products.add((subjectProducto2, AM2.Modelo, Literal('E1234H')))
+
+    subjectProducto3 = AM2['Camisa']
+    products.add((subjectProducto3, RDF.type, AM2.Producto))
+    products.add((subjectProducto3, AM2.Nombre, Literal("Camisa")))
+    products.add((subjectProducto3, AM2.TipoProducto, Literal("Ropa")))
+    products.add((subjectProducto3, AM2.Precio, Literal(15)))
+
+    subjectProducto4 = AM2['Televisor']
+    products.add((subjectProducto4, RDF.type, AM2.Producto))
+    products.add((subjectProducto4, AM2.Nombre, Literal("Televisor")))
+    products.add((subjectProducto4, AM2.TipoProducto, Literal("Electronica")))
+    products.add((subjectProducto4, AM2.Modelo, Literal('H456K')))
+    return
 
 @app.route("/iface", methods=['GET', 'POST'])
 def browser_iface():
@@ -235,8 +268,8 @@ def comunicacion():
                 gr = build_message(Graph(), ACL['not-understood'], sender=AgenteMostrarProductos.uri, msgcnt=mss_cnt)
 
 
-    for s,p,o in gr:
-        logger.info('sujeto:%s | predicado: %s | objeto: %s', s, p,o)
+    # for s,p,o in gr:
+    #     print('sujeto:%s | predicado: %s | objeto: %s'%( s, p,o))
 
     mss_cnt += 1
     logger.info('Respondemos a la peticion')
@@ -276,6 +309,10 @@ def agentbehavior1(cola):
             # requests.get(AgenteMostrarProductos.stop)
 
 if __name__ == '__main__':
+
+    # Inicializacion de datos
+    initProducts()
+    
     # Ponemos en marcha los behaviors
     ab1 = Process(target=agentbehavior1, args=(cola1,))
     ab1.start()

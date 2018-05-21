@@ -40,3 +40,6 @@ DSO = Namespace('http://www.semanticweb.org/directory-service-ontology#')
 
 # Amazon2 Ontologia
 AM2 = Namespace('http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#')
+
+# Restricciones
+RESTRICTION = Namespace('http://www.semanticweb.org/alexh/ontologies/2018/4/restriccion#')

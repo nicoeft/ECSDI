@@ -22,7 +22,7 @@ from rdflib import Graph, Namespace, RDF, URIRef, Literal, XSD
 from rdflib.namespace import FOAF, RDF
 import requests
 
-from AgentUtil.OntoNamespaces import ACL, DSO, AM2
+from AgentUtil.OntoNamespaces import ACL, DSO, AM2, RESTRICTION
 from AgentUtil.FlaskServer import shutdown_server
 from AgentUtil.ACLMessages import build_message, send_message, directory_search_agent
 from AgentUtil.Agent import Agent
@@ -109,13 +109,12 @@ def infoagent_search_message(addr, ragn_uri):
     
     # Añadimos restriccion modelo
     sj_modelo = AM2['Modelo' + str(mss_cnt)] #creamos una instancia con nombre Modelo1
-    gmess.add((sj_modelo, RDF.type, AM2.Modelo)) # indicamos que es de tipo Modelo
+    gmess.add((sj_modelo, RDF.type, AM2['Restriccion'])) # indicamos que es de tipo Modelo
+    gmess.add((sj_modelo, RESTRICTION.tipoRestriccion, AM2['Restriccion_modelo'])) # indicamos que es de tipo Modelo
     gmess.add((sj_modelo, AM2.tieneModelo, Literal('E1234H'))) #le damos valor a su data property
     
     #añadimos el modelo al conenido con su object property
     gmess.add((sj_contenido, AM2.Restricciones_clientes, URIRef(sj_contenido))) 
-
-
 
     # for s,p,o in gmess:
     #     logger.info('[gmess] sujeto:%s | predicado: %s | objeto: %s', s, p,o)
@@ -196,8 +195,10 @@ def agentbehavior1():
     #     logger.info('sujeto:%s | predicado: %s | objeto: %s', s, p,o)
 
     for s,p,o in gr.triples( (None,  RDF.type, AM2.Producto) ):
-        logger.info('Producto: sujeto:%s | predicado: %s | objeto: %s', s, p,o)
-        
+        print('Producto: sujeto:%s | predicado: %s | objeto: %s'%( s, p,o))
+        for s2,p2,o2 in gr.triples((s,None,None)):
+            print ('Propiedades: %s | %s | %s'%( s2, p2, o2))
+
     # gr2 = infoagent_search_message(AgenteMostrarProductos.address,AgenteMostrarProductos.uri)
     # gr3 = infoagent_search_message(AgenteMostrarProductos.address,AgenteMostrarProductos.uri)
     
