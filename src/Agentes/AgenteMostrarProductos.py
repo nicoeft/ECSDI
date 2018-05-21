@@ -41,7 +41,7 @@ args = parser.parse_args()
 
 # Configuration stuff
 if args.port is None:
-    port = 90011
+    port = 9011
 else:
     port = args.port
 
@@ -147,7 +147,7 @@ def getProducts(gr):
             productsGraph.add((s2,p2,o2))
 
     for s,p,o in productsGraph:
-        print ('kkkk -> %s %s %s'%(s,p,o))
+        # print ('kkkk -> %s %s %s'%(s,p,o))
         productsGraph.add((s,p,o))
 
     # logger.info("EOO" + productsGraph)
