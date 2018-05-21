@@ -99,8 +99,6 @@ def infoagent_search_message(addr, ragn_uri):
     logger.info('Hacemos una peticion a AgenteMostrarProductos')
 
     gmess = Graph()
-
-   
     
     gmess.bind('foaf', FOAF)
     gmess.bind('am2', AM2)
@@ -116,9 +114,16 @@ def infoagent_search_message(addr, ragn_uri):
     
     #añadimos el modelo al conenido con su object property
     gmess.add((sj_contenido, AM2.Restricciones_clientes, URIRef(sj_contenido))) 
+
+
+
+    for s,p,o in gmess:
+        logger.info('[gmess] sujeto:%s | predicado: %s | objeto: %s', s, p,o)
+
     msg = build_message(gmess, perf=ACL.request,
                         sender=AgenteCliente.uri,
                         receiver=ragn_uri,
+                        content=sj_contenido,
                         msgcnt=mss_cnt)
     gr = send_message(msg, addr)
     mss_cnt += 1
@@ -185,9 +190,14 @@ def agentbehavior1():
 
     # Ahora mandamos un objeto de tipo request mandando una accion de tipo Search
     # que esta en una supuesta ontologia de acciones de agentes
-    infoagent_search_message(AgenteMostrarProductos.address,AgenteMostrarProductos.uri)
-    infoagent_search_message(AgenteMostrarProductos.address,AgenteMostrarProductos.uri)
-    infoagent_search_message(AgenteMostrarProductos.address,AgenteMostrarProductos.uri)
+    gr = infoagent_search_message(AgenteMostrarProductos.address,AgenteMostrarProductos.uri)
+
+    for s,p,o in gr:
+        logger.info('sujeto:%s | predicado: %s | objeto: %s', s, p,o)
+
+    # gr2 = infoagent_search_message(AgenteMostrarProductos.address,AgenteMostrarProductos.uri)
+    # gr3 = infoagent_search_message(AgenteMostrarProductos.address,AgenteMostrarProductos.uri)
+    
     
     # r = requests.get(ra_stop)
     # print r.text
