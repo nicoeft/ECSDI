@@ -201,6 +201,24 @@ def browser_busca():
                 gmess.add((sj_marca, RDF.type, AM2['Restricciones_cliente'])) 
                 gmess.add((sj_marca, AM2.marcaRestriccion, Literal(marca))) 
                 gmess.add((sj_contenido, AM2.Restricciones_clientes, URIRef(sj_marca)))
+            tipo = request.form['tipo']
+            if tipo:
+                sj_tipo = AM2['Tipo' + str(mss_cnt)]
+                gmess.add((sj_tipo, RDF.type, AM2['Restricciones_cliente'])) 
+                gmess.add((sj_tipo, AM2.tipoProductoRestriccion, Literal(tipo))) 
+                gmess.add((sj_contenido, AM2.Restricciones_clientes, URIRef(sj_tipo)))
+            modelo = request.form['modelo']
+            if modelo:
+                sj_modelo = AM2['Modelo' + str(mss_cnt)]
+                gmess.add((sj_modelo, RDF.type, AM2['Restricciones_cliente'])) 
+                gmess.add((sj_modelo, AM2.modeloRestriccion, Literal(modelo))) 
+                gmess.add((sj_contenido, AM2.Restricciones_clientes, URIRef(sj_modelo)))
+            precio = request.form['precio']
+            if precio:
+                sj_precio = AM2['Precio' + str(mss_cnt)]
+                gmess.add((sj_precio, RDF.type, AM2['Restricciones_cliente'])) 
+                gmess.add((sj_precio, AM2.precioMaxRestriccion, Literal(precio))) 
+                gmess.add((sj_contenido, AM2.Restricciones_clientes, URIRef(sj_precio)))
             
             mostrador = directory_search_agent(DSO.AgenteMostrarProductos,AgenteCliente,DirectoryAgent,mss_cnt)
             msg = build_message(gmess, perf=ACL.request,
@@ -223,6 +241,8 @@ def browser_busca():
                     subject_dict = product_list[subject_pos[s]]
                     if p == AM2.Modelo:
                         subject_dict['modelo'] = o
+                    elif p == AM2.Marca:
+                        subject_dict['marca'] = o
                     elif p == AM2.Nombre:
                         subject_dict['nombre'] = o
                     elif p == AM2.Precio:
@@ -292,12 +312,12 @@ def agentbehavior1():
 
     # Ahora mandamos un objeto de tipo request mandando una accion de tipo Search
     # que esta en una supuesta ontologia de acciones de agentes
-    gr_productos = infoagent_search_message(AgenteMostrarProductos.address,AgenteMostrarProductos.uri)
+    #gr_productos = infoagent_search_message(AgenteMostrarProductos.address,AgenteMostrarProductos.uri)
 
-    for s,p,o in gr_productos.triples( (None,  RDF.type, AM2.Producto) ):
-        print('Producto: sujeto:%s | predicado: %s | objeto: %s'%( s, p,o))
-        for s2,p2,o2 in gr_productos.triples((s,None,None)):
-            print ('Propiedades: %s | %s | %s'%( s2, p2, o2))
+    #for s,p,o in gr_productos.triples( (None,  RDF.type, AM2.Producto) ):
+      #  print('Producto: sujeto:%s | predicado: %s | objeto: %s'%( s, p,o))
+       # for s2,p2,o2 in gr_productos.triples((s,None,None)):
+        #    print ('Propiedades: %s | %s | %s'%( s2, p2, o2))
 
     # gr2 = infoagent_search_message(AgenteMostrarProductos.address,AgenteMostrarProductos.uri)
     # gr3 = infoagent_search_message(AgenteMostrarProductos.address,AgenteMostrarProductos.uri)

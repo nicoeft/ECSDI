@@ -138,6 +138,7 @@ def getProducts(gr):
     valoracion = None
     tipoProducto = None
     nombre = None
+    modelo = None
 
     for s,p,o in gr.triples((None,RDF.type, AM2['Restricciones_cliente'])):
         for s2,p2,o2 in gr.triples((s, AM2.marcaRestriccion, None)):
@@ -155,11 +156,15 @@ def getProducts(gr):
                 
         for s2,p2,o2 in gr.triples((s, AM2.tipoProductoRestriccion, None)):
             print('restricciones: %s | %s | %s'%(s2,p2,o2))
-            tipoProducto = Literal(o2+"")
+            tipoProducto = Literal(o2)
 
         for s2,p2,o2 in gr.triples((s, AM2.nombreRestriccion, None)):
             print('restricciones: %s | %s | %s'%(s2,p2,o2))
-            nombre = Literal(o2+"")
+            nombre = Literal(o2)
+
+        for s2,p2,o2 in gr.triples((s, AM2.modeloRestriccion, None)):
+            print('restricciones: %s | %s | %s'%(s2,p2,o2))
+            modelo = Literal(o2)
 
     productsGraph = products
 
@@ -177,6 +182,14 @@ def getProducts(gr):
             for s2,p2,o2 in products.triples((s,None,None)):
                 tipoProductoGraph.add((s2,p2,o2))
         productsGraph = productsGraph & tipoProductoGraph
+    
+    if modelo != None:
+        modeloGraph = Graph()
+        for s,p,o in products.triples((None,AM2.Modelo,modelo)):
+            #print ('--> %s %s %s'%(s,p,o))
+            for s2,p2,o2 in products.triples((s,None,None)):
+                modeloGraph.add((s2,p2,o2))
+        productsGraph = productsGraph & modeloGraph
     
     if nombre != None:
         print("EEeEUU")
@@ -223,9 +236,18 @@ def initProducts():
     subjectProducto4 = AM2['Televisor_2']
     products.add((subjectProducto4, RDF.type, AM2.Producto))
     products.add((subjectProducto4, AM2.Nombre, Literal('Televisor')))
+    products.add((subjectProducto4, AM2.Marca, Literal('LG')))
     products.add((subjectProducto4, AM2.TipoProducto, Literal("Electronica")))
     products.add((subjectProducto4, AM2.Precio, Literal(550)))
     products.add((subjectProducto4, AM2.Modelo, Literal('H456K')))
+
+    subjectProducto5 = AM2['Televisor_3']
+    products.add((subjectProducto5, RDF.type, AM2.Producto))
+    products.add((subjectProducto5, AM2.Nombre, Literal('Televisor')))
+    products.add((subjectProducto5, AM2.Marca, Literal('LG')))
+    products.add((subjectProducto5, AM2.TipoProducto, Literal("Electronica")))
+    products.add((subjectProducto5, AM2.Precio, Literal(750)))
+    products.add((subjectProducto5, AM2.Modelo, Literal('H456KHD')))
     return
 
 @app.route("/iface", methods=['GET', 'POST'])
