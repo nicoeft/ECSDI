@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Amazon 2 </title>
+</head>
+<body>
+    <h1>Cerca de productes</h1>
+    {% if not products %}
+        <form method="post">
+            <input type="text" name="nombre" placeholder="Nombre del producto"/><br>
+            <input type="text" name="tipo" placeholder="Tipo del producto"/><br>
+            <input type="text" name="modelo" placeholder="Modelo del producto"/><br>
+            <input type="text" name="precio"  placeholder="Precio del producto..."/><br>
+            <input type="submit" name="submit" value="Buscar">
+        </form>
+    {% else %}
+        <form method="post">
+            <table cellpadding="5px">
+                <tr>
+                    <th><b>NOMBRE</b></th>
+                    <th><b>TIPO</b></th>
+                    <th><b>MODELO</b></th>
+                    <th><b>PRECIO</b></th>
+                </tr>
+                {% for item in products %}
+                    <tr>
+                        <td>{{ item.nombre }}</td>
+                        <td>{{ item.tipo }}</td>
+                        <td>{{ item.modelo }}</td>
+                        <td>{{ item.precio }}</td>
+                        <td><input type="checkbox" name="checkbox" value="{{ products.index(item) }}"></td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <input type="submit" name="submit" value="Comprar">
+        </form>
+    {% endif %}
+</body>
+</html>

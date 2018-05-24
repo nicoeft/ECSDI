@@ -109,12 +109,11 @@ def infoagent_search_message(addr, ragn_uri):
     
     # Añadimos restriccion modelo
     sj_modelo = AM2['Modelo' + str(mss_cnt)] #creamos una instancia con nombre Modelo1
-    gmess.add((sj_modelo, RDF.type, AM2['Restriccion'])) # indicamos que es de tipo Modelo
-    gmess.add((sj_modelo, RESTRICTION.tipoRestriccion, AM2['Restriccion_modelo'])) # indicamos que es de tipo Modelo
-    gmess.add((sj_modelo, AM2.tieneModelo, Literal('E1234H'))) #le damos valor a su data property
+    gmess.add((sj_modelo, RDF.type, AM2['Restricciones_cliente'])) # indicamos que es de tipo Modelo
+    gmess.add((sj_modelo, AM2.modeloRestriccion, Literal('E1234H'))) #le damos valor a su data property
     
     #añadimos el modelo al conenido con su object property
-    gmess.add((sj_contenido, AM2.Restricciones_clientes, URIRef(sj_contenido))) 
+    gmess.add((sj_contenido, AM2.peticion_productos_disponibles, URIRef(sj_modelo))) 
 
     # for s,p,o in gmess:
     #     logger.info('[gmess] sujeto:%s | predicado: %s | objeto: %s', s, p,o)
@@ -170,6 +169,31 @@ def buy_products(addr, ragn_uri):
     return gr
 
 
+@app.route("/busca", methods=['GET', 'POST'])
+def browser_busca():
+    """
+    Permite la comunicacion con el agente via un navegador
+    via un formulario
+    """
+    if request.method == 'GET':
+        return render_template('busquedaYCompra.html', products=None)
+    elif request.method == 'POST':
+        # Hacer peticion de busqueda de productos con las restricciones del form
+        if request.form['submit'] == 'Buscar':
+            logger.info("Creando peticion de productos disponibles")
+            gmess = Graph()
+            # Creamos el sujeto -> contenido del mensaje
+            sj_contenido = agn[AgenteCliente.name + 'Peticion_productos_disponibles' + str(mss_cnt)]
+            #le damos un tipo
+            gmess.add((sj_contenido, RDF.type, AM2.Peticion_productos_disponibles))
+            modelo = request.form['modelo']
+            if modelo:
+                # Añadimos restriccion modelo
+                sj_modelo = AM2['Modelo' + str(mss_cnt)] #creamos una instancia con nombre Modelo1..2.
+                gmess.add((sj_modelo, RDF.type, AM2['Restriccion'])) # indicamos que es de tipo Modelo
+                gmess.add((sj_modelo, RESTRICTION.tipoRestriccion, AM2['Restriccion_modelo'])) # indicamos que es de tipo Modelo
+                gmess.add((sj_modelo, AM2.tieneModelo, Literal(modelo, datatype=XSD.string))) #le damos valor a su data property
+
 @app.route("/iface", methods=['GET', 'POST'])
 def browser_iface():
     """
@@ -202,6 +226,7 @@ def comunicacion():
     Entrypoint de comunicacion del agente
     """
     return "Hola"
+
 
 
 def tidyup():
@@ -248,7 +273,7 @@ def agentbehavior1():
     # print r.text
 
     # Selfdestruct
-    requests.get(AgenteCliente.stop)
+    #requests.get(AgenteCliente.stop)
 
 
 if __name__ == '__main__':

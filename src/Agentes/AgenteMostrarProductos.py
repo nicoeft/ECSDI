@@ -134,7 +134,7 @@ def getProducts(gr):
     global products
 
     model = None
-    for s,p,o in gr.triples((None,RDF.type, AM2['Restriccion'])):
+    for s,p,o in gr.triples((None,RDF.type, AM2['Restricciones_cliente'])):
         for s2,p2,o2 in gr.triples((s, AM2.tieneModelo, None)):
             print('restricciones: %s | %s | %s'%(s2,p2,o2))
             model = o2
@@ -142,13 +142,13 @@ def getProducts(gr):
     productsGraph = Graph()
 
     for s,p,o in products.triples((None,AM2.Modelo,model)):
-        # print ('--> %s %s %s'%(s,p,o))
+        #print ('--> %s %s %s'%(s,p,o))
         for s2,p2,o2 in products.triples((s,None,None)):
             productsGraph.add((s2,p2,o2))
 
-    for s,p,o in productsGraph:
+    #for s,p,o in productsGraph:
         # print ('kkkk -> %s %s %s'%(s,p,o))
-        productsGraph.add((s,p,o))
+        #productsGraph.add((s,p,o))
 
     # logger.info("EOO" + productsGraph)
 
