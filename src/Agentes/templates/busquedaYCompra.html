@@ -12,6 +12,7 @@
             <input type="text" name="tipo" placeholder="Tipo del producto"/><br>
             <input type="text" name="modelo" placeholder="Modelo del producto"/><br>
             <input type="text" name="precio"  placeholder="Precio del producto..."/><br>
+            <input type="text" name="marca"  placeholder="Marca del producto..."/><br>
             <input type="submit" name="submit" value="Buscar">
         </form>
     {% else %}
@@ -20,6 +21,7 @@
                 <tr>
                     <th><b>NOMBRE</b></th>
                     <th><b>TIPO</b></th>
+                    <th><b>MARCA</b></th>
                     <th><b>MODELO</b></th>
                     <th><b>PRECIO</b></th>
                 </tr>
@@ -27,6 +29,7 @@
                     <tr>
                         <td>{{ item.nombre }}</td>
                         <td>{{ item.tipo }}</td>
+                        <td>{{ item.marca }}</td>
                         <td>{{ item.modelo }}</td>
                         <td>{{ item.precio }}</td>
                         <td><input type="checkbox" name="checkbox" value="{{ products.index(item) }}"></td>

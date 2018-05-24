@@ -187,16 +187,20 @@ def browser_busca():
             sj_contenido = agn[AgenteCliente.name + 'Peticion_productos_disponibles' + str(mss_cnt)]
             #le damos un tipo
             gmess.add((sj_contenido, RDF.type, AM2.Peticion_productos_disponibles))
+            #Añadimos restricciones
             nombre = request.form['nombre']
             if nombre:
-                # Añadimos restriccion modelo
-                logger.info("Añadimos restriccion Nombre")
-                print(nombre)
                 sj_nombre = AM2['Nombre' + str(mss_cnt)] #creamos una instancia con nombre Modelo1..2.
                 gmess.add((sj_nombre, RDF.type, AM2['Restricciones_cliente'])) # indicamos que es de tipo Modelo
                 gmess.add((sj_nombre, AM2.nombreRestriccion, Literal(nombre))) #le damos valor a su data property
                 #añadimos el modelo al conenido con su object property
                 gmess.add((sj_contenido, AM2.Restricciones_clientes, URIRef(sj_nombre)))
+            marca = request.form['marca']
+            if marca:
+                sj_marca = AM2['Marca' + str(mss_cnt)]
+                gmess.add((sj_marca, RDF.type, AM2['Restricciones_cliente'])) 
+                gmess.add((sj_marca, AM2.marcaRestriccion, Literal(marca))) 
+                gmess.add((sj_contenido, AM2.Restricciones_clientes, URIRef(sj_marca)))
             
             mostrador = directory_search_agent(DSO.AgenteMostrarProductos,AgenteCliente,DirectoryAgent,mss_cnt)
             msg = build_message(gmess, perf=ACL.request,
