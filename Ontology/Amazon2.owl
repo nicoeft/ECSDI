@@ -40,13 +40,19 @@
         <ObjectProperty IRI="#enviaLote"/>
     </Declaration>
     <Declaration>
+        <DataProperty IRI="#Marca"/>
+    </Declaration>
+    <Declaration>
         <ObjectProperty IRI="#recomienda"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Confirmacion_envio"/>
     </Declaration>
     <Declaration>
         <ObjectProperty IRI="#nuevaCompraContiene"/>
     </Declaration>
     <Declaration>
-        <Class IRI="#Confirmacion_envio"/>
+        <DataProperty IRI="#TipoProducto"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Pedido"/>
@@ -73,10 +79,10 @@
         <ObjectProperty IRI="#tieneRestriccion"/>
     </Declaration>
     <Declaration>
-        <ObjectProperty IRI="#cumpleRestriccion"/>
+        <Class IRI="#Recomendacion"/>
     </Declaration>
     <Declaration>
-        <Class IRI="#Recomendacion"/>
+        <ObjectProperty IRI="#cumpleRestriccion"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Peticion_productos_disponibles"/>
@@ -94,10 +100,10 @@
         <ObjectProperty IRI="#realizaEnvioPedido"/>
     </Declaration>
     <Declaration>
-        <Class IRI="#Realiza_envio"/>
+        <DataProperty IRI="#Email"/>
     </Declaration>
     <Declaration>
-        <DataProperty IRI="#Email"/>
+        <Class IRI="#Realiza_envio"/>
     </Declaration>
     <Declaration>
         <ObjectProperty IRI="#esProcesadoPorExt"/>
@@ -106,10 +112,10 @@
         <Class IRI="#Mensaje"/>
     </Declaration>
     <Declaration>
-        <Class IRI="#Contraoferta"/>
+        <Class IRI="#Confirmacion_envio_externo"/>
     </Declaration>
     <Declaration>
-        <Class IRI="#Confirmacion_envio_externo"/>
+        <Class IRI="#Contraoferta"/>
     </Declaration>
     <Declaration>
         <ObjectProperty IRI="#resultadoDevolucion"/>
@@ -136,6 +142,9 @@
         <Class IRI="#Restricciones_cliente"/>
     </Declaration>
     <Declaration>
+        <DataProperty IRI="#Nombre"/>
+    </Declaration>
+    <Declaration>
         <DataProperty IRI="#precioTotal"/>
     </Declaration>
     <Declaration>
@@ -157,10 +166,10 @@
         <Class IRI="#Envio"/>
     </Declaration>
     <Declaration>
-        <ObjectProperty IRI="#recibeOferta"/>
+        <Class IRI="#Envio_externo"/>
     </Declaration>
     <Declaration>
-        <Class IRI="#Envio_externo"/>
+        <ObjectProperty IRI="#recibeOferta"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Producto_devuelto"/>
@@ -181,10 +190,13 @@
         <Class IRI="#Razon_devolucion"/>
     </Declaration>
     <Declaration>
-        <ObjectProperty IRI="#peticionDevolucionTiene"/>
+        <DataProperty IRI="#Modelo"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Ingresar_dinero_vendedor_externo"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#peticionDevolucionTiene"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Enviar_recomendacion"/>
@@ -208,10 +220,10 @@
         <Class IRI="#Centro_logistico"/>
     </Declaration>
     <Declaration>
-        <Class IRI="#Emitir_factura"/>
+        <Class IRI="#Producto"/>
     </Declaration>
     <Declaration>
-        <Class IRI="#Producto"/>
+        <Class IRI="#Emitir_factura"/>
     </Declaration>
     <Declaration>
         <ObjectProperty IRI="#esProcesadoPor"/>
@@ -256,6 +268,9 @@
         <Class IRI="#Toca_enviar_recomendacion"/>
     </Declaration>
     <Declaration>
+        <DataProperty IRI="#Precio"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#Solicitud_envio"/>
     </Declaration>
     <Declaration>
@@ -271,10 +286,10 @@
         <ObjectProperty IRI="#enviaRecomendacion"/>
     </Declaration>
     <Declaration>
-        <Class IRI="#Cliente"/>
+        <Class IRI="#Almacen"/>
     </Declaration>
     <Declaration>
-        <Class IRI="#Almacen"/>
+        <Class IRI="#Cliente"/>
     </Declaration>
     <Declaration>
         <ObjectProperty IRI="#pedidoDestinadoA"/>
@@ -283,10 +298,10 @@
         <Class IRI="#Ropa"/>
     </Declaration>
     <Declaration>
-        <Class IRI="#Devolucion_denegada"/>
+        <Class IRI="#Lote"/>
     </Declaration>
     <Declaration>
-        <Class IRI="#Lote"/>
+        <Class IRI="#Devolucion_denegada"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Precios_envio"/>
@@ -296,9 +311,6 @@
     </Declaration>
     <Declaration>
         <Class IRI="#Informacion_productos_disponibles"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="#plazoEntregaRestriccion"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Devolver_dinero_cliente"/>
@@ -765,6 +777,26 @@
         <Class IRI="#Vendedor"/>
     </DataPropertyDomain>
     <DataPropertyDomain>
+        <DataProperty IRI="#Marca"/>
+        <Class IRI="#Producto"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Modelo"/>
+        <Class IRI="#Producto"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Nombre"/>
+        <Class IRI="#Producto"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Precio"/>
+        <Class IRI="#Producto"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#TipoProducto"/>
+        <Class IRI="#Producto"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
         <DataProperty IRI="#fechaPedido"/>
         <Class IRI="#Pedido"/>
     </DataPropertyDomain>
@@ -779,10 +811,6 @@
     <DataPropertyDomain>
         <DataProperty IRI="#motivo"/>
         <Class IRI="#Razon_devolucion"/>
-    </DataPropertyDomain>
-    <DataPropertyDomain>
-        <DataProperty IRI="#plazoEntregaRestriccion"/>
-        <Class IRI="#Restricciones_cliente"/>
     </DataPropertyDomain>
     <DataPropertyDomain>
         <DataProperty IRI="#precioMaxRestriccion"/>
@@ -805,6 +833,26 @@
         <Datatype abbreviatedIRI="xsd:string"/>
     </DataPropertyRange>
     <DataPropertyRange>
+        <DataProperty IRI="#Marca"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#Modelo"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#Nombre"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#Precio"/>
+        <Datatype abbreviatedIRI="xsd:double"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#TipoProducto"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
         <DataProperty IRI="#fechaPedido"/>
         <Datatype abbreviatedIRI="xsd:dateTime"/>
     </DataPropertyRange>
@@ -819,10 +867,6 @@
     <DataPropertyRange>
         <DataProperty IRI="#motivo"/>
         <Datatype abbreviatedIRI="xsd:string"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty IRI="#plazoEntregaRestriccion"/>
-        <Datatype abbreviatedIRI="xsd:positiveInteger"/>
     </DataPropertyRange>
     <DataPropertyRange>
         <DataProperty IRI="#precioMaxRestriccion"/>

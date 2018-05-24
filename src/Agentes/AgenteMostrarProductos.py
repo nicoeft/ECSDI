@@ -134,10 +134,31 @@ def getProducts(gr):
     global products
 
     model = None
+    marca = None
+    precioMax = None
+    valoracion = None
+    tipoProducto = None
+
     for s,p,o in gr.triples((None,RDF.type, AM2['Restricciones_cliente'])):
-        for s2,p2,o2 in gr.triples((s, AM2.tieneModelo, None)):
+        for s2,p2,o2 in gr.triples((s, AM2.modeloRestriccion, None)):
             print('restricciones: %s | %s | %s'%(s2,p2,o2))
             model = o2
+        
+        for s2,p2,o2 in gr.triples((s, AM2.marcaRestriccion, None)):
+            print('restricciones: %s | %s | %s'%(s2,p2,o2))
+            marca = o2
+            
+        for s2,p2,o2 in gr.triples((s, AM2.precioMaxRestriccion, None)):
+            print('restricciones: %s | %s | %s'%(s2,p2,o2))
+            precioMax = o2
+        
+        for s2,p2,o2 in gr.triples((s, AM2.valoracionRestriccion, None)):
+            print('restricciones: %s | %s | %s'%(s2,p2,o2))
+            valoracion = o2
+                
+        for s2,p2,o2 in gr.triples((s, AM2.tipoRestriccion, None)):
+            print('restricciones: %s | %s | %s'%(s2,p2,o2))
+            tipoProducto = o2
 
     productsGraph = Graph()
 
