@@ -142,7 +142,7 @@ def getProducts(gr):
     for s,p,o in gr.triples((None,RDF.type, AM2['Restricciones_cliente'])):
         for s2,p2,o2 in gr.triples((s, AM2.marcaRestriccion, None)):
             print('restricciones: %s | %s | %s'%(s2,p2,o2))
-            marca = Literal(o2+"")
+            marca = Literal(o2)
             
         for s2,p2,o2 in gr.triples((s, AM2.precioMaxRestriccion, None)):
             print('restricciones: %s | %s | %s'%(s2,p2,o2))

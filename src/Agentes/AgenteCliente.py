@@ -194,7 +194,7 @@ def browser_busca():
                 print(nombre)
                 sj_nombre = AM2['Nombre' + str(mss_cnt)] #creamos una instancia con nombre Modelo1..2.
                 gmess.add((sj_nombre, RDF.type, AM2['Restricciones_cliente'])) # indicamos que es de tipo Modelo
-                gmess.add((sj_nombre, AM2.nombreRestriccion, Literal(nombre, datatype=XSD.string))) #le damos valor a su data property
+                gmess.add((sj_nombre, AM2.nombreRestriccion, Literal(nombre))) #le damos valor a su data property
                 #añadimos el modelo al conenido con su object property
                 gmess.add((sj_contenido, AM2.Restricciones_clientes, URIRef(sj_nombre)))
             
