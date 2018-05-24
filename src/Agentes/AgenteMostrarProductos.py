@@ -133,17 +133,13 @@ def register_message():
 def getProducts(gr):
     global products
 
-    model = None
     marca = None
     precioMax = None
     valoracion = None
     tipoProducto = None
+    nombre = None
 
     for s,p,o in gr.triples((None,RDF.type, AM2['Restricciones_cliente'])):
-        for s2,p2,o2 in gr.triples((s, AM2.modeloRestriccion, None)):
-            print('restricciones: %s | %s | %s'%(s2,p2,o2))
-            model = o2
-        
         for s2,p2,o2 in gr.triples((s, AM2.marcaRestriccion, None)):
             print('restricciones: %s | %s | %s'%(s2,p2,o2))
             marca = o2
@@ -156,16 +152,37 @@ def getProducts(gr):
             print('restricciones: %s | %s | %s'%(s2,p2,o2))
             valoracion = o2
                 
-        for s2,p2,o2 in gr.triples((s, AM2.tipoRestriccion, None)):
+        for s2,p2,o2 in gr.triples((s, AM2.tipoProductoRestriccion, None)):
             print('restricciones: %s | %s | %s'%(s2,p2,o2))
             tipoProducto = o2
 
-    productsGraph = Graph()
+        for s2,p2,o2 in gr.triples((s, AM2.nombreRestriccion, None)):
+            print('restricciones: %s | %s | %s'%(s2,p2,o2))
+            nombre = o2
 
-    for s,p,o in products.triples((None,AM2.Modelo,model)):
-        #print ('--> %s %s %s'%(s,p,o))
-        for s2,p2,o2 in products.triples((s,None,None)):
-            productsGraph.add((s2,p2,o2))
+    productsGraph = products
+
+    if marca != None:
+        marcaGraph = Graph()
+        for s,p,o in products.triples((None,AM2.Marca,marca)):
+            #print ('--> %s %s %s'%(s,p,o))
+            for s2,p2,o2 in products.triples((s,None,None)):
+                marcaGraph.add((s2,p2,o2))
+        productsGraph = productsGraph & marcaGraph
+    
+    if tipoProducto != None:
+        tipoProductoGraph = Graph()
+        for s,p,o in products.triples((None,AM2.TipoProducto,tipoProducto)):
+            for s2,p2,o2 in products.triples((s,None,None)):
+                tipoProductoGraph.add((s2,p2,o2))
+        productsGraph = productsGraph & tipoProductoGraph
+    
+    if nombre != None:
+        nombreGraph = Graph()
+        for s,p,o in products.triples((None,AM2.Nombre,nombre)):
+            for s2,p2,o2 in products.triples((s,None,None)):
+                nombreGraph.add((s2,p2,o2))
+        productsGraph = productsGraph & nombreGraph
 
     #for s,p,o in productsGraph:
         # print ('kkkk -> %s %s %s'%(s,p,o))
