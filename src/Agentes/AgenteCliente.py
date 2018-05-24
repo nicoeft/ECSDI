@@ -171,6 +171,7 @@ def buy_products(addr, ragn_uri):
 
 @app.route("/busca", methods=['GET', 'POST'])
 def browser_busca():
+    global mss_cnt
     """
     Permite la comunicacion con el agente via un navegador
     via un formulario
@@ -189,10 +190,43 @@ def browser_busca():
             modelo = request.form['modelo']
             if modelo:
                 # Añadimos restriccion modelo
+                logger.info("Añadimos restriccion Modelo")
                 sj_modelo = AM2['Modelo' + str(mss_cnt)] #creamos una instancia con nombre Modelo1..2.
-                gmess.add((sj_modelo, RDF.type, AM2['Restriccion'])) # indicamos que es de tipo Modelo
-                gmess.add((sj_modelo, RESTRICTION.tipoRestriccion, AM2['Restriccion_modelo'])) # indicamos que es de tipo Modelo
+                gmess.add((sj_modelo, RDF.type, AM2['Restricciones_cliente'])) # indicamos que es de tipo Modelo
                 gmess.add((sj_modelo, AM2.tieneModelo, Literal(modelo, datatype=XSD.string))) #le damos valor a su data property
+                #añadimos el modelo al conenido con su object property
+                gmess.add((sj_contenido, AM2.Restricciones_clientes, URIRef(sj_contenido)))
+            
+            mostrador = directory_search_agent(DSO.AgenteMostrarProductos,AgenteCliente,DirectoryAgent,mss_cnt)
+            msg = build_message(gmess, perf=ACL.request,
+                        sender=AgenteCliente.uri,
+                        receiver=mostrador.uri,
+                        content=sj_contenido,
+                        msgcnt=mss_cnt)
+            gr = send_message(msg, mostrador.address)
+            mss_cnt += 1
+            logger.info('Recibimos respuesta a la peticion al servicio de informacion')
+            index = 0
+            subject_pos = {}
+            product_list = []
+            for s, p, o in gr:
+                if s not in subject_pos:
+                    subject_pos[s] = index
+                    product_list.append({})
+                    index += 1
+                if s in subject_pos:
+                    subject_dict = product_list[subject_pos[s]]
+                    if p == AM2.Modelo:
+                        subject_dict['modelo'] = o
+                    elif p == AM2.Nombre:
+                        subject_dict['nombre'] = o
+                    elif p == AM2.Precio:
+                        subject_dict['precio'] = o
+                    elif p == AM2.TipoProducto:
+                        subject_dict['tipo'] = o
+                    product_list[subject_pos[s]] = subject_dict
+
+            return render_template('busquedaYCompra.html', products=product_list)
 
 @app.route("/iface", methods=['GET', 'POST'])
 def browser_iface():

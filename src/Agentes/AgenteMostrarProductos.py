@@ -218,6 +218,7 @@ def initProducts():
     products.add((subjectProducto4, RDF.type, AM2.Producto))
     products.add((subjectProducto4, AM2.Nombre, Literal("Televisor")))
     products.add((subjectProducto4, AM2.TipoProducto, Literal("Electronica")))
+    products.add((subjectProducto4, AM2.Precio, Literal(550)))
     products.add((subjectProducto4, AM2.Modelo, Literal('H456K')))
     return
 
