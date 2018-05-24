@@ -163,7 +163,7 @@ def initProducts():
     products.add((subjectProducto, AM2.TipoProducto, Literal("Electronica")))
     products.add((subjectProducto, AM2.Precio, Literal(50)))
 
-    subjectProducto2 = AM2['Televisor']
+    subjectProducto2 = AM2['Televisor_1']
     products.add((subjectProducto2, RDF.type, AM2.Producto))
     products.add((subjectProducto2, AM2.Nombre, Literal("Televisor")))
     products.add((subjectProducto2, AM2.TipoProducto, Literal("Electronica")))
@@ -176,7 +176,7 @@ def initProducts():
     products.add((subjectProducto3, AM2.TipoProducto, Literal("Ropa")))
     products.add((subjectProducto3, AM2.Precio, Literal(15)))
 
-    subjectProducto4 = AM2['Televisor']
+    subjectProducto4 = AM2['Televisor_2']
     products.add((subjectProducto4, RDF.type, AM2.Producto))
     products.add((subjectProducto4, AM2.Nombre, Literal("Televisor")))
     products.add((subjectProducto4, AM2.TipoProducto, Literal("Electronica")))

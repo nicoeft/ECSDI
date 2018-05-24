@@ -130,6 +130,45 @@ def infoagent_search_message(addr, ragn_uri):
 
     return gr
 
+def buy_products(addr, ragn_uri):
+    """
+    Envia una accion a un agente de informacion
+    """
+    global mss_cnt
+    logger.info('Hacemos una peticion a AgenteMostrarProductos')
+
+    gmess = Graph()
+    
+    gmess.bind('foaf', FOAF)
+    gmess.bind('am2', AM2)
+     # Creamos el sujeto -> contenido del mensaje
+    sj_contenido = agn[AgenteCliente.name + 'Peticion_productos_disponibles' + str(mss_cnt)]
+    #le damos un tipo
+    gmess.add((sj_contenido, RDF.type, AM2.Peticion_productos_disponibles))
+    
+    # Añadimos restriccion modelo
+    sj_modelo = AM2['Modelo' + str(mss_cnt)] #creamos una instancia con nombre Modelo1
+    gmess.add((sj_modelo, RDF.type, AM2['Restriccion'])) # indicamos que es de tipo Modelo
+    gmess.add((sj_modelo, RESTRICTION.tipoRestriccion, AM2['Restriccion_modelo'])) # indicamos que es de tipo Modelo
+    gmess.add((sj_modelo, AM2.tieneModelo, Literal('E1234H'))) #le damos valor a su data property
+    
+    #añadimos el modelo al conenido con su object property
+    gmess.add((sj_contenido, AM2.Restricciones_clientes, URIRef(sj_contenido))) 
+
+    # for s,p,o in gmess:
+    #     logger.info('[gmess] sujeto:%s | predicado: %s | objeto: %s', s, p,o)
+
+    msg = build_message(gmess, perf=ACL.request,
+                        sender=AgenteCliente.uri,
+                        receiver=ragn_uri,
+                        content=sj_contenido,
+                        msgcnt=mss_cnt)
+    gr = send_message(msg, addr)
+    mss_cnt += 1
+    logger.info('Recibimos respuesta a la peticion al servicio de informacion')
+
+    return gr
+
 
 @app.route("/iface", methods=['GET', 'POST'])
 def browser_iface():
@@ -189,20 +228,22 @@ def agentbehavior1():
 
     # Ahora mandamos un objeto de tipo request mandando una accion de tipo Search
     # que esta en una supuesta ontologia de acciones de agentes
-    gr = infoagent_search_message(AgenteMostrarProductos.address,AgenteMostrarProductos.uri)
+    gr_productos = infoagent_search_message(AgenteMostrarProductos.address,AgenteMostrarProductos.uri)
 
-    # for s,p,o in gr:
-    #     logger.info('sujeto:%s | predicado: %s | objeto: %s', s, p,o)
-
-    for s,p,o in gr.triples( (None,  RDF.type, AM2.Producto) ):
+    for s,p,o in gr_productos.triples( (None,  RDF.type, AM2.Producto) ):
         print('Producto: sujeto:%s | predicado: %s | objeto: %s'%( s, p,o))
-        for s2,p2,o2 in gr.triples((s,None,None)):
+        for s2,p2,o2 in gr_productos.triples((s,None,None)):
             print ('Propiedades: %s | %s | %s'%( s2, p2, o2))
 
     # gr2 = infoagent_search_message(AgenteMostrarProductos.address,AgenteMostrarProductos.uri)
     # gr3 = infoagent_search_message(AgenteMostrarProductos.address,AgenteMostrarProductos.uri)
     
-    
+    # AgenteVentaProductos = directory_search_agent(DSO.AgenteVentaProductos,AgenteCliente,DirectoryAgent,mss_cnt)
+    # gr_compra = buy_products(AgenteVentaProductos.address,AgenteVentaProductos.uri)
+
+
+    # for s,p,o in gr_compra:
+    #     print('Respuesta compra producto: sujeto:%s | predicado: %s | objeto: %s'%(s,p,o))
     # r = requests.get(ra_stop)
     # print r.text
 

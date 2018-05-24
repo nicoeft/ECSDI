@@ -21,7 +21,7 @@ import argparse
 
 from rdflib import Namespace, Graph,Literal
 from rdflib.namespace import FOAF, RDF
-from flask import Flask
+from flask import Flask, request
 
 from AgentUtil.OntoNamespaces import ACL, DSO, AM2, RESTRICTION
 from AgentUtil.ACLMessages import build_message, send_message, get_message_properties
@@ -146,7 +146,63 @@ def comunicacion():
     global dsgraph
     global mss_cnt
     # TODO: quitar el pass y hacer la funcion
-    pass
+
+    logger.info('Peticion de Compra')
+
+    # Extraemos el mensaje y creamos un grafo con el
+    message = request.args['content']
+    gm = Graph()
+    gm.parse(data=message)
+
+    # for s,p,o in gm:
+    #     logger.info('[-->]sujeto:%s | predicado: %s | objeto: %s', s, p,o)
+    
+    msgdic = get_message_properties(gm)
+
+    # Comprobamos que sea un mensaje FIPA ACL
+    if msgdic is None:
+        # Si no es, respondemos que no hemos entendido el mensaje
+        gr = build_message(Graph(), ACL['not-understood'], sender=AgenteVentaProductos.uri, msgcnt=mss_cnt)
+    else:
+        # Obtenemos la performativa
+        perf = msgdic['performative']
+        # logger.info("OOOEOEOEOE %s", perf)
+        if perf != ACL.request:
+            # logger.info("NOT UNDERSTOOD!")
+            # Si no es un request, respondemos que no hemos entendido el mensaje
+            gr = build_message(Graph(), ACL['not-understood'], sender=AgenteVentaProductos.uri, msgcnt=mss_cnt)
+        else:
+            # Extraemos el objeto del contenido que ha de ser una accion de la ontologia de acciones del agente
+            # de registro
+            # Averiguamos el tipo de la accion
+            # logger.info("GOT this one %s", msgdic)
+            if 'content' in msgdic:
+                content = msgdic['content']
+                accion = gm.value(subject=content, predicate=RDF.type)
+                # logger.info("PPPPvPPPPPPPPP %s %s",accion, AM2.Peticion_productos_disponibles )
+
+                # Aqui realizariamos lo que pide la accion
+                if accion == AM2.Peticion_Compra:
+                    print('peticion de compra')
+                    # productsGraph = getProducts(gm)
+                    gr = build_message(Graph(),
+                        ACL['inform-done'],
+                        sender=AgenteVentaProductos.uri,
+                        msgcnt=mss_cnt,
+                        receiver=msgdic['sender'], )
+                    logger.info("AQUI!")
+                else:
+                    gr = build_message(Graph(), ACL['not-understood'], sender=AgenteVentaProductos.uri, msgcnt=mss_cnt)
+            else:
+                gr = build_message(Graph(), ACL['not-understood'], sender=AgenteVentaProductos.uri, msgcnt=mss_cnt)
+
+
+    # for s,p,o in gr:
+    #     print('sujeto:%s | predicado: %s | objeto: %s'%( s, p,o))
+
+    mss_cnt += 1
+    logger.info('Respondemos a la peticion')
+    return gr.serialize(format='xml')
 
 
 @app.route("/Stop")
