@@ -181,77 +181,104 @@ def browser_busca():
     elif request.method == 'POST':
         # Hacer peticion de busqueda de productos con las restricciones del form
         if request.form['submit'] == 'Buscar':
-            logger.info("Creando peticion de productos disponibles")
-            gmess = Graph()
-            # Creamos el sujeto -> contenido del mensaje
-            sj_contenido = agn[AgenteCliente.name + 'Peticion_productos_disponibles' + str(mss_cnt)]
-            #le damos un tipo
-            gmess.add((sj_contenido, RDF.type, AM2.Peticion_productos_disponibles))
-            #Añadimos restricciones
-            nombre = request.form['nombre']
-            if nombre:
-                sj_nombre = AM2['Nombre' + str(mss_cnt)] #creamos una instancia con nombre Modelo1..2.
-                gmess.add((sj_nombre, RDF.type, AM2['Restricciones_cliente'])) # indicamos que es de tipo Modelo
-                gmess.add((sj_nombre, AM2.nombreRestriccion, Literal(nombre))) #le damos valor a su data property
-                #añadimos el modelo al conenido con su object property
-                gmess.add((sj_contenido, AM2.Restricciones_clientes, URIRef(sj_nombre)))
-            marca = request.form['marca']
-            if marca:
-                sj_marca = AM2['Marca' + str(mss_cnt)]
-                gmess.add((sj_marca, RDF.type, AM2['Restricciones_cliente'])) 
-                gmess.add((sj_marca, AM2.marcaRestriccion, Literal(marca))) 
-                gmess.add((sj_contenido, AM2.Restricciones_clientes, URIRef(sj_marca)))
-            tipo = request.form['tipo']
-            if tipo:
-                sj_tipo = AM2['Tipo' + str(mss_cnt)]
-                gmess.add((sj_tipo, RDF.type, AM2['Restricciones_cliente'])) 
-                gmess.add((sj_tipo, AM2.tipoProductoRestriccion, Literal(tipo))) 
-                gmess.add((sj_contenido, AM2.Restricciones_clientes, URIRef(sj_tipo)))
-            modelo = request.form['modelo']
-            if modelo:
-                sj_modelo = AM2['Modelo' + str(mss_cnt)]
-                gmess.add((sj_modelo, RDF.type, AM2['Restricciones_cliente'])) 
-                gmess.add((sj_modelo, AM2.modeloRestriccion, Literal(modelo))) 
-                gmess.add((sj_contenido, AM2.Restricciones_clientes, URIRef(sj_modelo)))
-            precio = request.form['precio']
-            if precio:
-                sj_precio = AM2['Precio' + str(mss_cnt)]
-                gmess.add((sj_precio, RDF.type, AM2['Restricciones_cliente'])) 
-                gmess.add((sj_precio, AM2.precioMaxRestriccion, Literal(precio))) 
-                gmess.add((sj_contenido, AM2.Restricciones_clientes, URIRef(sj_precio)))
-            
-            mostrador = directory_search_agent(DSO.AgenteMostrarProductos,AgenteCliente,DirectoryAgent,mss_cnt)
-            msg = build_message(gmess, perf=ACL.request,
-                        sender=AgenteCliente.uri,
-                        receiver=mostrador.uri,
-                        content=sj_contenido,
-                        msgcnt=mss_cnt)
-            gr = send_message(msg, mostrador.address)
-            mss_cnt += 1
-            logger.info('Recibimos respuesta a la peticion al servicio de informacion')
-            index = 0
-            subject_pos = {}
-            product_list = []
-            for s, p, o in gr:
-                if s not in subject_pos:
-                    subject_pos[s] = index
-                    product_list.append({})
-                    index += 1
-                if s in subject_pos:
-                    subject_dict = product_list[subject_pos[s]]
-                    if p == AM2.Modelo:
-                        subject_dict['modelo'] = o
-                    elif p == AM2.Marca:
-                        subject_dict['marca'] = o
-                    elif p == AM2.Nombre:
-                        subject_dict['nombre'] = o
-                    elif p == AM2.Precio:
-                        subject_dict['precio'] = o
-                    elif p == AM2.TipoProducto:
-                        subject_dict['tipo'] = o
-                    product_list[subject_pos[s]] = subject_dict
+            return mostrarProductosFiltrados(request)
+        else:
+            return comprar(request)
 
-            return render_template('busquedaYCompra.html', products=product_list)
+def comprar(request):
+    global mss_cnt
+    logger.info("Comprando productos")
+    gmess = Graph()
+    # Creamos el sujeto -> contenido del mensaje
+    sj_contenido = agn[AgenteCliente.name + 'Peticion_Compra' + str(mss_cnt)]
+    #le damos un tipo
+    gmess.add((sj_contenido, RDF.type, AM2.Peticion_Compra))
+    vendedor = directory_search_agent(DSO.AgenteVentaProductos,AgenteCliente,DirectoryAgent,mss_cnt)
+    msg = build_message(gmess, perf=ACL.request,
+                sender=AgenteCliente.uri,
+                receiver=vendedor.uri,
+                content=sj_contenido,
+                msgcnt=mss_cnt)
+    print("message BUILD")
+    gr = send_message(msg, vendedor.address)
+    print("message SENT")
+    mss_cnt += 1
+    return "hola"
+
+def mostrarProductosFiltrados(request):
+    global mss_cnt
+    logger.info("Creando peticion de productos disponibles")
+    gmess = Graph()
+    # Creamos el sujeto -> contenido del mensaje
+    sj_contenido = agn[AgenteCliente.name + 'Peticion_productos_disponibles' + str(mss_cnt)]
+    #le damos un tipo
+    gmess.add((sj_contenido, RDF.type, AM2.Peticion_productos_disponibles))
+    #Añadimos restricciones
+    nombre = request.form['nombre']
+    if nombre:
+        sj_nombre = AM2['Nombre' + str(mss_cnt)] #creamos una instancia con nombre Modelo1..2.
+        gmess.add((sj_nombre, RDF.type, AM2['Restricciones_cliente'])) # indicamos que es de tipo Modelo
+        gmess.add((sj_nombre, AM2.nombreRestriccion, Literal(nombre))) #le damos valor a su data property
+        #añadimos el modelo al conenido con su object property
+        gmess.add((sj_contenido, AM2.Restricciones_clientes, URIRef(sj_nombre)))
+    marca = request.form['marca']
+    if marca:
+        sj_marca = AM2['Marca' + str(mss_cnt)]
+        gmess.add((sj_marca, RDF.type, AM2['Restricciones_cliente'])) 
+        gmess.add((sj_marca, AM2.marcaRestriccion, Literal(marca))) 
+        gmess.add((sj_contenido, AM2.Restricciones_clientes, URIRef(sj_marca)))
+    tipo = request.form['tipo']
+    if tipo:
+        sj_tipo = AM2['Tipo' + str(mss_cnt)]
+        gmess.add((sj_tipo, RDF.type, AM2['Restricciones_cliente'])) 
+        gmess.add((sj_tipo, AM2.tipoProductoRestriccion, Literal(tipo))) 
+        gmess.add((sj_contenido, AM2.Restricciones_clientes, URIRef(sj_tipo)))
+    modelo = request.form['modelo']
+    if modelo:
+        sj_modelo = AM2['Modelo' + str(mss_cnt)]
+        gmess.add((sj_modelo, RDF.type, AM2['Restricciones_cliente'])) 
+        gmess.add((sj_modelo, AM2.modeloRestriccion, Literal(modelo))) 
+        gmess.add((sj_contenido, AM2.Restricciones_clientes, URIRef(sj_modelo)))
+    precio = request.form['precio']
+    if precio:
+        sj_precio = AM2['Precio' + str(mss_cnt)]
+        gmess.add((sj_precio, RDF.type, AM2['Restricciones_cliente'])) 
+        gmess.add((sj_precio, AM2.precioMaxRestriccion, Literal(precio))) 
+        gmess.add((sj_contenido, AM2.Restricciones_clientes, URIRef(sj_precio)))
+    
+    mostrador = directory_search_agent(DSO.AgenteMostrarProductos,AgenteCliente,DirectoryAgent,mss_cnt)
+    msg = build_message(gmess, perf=ACL.request,
+                sender=AgenteCliente.uri,
+                receiver=mostrador.uri,
+                content=sj_contenido,
+                msgcnt=mss_cnt)
+    gr = send_message(msg, mostrador.address)
+    mss_cnt += 1
+    logger.info('Recibimos respuesta a la peticion al servicio de informacion')
+    index = 0
+    subject_pos = {}
+    product_list = []
+    for s, p, o in gr:
+        if s not in subject_pos:
+            subject_pos[s] = index
+            product_list.append({})
+            index += 1
+        if s in subject_pos:
+            subject_dict = product_list[subject_pos[s]]
+            if p == AM2.Modelo:
+                subject_dict['modelo'] = o
+            elif p == AM2.Marca:
+                subject_dict['marca'] = o
+            elif p == AM2.Nombre:
+                subject_dict['nombre'] = o
+            elif p == AM2.Precio:
+                subject_dict['precio'] = o
+            elif p == AM2.TipoProducto:
+                subject_dict['tipo'] = o
+            product_list[subject_pos[s]] = subject_dict
+
+    return render_template('busquedaYCompra.html', products=product_list)
+
 
 @app.route("/iface", methods=['GET', 'POST'])
 def browser_iface():

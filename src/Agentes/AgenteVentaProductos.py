@@ -23,8 +23,8 @@ from rdflib import Namespace, Graph,Literal
 from rdflib.namespace import FOAF, RDF
 from flask import Flask, request
 
-from AgentUtil.OntoNamespaces import ACL, DSO, AM2, RESTRICTION
-from AgentUtil.ACLMessages import build_message, send_message, get_message_properties
+from AgentUtil.OntoNamespaces import ACL, DSO, AM2, RESTRICTION,MSG
+from AgentUtil.ACLMessages import build_message, send_message, get_message_properties, directory_search_agent
 from AgentUtil.FlaskServer import shutdown_server
 from AgentUtil.Agent import Agent
 from AgentUtil.Logging import config_logger
@@ -154,8 +154,10 @@ def comunicacion():
     gm = Graph()
     gm.parse(data=message)
 
-    # for s,p,o in gm:
-    #     logger.info('[-->]sujeto:%s | predicado: %s | objeto: %s', s, p,o)
+    # sender = gm.triples((None,ACL['sender'],None))
+    # for s,p,o in gm.triples((None,ACL['sender'],None)):
+    #     logger.info('[-->>]sujeto:%s | predicado: %s | objeto: %s', s, p,o)
+    #     senderURI = o
     
     msgdic = get_message_properties(gm)
 
@@ -185,11 +187,18 @@ def comunicacion():
                 if accion == AM2.Peticion_Compra:
                     print('peticion de compra')
                     # productsGraph = getProducts(gm)
-                    gr = build_message(Graph(),
+                    gmess = Graph()
+                    sj_contenido = MSG[AgenteVentaProductos.name + 'Peticion_Compra-' + str(mss_cnt) + '-Confirmada']
+                    gmess.add((sj_contenido, RDF.type, AM2.Confirmacion_compra))
+                    # TODO: No funciona porque no registramos el Agente cliente!
+                    cliente = directory_search_agent(DSO.AgenteCliente,AgenteVentaProductos,DirectoryAgent,mss_cnt)
+                    msg = build_message(gmess,
                         ACL['inform-done'],
                         sender=AgenteVentaProductos.uri,
                         msgcnt=mss_cnt,
+                        content=sj_contenido,
                         receiver=msgdic['sender'], )
+                    gr = send_message(msg, cliente.address)
                     logger.info("AQUI!")
                 else:
                     gr = build_message(Graph(), ACL['not-understood'], sender=AgenteVentaProductos.uri, msgcnt=mss_cnt)
