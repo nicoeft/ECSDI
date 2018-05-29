@@ -24,7 +24,7 @@ from rdflib.namespace import FOAF, RDF
 from flask import Flask, request
 
 from AgentUtil.OntoNamespaces import ACL, DSO, AM2, RESTRICTION,MSG
-from AgentUtil.ACLMessages import build_message, send_message, get_message_properties, directory_search_agent
+from AgentUtil.ACLMessages import build_message, send_message, get_message_properties, directory_search_agent, register_message
 from AgentUtil.FlaskServer import shutdown_server
 from AgentUtil.Agent import Agent
 from AgentUtil.Logging import config_logger
@@ -99,44 +99,6 @@ cola1 = Queue()
 
 # Flask stuff
 app = Flask(__name__)
-
-def register_message():
-    """
-    Envia un mensaje de registro al servicio de registro
-    usando una performativa Request y una accion Register del
-    servicio de directorio
-
-    :param gmess:
-    :return:
-    """
-
-    logger.info('Nos registramos')
-
-    global mss_cnt
-
-    gmess = Graph()
-
-    # Construimos el mensaje de registro
-    gmess.bind('foaf', FOAF)
-    gmess.bind('dso', DSO)
-    reg_obj = agn[AgenteVentaProductos.name + '-Register']
-    gmess.add((reg_obj, RDF.type, DSO.Register))
-    gmess.add((reg_obj, DSO.Uri, AgenteVentaProductos.uri))
-    gmess.add((reg_obj, FOAF.Name, Literal(AgenteVentaProductos.name)))
-    gmess.add((reg_obj, DSO.Address, Literal(AgenteVentaProductos.address)))
-    gmess.add((reg_obj, DSO.AgentType, DSO.AgenteVentaProductos))
-
-    # Lo metemos en un envoltorio FIPA-ACL y lo enviamos
-    gr = send_message(
-        build_message(gmess, perf=ACL.request,
-                      sender=AgenteVentaProductos.uri,
-                      receiver=DirectoryAgent.uri,
-                      content=reg_obj,
-                      msgcnt=mss_cnt),
-        DirectoryAgent.address)
-    mss_cnt += 1
-
-    return gr
 
 @app.route("/comm")
 def comunicacion():
@@ -237,7 +199,9 @@ def agentbehavior1(cola):
 
     :return:
     """
-    gr = register_message()
+    global mss_cnt
+
+    gr = register_message(DSO.AgenteVentaProductos,AgenteVentaProductos,DirectoryAgent,mss_cnt)
     fin = False
     while not fin:
         while cola.empty():

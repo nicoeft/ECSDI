@@ -19,7 +19,7 @@ from rdflib.namespace import FOAF, RDF
 
 from AgentUtil.OntoNamespaces import ACL, DSO, AM2, RESTRICTION
 from AgentUtil.FlaskServer import shutdown_server
-from AgentUtil.ACLMessages import build_message, send_message, get_message_properties
+from AgentUtil.ACLMessages import build_message, send_message, get_message_properties, register_message
 from AgentUtil.Agent import Agent
 from AgentUtil.Logging import config_logger
 
@@ -91,43 +91,7 @@ cola1 = Queue()
 # Productos
 products = Graph()
 
-def register_message():
-    """
-    Envia un mensaje de registro al servicio de registro
-    usando una performativa Request y una accion Register del
-    servicio de directorio
 
-    :param gmess:
-    :return:
-    """
-
-    logger.info('Nos registramos')
-
-    global mss_cnt
-
-    gmess = Graph()
-
-    # Construimos el mensaje de registro
-    gmess.bind('foaf', FOAF)
-    gmess.bind('dso', DSO)
-    reg_obj = agn[AgenteMostrarProductos.name + '-Register']
-    gmess.add((reg_obj, RDF.type, DSO.Register))
-    gmess.add((reg_obj, DSO.Uri, AgenteMostrarProductos.uri))
-    gmess.add((reg_obj, FOAF.Name, Literal(AgenteMostrarProductos.name)))
-    gmess.add((reg_obj, DSO.Address, Literal(AgenteMostrarProductos.address)))
-    gmess.add((reg_obj, DSO.AgentType, DSO.AgenteMostrarProductos))
-
-    # Lo metemos en un envoltorio FIPA-ACL y lo enviamos
-    gr = send_message(
-        build_message(gmess, perf=ACL.request,
-                      sender=AgenteMostrarProductos.uri,
-                      receiver=DirectoryAgent.uri,
-                      content=reg_obj,
-                      msgcnt=mss_cnt),
-        DirectoryAgent.address)
-    mss_cnt += 1
-
-    return gr
 
 
 def getProducts(gr):
@@ -358,8 +322,9 @@ def agentbehavior1(cola):
 
     :return:
     """
+    global mss_cnt
     # Registramos el agente
-    gr = register_message()
+    gr = register_message(DSO.AgenteMostrarProductos,AgenteMostrarProductos,DirectoryAgent,mss_cnt)
 
     # Escuchando la cola hasta que llegue un 0
     fin = False

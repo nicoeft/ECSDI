@@ -24,7 +24,7 @@ import requests
 
 from AgentUtil.OntoNamespaces import ACL, DSO, AM2, RESTRICTION
 from AgentUtil.FlaskServer import shutdown_server
-from AgentUtil.ACLMessages import build_message, send_message, directory_search_agent
+from AgentUtil.ACLMessages import build_message, send_message, directory_search_agent, register_message
 from AgentUtil.Agent import Agent
 from AgentUtil.Logging import config_logger
 
@@ -90,43 +90,6 @@ DirectoryAgent = Agent('DirectoryAgent',
 # Global dsgraph triplestore
 dsgraph = Graph()
 
-def register_message():
-    """
-    Envia un mensaje de registro al servicio de registro
-    usando una performativa Request y una accion Register del
-    servicio de directorio
-
-    :param gmess:
-    :return:
-    """
-
-    logger.info('Nos registramos')
-
-    global mss_cnt
-
-    gmess = Graph()
-
-    # Construimos el mensaje de registro
-    gmess.bind('foaf', FOAF)
-    gmess.bind('dso', DSO)
-    reg_obj = agn[AgenteCliente.name + '-Register']
-    gmess.add((reg_obj, RDF.type, DSO.Register))
-    gmess.add((reg_obj, DSO.Uri, AgenteCliente.uri))
-    gmess.add((reg_obj, FOAF.Name, Literal(AgenteCliente.name)))
-    gmess.add((reg_obj, DSO.Address, Literal(AgenteCliente.address)))
-    gmess.add((reg_obj, DSO.AgentType, DSO.AgenteCliente))
-
-    # Lo metemos en un envoltorio FIPA-ACL y lo enviamos
-    gr = send_message(
-        build_message(gmess, perf=ACL.request,
-                      sender=AgenteCliente.uri,
-                      receiver=DirectoryAgent.uri,
-                      content=reg_obj,
-                      msgcnt=mss_cnt),
-        DirectoryAgent.address)
-    mss_cnt += 1
-
-    return gr
 
 
 @app.route("/busca", methods=['GET', 'POST'])
@@ -289,10 +252,11 @@ def agentbehavior1():
 
     :return:
     """
+    global mss_cnt
 
      # Registramos el agente cliente
     logger.info('Nos registramos en el servicio de registro')
-    gr = register_message()
+    gr = register_message(DSO.AgenteCliente,AgenteCliente,DirectoryAgent,mss_cnt)
     
 
 

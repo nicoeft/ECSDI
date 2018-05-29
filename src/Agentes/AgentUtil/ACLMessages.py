@@ -10,7 +10,7 @@ Created on 08/02/2014
 """
 __author__ = 'javier'
 
-from rdflib import Graph, Namespace
+from rdflib import Graph, Namespace, Literal
 import requests
 from rdflib.namespace import RDF, FOAF
 from AgentUtil.OntoNamespaces import ACL ,DSO
@@ -85,7 +85,7 @@ def get_message_properties(msg):
                 msgdic[key] = val
     return msgdic
 
-def directory_search_agent(type, origen,agenteDirectorio, mss_cnt):
+def directory_search_agent(tipoDSO, origen,agenteDirectorio, mss_cnt):
     """
     Busca en el servicio de registro mandando un
     mensaje de request con una accion Search del servicio de directorio
@@ -98,15 +98,15 @@ def directory_search_agent(type, origen,agenteDirectorio, mss_cnt):
     gmess.bind('dso', DSO)
     reg_obj = agn[origen.name + '-search'] #nombre del graph -> AgenteCliente-search
     gmess.add((reg_obj, RDF.type, DSO.Search))  #añadimos el tipo de RDF-> Serach
-    gmess.add((reg_obj, DSO.AgentType, type)) #añadimos el tipo de agente que estamos pidiendo es el parm de la funcion (DSO.AgenteMostrarProductos)
-
+    gmess.add((reg_obj, DSO.AgentType, tipoDSO)) #añadimos el tipo de agente que estamos pidiendo es el parm de la funcion (DSO.AgenteMostrarProductos)
+    mss_cnt += 1
     msg = build_message(gmess, perf=ACL.request,
                         sender=origen.uri,
                         receiver=agenteDirectorio.uri,
                         content=reg_obj,
                         msgcnt=mss_cnt)
     gr = send_message(msg, agenteDirectorio.address)
-    mss_cnt += 1
+    
     # Obtenemos la direccion del agente de la respuesta
     # No hacemos ninguna comprobacion sobre si es un mensaje valido
     msg = gr.value(predicate=RDF.type, object=ACL.FipaAclMessage) #Obtenemos el mensaje fipa 
@@ -115,3 +115,38 @@ def directory_search_agent(type, origen,agenteDirectorio, mss_cnt):
     ragn_uri = gr.value(subject=content, predicate=DSO.Uri) #Obtenemos la uri del contenido
     name = gr.value(subject=content, predicate=FOAF.name) #Obtenemos el nombre del agente del contenido
     return Agent(name,ragn_uri,ragn_addr,None)
+
+
+def register_message(tipoDSO,agenteRegistrar,agenteDirectorio,mss_cnt):
+    """
+    Envia un mensaje de registro al servicio de registro
+    usando una performativa Request y una accion Register del
+    servicio de directorio
+
+    :param gmess:
+    :return:
+    """
+
+    gmess = Graph()
+
+    # Construimos el mensaje de registro
+    gmess.bind('foaf', FOAF)
+    gmess.bind('dso', DSO)
+    reg_obj = agn[agenteRegistrar.name + '-Register']
+    gmess.add((reg_obj, RDF.type, DSO.Register))
+    gmess.add((reg_obj, DSO.Uri, agenteRegistrar.uri))
+    gmess.add((reg_obj, FOAF.Name, Literal(agenteRegistrar.name)))
+    gmess.add((reg_obj, DSO.Address, Literal(agenteRegistrar.address)))
+    gmess.add((reg_obj, DSO.AgentType, tipoDSO))
+    mss_cnt += 1
+    # Lo metemos en un envoltorio FIPA-ACL y lo enviamos
+    gr = send_message(
+        build_message(gmess, perf=ACL.request,
+                      sender=agenteRegistrar.uri,
+                      receiver=agenteDirectorio.uri,
+                      content=reg_obj,
+                      msgcnt=mss_cnt),
+        agenteDirectorio.address)
+    
+
+    return gr
