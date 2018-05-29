@@ -90,81 +90,41 @@ DirectoryAgent = Agent('DirectoryAgent',
 # Global dsgraph triplestore
 dsgraph = Graph()
 
+def register_message():
+    """
+    Envia un mensaje de registro al servicio de registro
+    usando una performativa Request y una accion Register del
+    servicio de directorio
 
-def infoagent_search_message(addr, ragn_uri):
+    :param gmess:
+    :return:
     """
-    Envia una accion a un agente de informacion
-    """
+
+    logger.info('Nos registramos')
+
     global mss_cnt
-    logger.info('Hacemos una peticion a AgenteMostrarProductos')
 
     gmess = Graph()
-    
+
+    # Construimos el mensaje de registro
     gmess.bind('foaf', FOAF)
-    gmess.bind('am2', AM2)
-     # Creamos el sujeto -> contenido del mensaje
-    sj_contenido = agn[AgenteCliente.name + 'Peticion_productos_disponibles' + str(mss_cnt)]
-    #le damos un tipo
-    gmess.add((sj_contenido, RDF.type, AM2.Peticion_productos_disponibles))
-    
-    # Añadimos restriccion modelo
-    sj_modelo = AM2['Modelo' + str(mss_cnt)] #creamos una instancia con nombre Modelo1
-    gmess.add((sj_modelo, RDF.type, AM2['Restricciones_cliente'])) # indicamos que es de tipo Modelo
-    gmess.add((sj_modelo, AM2.modeloRestriccion, Literal('E1234H'))) #le damos valor a su data property
-    
-    #añadimos el modelo al conenido con su object property
-    gmess.add((sj_contenido, AM2.peticion_productos_disponibles, URIRef(sj_modelo))) 
+    gmess.bind('dso', DSO)
+    reg_obj = agn[AgenteCliente.name + '-Register']
+    gmess.add((reg_obj, RDF.type, DSO.Register))
+    gmess.add((reg_obj, DSO.Uri, AgenteCliente.uri))
+    gmess.add((reg_obj, FOAF.Name, Literal(AgenteCliente.name)))
+    gmess.add((reg_obj, DSO.Address, Literal(AgenteCliente.address)))
+    gmess.add((reg_obj, DSO.AgentType, DSO.AgenteCliente))
 
-    # for s,p,o in gmess:
-    #     logger.info('[gmess] sujeto:%s | predicado: %s | objeto: %s', s, p,o)
-
-    msg = build_message(gmess, perf=ACL.request,
-                        sender=AgenteCliente.uri,
-                        receiver=ragn_uri,
-                        content=sj_contenido,
-                        msgcnt=mss_cnt)
-    gr = send_message(msg, addr)
+    # Lo metemos en un envoltorio FIPA-ACL y lo enviamos
+    gr = send_message(
+        build_message(gmess, perf=ACL.request,
+                      sender=AgenteCliente.uri,
+                      receiver=DirectoryAgent.uri,
+                      content=reg_obj,
+                      msgcnt=mss_cnt),
+        DirectoryAgent.address)
     mss_cnt += 1
-    logger.info('Recibimos respuesta a la peticion al servicio de informacion')
-
-    return gr
-
-def buy_products(addr, ragn_uri):
-    """
-    Envia una accion a un agente de informacion
-    """
-    global mss_cnt
-    logger.info('Hacemos una peticion a AgenteMostrarProductos')
-
-    gmess = Graph()
-    
-    gmess.bind('foaf', FOAF)
-    gmess.bind('am2', AM2)
-     # Creamos el sujeto -> contenido del mensaje
-    sj_contenido = agn[AgenteCliente.name + 'Peticion_productos_disponibles' + str(mss_cnt)]
-    #le damos un tipo
-    gmess.add((sj_contenido, RDF.type, AM2.Peticion_productos_disponibles))
-    
-    # Añadimos restriccion modelo
-    sj_modelo = AM2['Modelo' + str(mss_cnt)] #creamos una instancia con nombre Modelo1
-    gmess.add((sj_modelo, RDF.type, AM2['Restriccion'])) # indicamos que es de tipo Modelo
-    gmess.add((sj_modelo, RESTRICTION.tipoRestriccion, AM2['Restriccion_modelo'])) # indicamos que es de tipo Modelo
-    gmess.add((sj_modelo, AM2.tieneModelo, Literal('E1234H'))) #le damos valor a su data property
-    
-    #añadimos el modelo al conenido con su object property
-    gmess.add((sj_contenido, AM2.Restricciones_clientes, URIRef(sj_contenido))) 
-
-    # for s,p,o in gmess:
-    #     logger.info('[gmess] sujeto:%s | predicado: %s | objeto: %s', s, p,o)
-
-    msg = build_message(gmess, perf=ACL.request,
-                        sender=AgenteCliente.uri,
-                        receiver=ragn_uri,
-                        content=sj_contenido,
-                        msgcnt=mss_cnt)
-    gr = send_message(msg, addr)
-    mss_cnt += 1
-    logger.info('Recibimos respuesta a la peticion al servicio de informacion')
 
     return gr
 
@@ -330,11 +290,10 @@ def agentbehavior1():
     :return:
     """
 
-    # Buscamos en el directorio
-    # un agente de mostrar productos
-    logger.info('Buscamos en el servicio de registro')
-    AgenteMostrarProductos = directory_search_agent(DSO.AgenteMostrarProductos,AgenteCliente,DirectoryAgent,mss_cnt)
-    logger.info('Recibimos informacion del agente')
+     # Registramos el agente cliente
+    logger.info('Nos registramos en el servicio de registro')
+    gr = register_message()
+    
 
 
     # Ahora mandamos un objeto de tipo request mandando una accion de tipo Search

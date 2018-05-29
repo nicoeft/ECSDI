@@ -185,21 +185,18 @@ def comunicacion():
 
                 # Aqui realizariamos lo que pide la accion
                 if accion == AM2.Peticion_Compra:
-                    print('peticion de compra')
                     # productsGraph = getProducts(gm)
                     gmess = Graph()
                     sj_contenido = MSG[AgenteVentaProductos.name + 'Peticion_Compra-' + str(mss_cnt) + '-Confirmada']
                     gmess.add((sj_contenido, RDF.type, AM2.Confirmacion_compra))
-                    # TODO: No funciona porque no registramos el Agente cliente!
                     cliente = directory_search_agent(DSO.AgenteCliente,AgenteVentaProductos,DirectoryAgent,mss_cnt)
-                    msg = build_message(gmess,
+                    gr = build_message(gmess,
                         ACL['inform-done'],
                         sender=AgenteVentaProductos.uri,
                         msgcnt=mss_cnt,
                         content=sj_contenido,
                         receiver=msgdic['sender'], )
-                    gr = send_message(msg, cliente.address)
-                    logger.info("AQUI!")
+                    logger.info('Confirmacion Compra Creada')
                 else:
                     gr = build_message(Graph(), ACL['not-understood'], sender=AgenteVentaProductos.uri, msgcnt=mss_cnt)
             else:
