@@ -3,3 +3,5 @@
 - 9010 AgenteCliente
 - 9011 AgenteMostrarProductos
 - 9012 AgenteVentaProductos
+- 9013 AgenteLogistico
+- 9014 AgenteAlmacen

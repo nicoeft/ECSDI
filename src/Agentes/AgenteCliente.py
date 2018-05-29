@@ -24,7 +24,7 @@ import requests
 
 from AgentUtil.OntoNamespaces import ACL, DSO, AM2, RESTRICTION
 from AgentUtil.FlaskServer import shutdown_server
-from AgentUtil.ACLMessages import build_message, send_message, directory_search_agent, register_message
+from AgentUtil.ACLMessages import get_message_properties, build_message, send_message, directory_search_agent, register_message
 from AgentUtil.Agent import Agent
 from AgentUtil.Logging import config_logger
 
@@ -113,7 +113,7 @@ def comprar(request):
     logger.info("Comprando productos")
     gmess = Graph()
     # Creamos el sujeto -> contenido del mensaje
-    sj_contenido = agn[AgenteCliente.name + 'Peticion_Compra' + str(mss_cnt)]
+    sj_contenido = agn[AgenteCliente.name + '-Peticion_Compra-' + str(mss_cnt)]
     #le damos un tipo
     gmess.add((sj_contenido, RDF.type, AM2.Peticion_Compra))
     vendedor = directory_search_agent(DSO.AgenteVentaProductos,AgenteCliente,DirectoryAgent,mss_cnt)
@@ -126,7 +126,11 @@ def comprar(request):
     gr = send_message(msg, vendedor.address)
     print("message SENT")
     mss_cnt += 1
-    return "hola"
+    msgdic = get_message_properties(gr)
+    content = msgdic['content']
+    accion = gr.value(subject=content, predicate=RDF.type)
+    logger.info(accion)
+    return accion
 
 def mostrarProductosFiltrados(request):
     global mss_cnt
