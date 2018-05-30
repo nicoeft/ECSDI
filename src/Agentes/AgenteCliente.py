@@ -117,12 +117,20 @@ def comprar(request):
     sj_contenido = agn[AgenteCliente.name + '-Peticion_Compra-' + str(mss_cnt)]
     # le damos un tipo
     gmess.add((sj_contenido, RDF.type, AM2.Peticion_Compra))
+    # sujetoProductos = AM2["Productos"]
+    # gmess.add((sujetoProductos,))
     for id in request.form.getlist('productsToBuy'):
-        print("Ids: %s"%id)
-        productSubject = current_products.value((None, AM2.Id, Literal(id)))
+        # print("Ids: %s"%id)
+        productSubject = current_products.value(predicate=AM2.Id, object=Literal(id))
+        # print("OEOOEOEO: %s"%(productSubject))
+        # sj_producto = AM2['Producto' + str(mss_cnt)]
+        gmess.add((productSubject, RDF.type, AM2['Producto'])) 
         for s, p, o in current_products.triples((productSubject,None,None)):
             print("Productos a comprar: %s | %s | %s"%(s,p,o))
-            gmess.add((s,p,o))
+            gmess.add((productSubject, p, o)) 
+
+        gmess.add((sj_contenido, AM2.Productos, URIRef(productSubject)))
+            # gmess.add((s,p,o))
 
     vendedor = directory_search_agent(DSO.AgenteVentaProductos,AgenteCliente,DirectoryAgent,mss_cnt)
     msg = build_message(gmess, perf=ACL.request,

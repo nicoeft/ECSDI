@@ -134,6 +134,9 @@ def comunicacion():
                 content = msgdic['content']
                 accion = gm.value(subject=content, predicate=RDF.type)
                 # Aqui realizariamos lo que pide la accion
+                # for s,p,o in gm:
+                #     print("EOOO: %s | %s | %s"%(s,p,o))
+
                 if accion == AM2.Solicitud_envio: 
                     gmess = Graph()
                     sj_contenido = MSG[AgenteLogistico.name + '-Realiza_envio-' + str(mss_cnt)]
