@@ -87,9 +87,8 @@ DirectoryAgent = Agent('DirectoryAgent',
                        'http://%s:%d/Register' % (dhostname, dport),
                        'http://%s:%d/Stop' % (dhostname, dport))
 
-# Global dsgraph triplestore
-dsgraph = Graph()
-
+# Global current_products triplestore
+current_products = Graph()
 
 
 @app.route("/busca", methods=['GET', 'POST'])
@@ -110,6 +109,7 @@ def browser_busca():
 
 def comprar(request):
     global mss_cnt
+    global current_products
     logger.info("Comprando productos")
     print(request.form.getlist('productsToBuy'))
     gmess = Graph()
@@ -117,6 +117,13 @@ def comprar(request):
     sj_contenido = agn[AgenteCliente.name + '-Peticion_Compra-' + str(mss_cnt)]
     # le damos un tipo
     gmess.add((sj_contenido, RDF.type, AM2.Peticion_Compra))
+    for id in request.form.getlist('productsToBuy'):
+        print("Ids: %s"%id)
+        productSubject = current_products.value((None, AM2.Id, Literal(id)))
+        for s, p, o in current_products.triples((productSubject,None,None)):
+            print("Productos a comprar: %s | %s | %s"%(s,p,o))
+            gmess.add((s,p,o))
+
     vendedor = directory_search_agent(DSO.AgenteVentaProductos,AgenteCliente,DirectoryAgent,mss_cnt)
     msg = build_message(gmess, perf=ACL.request,
                 sender=AgenteCliente.uri,
@@ -135,6 +142,8 @@ def comprar(request):
 
 def mostrarProductosFiltrados(request):
     global mss_cnt
+    global current_products
+
     logger.info("Creando peticion de productos disponibles")
     gmess = Graph()
     # Creamos el sujeto -> contenido del mensaje
@@ -180,13 +189,13 @@ def mostrarProductosFiltrados(request):
                 receiver=mostrador.uri,
                 content=sj_contenido,
                 msgcnt=mss_cnt)
-    gr = send_message(msg, mostrador.address)
+    current_products = send_message(msg, mostrador.address)
     mss_cnt += 1
     logger.info('Recibimos respuesta a la peticion al servicio de informacion')
     index = 0
     subject_pos = {}
     product_list = []
-    for s, p, o in gr:
+    for s, p, o in current_products:
         if s not in subject_pos:
             subject_pos[s] = index
             product_list.append({})

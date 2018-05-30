@@ -156,13 +156,13 @@ def getProducts(gr):
         productsGraph = productsGraph & modeloGraph
     
     if nombre != None:
-        print("EEeEUU")
+        # print("EEeEUU")
         nombreGraph = Graph()
         # for s,p,o in productsGraph.triples((None,AM2.Nombre,Literal('Televisor'))):
         #     print ('productsGraphaa--> %s %s %s'%(s,p,o))
 
         for s,p,o in products.triples((None,AM2.Nombre,nombre)):
-            print ('pasdf--> %s %s %s'%(s,p,o))
+            # print ('pasdf--> %s %s %s'%(s,p,o))
             for s2,p2,o2 in products.triples((s,None,None)):
                 nombreGraph.add((s2,p2,o2))
         productsGraph = productsGraph & nombreGraph
@@ -177,7 +177,7 @@ def getProducts(gr):
 
 def initProducts():
     global products
-
+    # Atención: Ojo, el atributo Id tiene que ser unico
     subjectProducto = AM2['DVD']
     products.add((subjectProducto, RDF.type, AM2.Producto))
     products.add((subjectProducto, AM2.Id, Literal("1")))
