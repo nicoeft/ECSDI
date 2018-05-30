@@ -111,10 +111,11 @@ def browser_busca():
 def comprar(request):
     global mss_cnt
     logger.info("Comprando productos")
+    print(request.form.getlist('productsToBuy'))
     gmess = Graph()
     # Creamos el sujeto -> contenido del mensaje
     sj_contenido = agn[AgenteCliente.name + '-Peticion_Compra-' + str(mss_cnt)]
-    #le damos un tipo
+    # le damos un tipo
     gmess.add((sj_contenido, RDF.type, AM2.Peticion_Compra))
     vendedor = directory_search_agent(DSO.AgenteVentaProductos,AgenteCliente,DirectoryAgent,mss_cnt)
     msg = build_message(gmess, perf=ACL.request,
@@ -198,6 +199,8 @@ def mostrarProductosFiltrados(request):
                 subject_dict['marca'] = o
             elif p == AM2.Nombre:
                 subject_dict['nombre'] = o
+            elif p == AM2.Id:
+                subject_dict['id'] = o
             elif p == AM2.Precio:
                 subject_dict['precio'] = o
             elif p == AM2.TipoProducto:

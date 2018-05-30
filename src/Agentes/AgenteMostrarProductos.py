@@ -180,12 +180,14 @@ def initProducts():
 
     subjectProducto = AM2['DVD']
     products.add((subjectProducto, RDF.type, AM2.Producto))
+    products.add((subjectProducto, AM2.Id, Literal("1")))
     products.add((subjectProducto, AM2.Nombre, Literal("DVD")))
     products.add((subjectProducto, AM2.TipoProducto, Literal("Electronica")))
     products.add((subjectProducto, AM2.Precio, Literal(50)))
 
     subjectProducto2 = AM2['Televisor_1']
     products.add((subjectProducto2, RDF.type, AM2.Producto))
+    products.add((subjectProducto2, AM2.Id, Literal("2")))
     products.add((subjectProducto2, AM2.Nombre, Literal("Televisor")))
     products.add((subjectProducto2, AM2.TipoProducto, Literal("Electronica")))
     products.add((subjectProducto2, AM2.Precio, Literal(300)))
@@ -193,12 +195,14 @@ def initProducts():
 
     subjectProducto3 = AM2['Camisa']
     products.add((subjectProducto3, RDF.type, AM2.Producto))
+    products.add((subjectProducto3, AM2.Id, Literal("3")))
     products.add((subjectProducto3, AM2.Nombre, Literal("Camisa")))
     products.add((subjectProducto3, AM2.TipoProducto, Literal("Ropa")))
     products.add((subjectProducto3, AM2.Precio, Literal(15)))
 
     subjectProducto4 = AM2['Televisor_2']
     products.add((subjectProducto4, RDF.type, AM2.Producto))
+    products.add((subjectProducto4, AM2.Id, Literal("4")))
     products.add((subjectProducto4, AM2.Nombre, Literal('Televisor')))
     products.add((subjectProducto4, AM2.Marca, Literal('LG')))
     products.add((subjectProducto4, AM2.TipoProducto, Literal("Electronica")))
@@ -207,11 +211,21 @@ def initProducts():
 
     subjectProducto5 = AM2['Televisor_3']
     products.add((subjectProducto5, RDF.type, AM2.Producto))
+    products.add((subjectProducto5, AM2.Id, Literal("5")))
     products.add((subjectProducto5, AM2.Nombre, Literal('Televisor')))
     products.add((subjectProducto5, AM2.Marca, Literal('LG')))
     products.add((subjectProducto5, AM2.TipoProducto, Literal("Electronica")))
     products.add((subjectProducto5, AM2.Precio, Literal(750)))
     products.add((subjectProducto5, AM2.Modelo, Literal('H456KHD')))
+
+    subjectProducto5 = AM2['Televisor_4']
+    products.add((subjectProducto5, RDF.type, AM2.Producto))
+    products.add((subjectProducto5, AM2.Id, Literal("6")))
+    products.add((subjectProducto5, AM2.Nombre, Literal('Televisor')))
+    products.add((subjectProducto5, AM2.Marca, Literal('BlauPunkt')))
+    products.add((subjectProducto5, AM2.TipoProducto, Literal("Electronica")))
+    products.add((subjectProducto5, AM2.Precio, Literal(124)))
+    products.add((subjectProducto5, AM2.Modelo, Literal('H4589KHD')))
     return
 
 @app.route("/iface", methods=['GET', 'POST'])

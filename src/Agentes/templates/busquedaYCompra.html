@@ -19,6 +19,7 @@
         <form method="post">
             <table cellpadding="5px">
                 <tr>
+                    <th><b>ID</b></th>
                     <th><b>NOMBRE</b></th>
                     <th><b>TIPO</b></th>
                     <th><b>MARCA</b></th>
@@ -27,12 +28,15 @@
                 </tr>
                 {% for item in products %}
                     <tr>
+                    {% if item.id %}
+                        <td>{{ item.id }}</td>
                         <td>{{ item.nombre }}</td>
                         <td>{{ item.tipo }}</td>
                         <td>{{ item.marca }}</td>
                         <td>{{ item.modelo }}</td>
                         <td>{{ item.precio }}</td>
-                        <td><input type="checkbox" name="checkbox" value="{{ products.index(item) }}"></td>
+                        <td><input type="checkbox" name="productsToBuy" value="{{ item.Id }}"></td>
+                    {% endif %}
                     </tr>
                 {% endfor %}
             </table>
