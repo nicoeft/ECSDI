@@ -5,3 +5,4 @@
 - 9012 AgenteVentaProductos
 - 9013 AgenteLogistico
 - 9014 AgenteAlmacen
+- 9030 AgenteTransportista1
