@@ -1,0 +1,8 @@
+- Agentes que escriben en ficheros:
+  - AgenteVentaProductos : registroCompras.txt
+  - Agente
+
+Templates
+- AgenteCliente: mostrarCestaConfirmacion
+
+

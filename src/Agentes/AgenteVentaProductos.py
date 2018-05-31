@@ -21,7 +21,7 @@ import argparse
 
 from rdflib import Namespace, Graph,Literal
 from rdflib.namespace import FOAF, RDF
-from flask import Flask, request
+from flask import Flask, request, render_template
 
 from AgentUtil.OntoNamespaces import ACL, DSO, AM2, RESTRICTION,MSG
 from AgentUtil.ACLMessages import build_message, send_message, get_message_properties, directory_search_agent, register_message
@@ -178,10 +178,9 @@ def comunicacion():
                     
                     cola1.put(grm)
 
-                    print("Aquiii!")
                     gmess2 = Graph()
-                    sj_contenido = MSG[AgenteVentaProductos.name + '-Peticion_recibida-' + str(mss_cnt)]
-                    gmess2.add((sj_contenido, RDF.type, AM2.Peticion_recibida))
+                    sj_contenido = MSG[AgenteVentaProductos.name + '-Confirmacion_cesta-' + str(mss_cnt)]
+                    gmess2.add((sj_contenido, RDF.type, AM2.Confirmacion_cesta))
                     gr = build_message(gmess2,
                         ACL['inform-done'],
                         sender=AgenteVentaProductos.uri,
@@ -208,7 +207,7 @@ def comunicacion():
 
 @app.route("/")
 def ventas():
-    return "Aqui pondriamos el Front-End de confirmación?"
+    return render_template('peticionesCompra.html')
 
 @app.route("/Stop")
 def stop():
@@ -251,6 +250,8 @@ def agentbehavior1(cola):
             fin = True
         else:
             gr = send_message(v,agenteLogistico.address)
+            # TODO: send message to client
+
             print("Recibida! %s "%gr)
 
 
