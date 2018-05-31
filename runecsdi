@@ -1,5 +1,0 @@
-#!/bin/bash
-echo "Running ECSDI Agents"
-gnome-terminal --window-with-profile=nicoscripts -e "python /home/nico/workspace/ECSDI/src/Agentes/SimpleDirectoryService.py "
-sleep 0.5
-gnome-terminal --window-with-profile=nicoscripts -e "python /home/nico/workspace/ECSDI/src/Agentes/AgenteMostrarProductos.py" --tab -e "python /home/nico/workspace/ECSDI/src/Agentes/AgenteVentaProductos.py" --tab -e  "python /home/nico/workspace/ECSDI/src/Agentes/AgenteCliente.py" --tab -e  "python /home/nico/workspace/ECSDI/src/Agentes/AgenteLogistico.py" --tab -e  "python /home/nico/workspace/ECSDI/src/Agentes/AgenteAlmacen.py" --tab -e  "python /home/nico/workspace/ECSDI/src/Agentes/AgenteTransportista1.py"  --tab -e  "python /home/nico/workspace/ECSDI/src/Agentes/AgenteTransportista2.py"
