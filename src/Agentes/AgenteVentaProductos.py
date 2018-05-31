@@ -190,6 +190,11 @@ def comunicacion():
     return gr.serialize(format='xml')
 
 
+
+@app.route("/")
+def ventas():
+    return "Aqui pondriamos el Front-End de confirmación?"
+
 @app.route("/Stop")
 def stop():
     """
