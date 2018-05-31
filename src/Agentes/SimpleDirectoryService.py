@@ -239,15 +239,15 @@ def agentbehavior1(cola):
     hasta que llega un 0 a la cola
     """
     fin = False
-    while not fin:
-        while cola.empty():
-            pass
-        v = cola.get()
-        if v == 0:
-            print(v)
-            return 0
-        else:
-            print(v)
+    # while not fin:
+    #     while cola.empty():
+    #         pass
+    #     v = cola.get()
+    #     if v == 0:
+    #         print(v)
+    #         return 0
+    #     else:
+    #         print(v)
 
 
 if __name__ == '__main__':

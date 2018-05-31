@@ -200,14 +200,14 @@ def agentbehavior1(cola):
     logger.info('Nos registramos en el servicio de registro')
     register_message(DSO.AgenteLogistico,AgenteLogistico,DirectoryAgent,mss_cnt)
     fin = False
-    while not fin:
-        while cola.empty():
-            pass
-        v = cola.get()
-        if v == 0:
-            fin = True
-        else:
-            print(v)
+    # while not fin:
+    #     while cola.empty():
+    #         pass
+    #     v = cola.get()
+    #     if v == 0:
+    #         fin = True
+    #     else:
+    #         print(v)
 
 
 if __name__ == '__main__':
