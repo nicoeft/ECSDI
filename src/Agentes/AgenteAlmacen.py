@@ -174,7 +174,7 @@ def negociaEnvio():
     gmess = Graph()
     sj_contenido = MSG[AgenteAlmacen.name + '-Pedir_precio_envio-' + str(mss_cnt)]
     gmess.add((sj_contenido, RDF.type, AM2.Pedir_precio_envio))
-    agenteTransportista = directory_search_agent(DSO.AgenteTransportista,AgenteAlmacen,DirectoryAgent,mss_cnt)
+    agenteTransportista = directory_search_agent(DSO.AgenteTransportista,AgenteAlmacen,DirectoryAgent,mss_cnt)[0]
     grm = build_message(gmess,
         perf=ACL.request,
         sender=AgenteAlmacen.uri,
