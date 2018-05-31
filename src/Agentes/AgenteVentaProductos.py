@@ -242,7 +242,7 @@ def agentbehavior1(cola):
     register_message(DSO.AgenteVentaProductos,AgenteVentaProductos,DirectoryAgent,mss_cnt)
     fin = False
     agenteLogistico = directory_search_agent(DSO.AgenteLogistico,AgenteVentaProductos,DirectoryAgent,mss_cnt)[0]
-
+    agenteCliente = directory_search_agent(DSO.AgenteCliente,AgenteVentaProductos,DirectoryAgent,mss_cnt)[0]
     while not fin:
         while cola.empty():
             pass
@@ -252,6 +252,16 @@ def agentbehavior1(cola):
         else:
             gr = send_message(v,agenteLogistico.address)
             print("Recibida! %s "%gr)
+            gmess = Graph()
+            sj_contenido = MSG[AgenteVentaProductos.name + '-Factura_Compra-' + str(mss_cnt)]
+            gmess.add((sj_contenido, RDF.type, AM2.Emitir_factura))
+            grm = build_message(gmess,
+                    perf=ACL.request,
+                    sender=AgenteVentaProductos.uri,
+                    receiver=agenteCliente.uri,
+                    content=sj_contenido,
+                    msgcnt=mss_cnt)
+            send_message(grm,agenteCliente.address)
 
 
 if __name__ == '__main__':
