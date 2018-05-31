@@ -138,9 +138,18 @@ def comunicacion():
                 #     print("EOOO: %s | %s | %s"%(s,p,o))
 
                 if accion == AM2.Solicitud_envio: 
+
+                    products = Graph()
+                    # TODO: Productos recibidos
+                    for s in gm.subjects(RDF.type,AM2["Producto"]):
+                        products += gm.triples((s,None,None))
+                        # for s2,p,o in gm.triples((s,None,None)):
+                        #     print("Productos a Enviar: %s | %s | %s"%(s2,p,o))
+
                     gmess = Graph()
                     sj_contenido = MSG[AgenteLogistico.name + '-Realiza_envio-' + str(mss_cnt)]
                     gmess.add((sj_contenido, RDF.type, AM2.Realiza_envio))
+                    gmess += products
                     agenteAlmacen = directory_search_agent(DSO.AgenteAlmacen,AgenteLogistico,DirectoryAgent,mss_cnt)
                     grm = build_message(gmess,
                         perf=ACL.request,

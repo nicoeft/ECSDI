@@ -122,17 +122,12 @@ def comprar(request):
     for id in request.form.getlist('productsToBuy'):
         # print("Ids: %s"%id)
         productSubject = current_products.value(predicate=AM2.Id, object=Literal(id))
-        # print("OEOOEOEO: %s"%(productSubject))
-        # sj_producto = AM2['Producto' + str(mss_cnt)]
+
         gmess.add((productSubject, RDF.type, AM2['Producto'])) 
-        # for s, p, o in current_products.triples((productSubject,None,None)):
-        #     print("Productos a comprar: %s | %s | %s"%(s,p,o))
-        #     gmess.add((productSubject, p, o)) 
 
         gmess += current_products.triples((productSubject,None,None))
 
         gmess.add((sj_contenido, AM2.Productos, URIRef(productSubject)))
-            # gmess.add((s,p,o))
 
     vendedor = directory_search_agent(DSO.AgenteVentaProductos,AgenteCliente,DirectoryAgent,mss_cnt)
     msg = build_message(gmess, perf=ACL.request,

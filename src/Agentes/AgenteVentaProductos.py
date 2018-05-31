@@ -161,6 +161,12 @@ def comunicacion():
                     gmess = Graph()
                     sj_contenido = MSG[AgenteVentaProductos.name + '-Solicitud_envio-' + str(mss_cnt)]
                     gmess.add((sj_contenido, RDF.type, AM2.Solicitud_envio))
+
+                    # productSubject = current_products.value(predicate=AM2.Id, object=Literal(id))
+                    # gmess.add((productSubject, RDF.type, AM2['Producto'])) 
+                    gmess += productsGraph
+                    # gmess.add((sj_contenido, AM2.Productos, URIRef(productSubject)))
+
                     agenteLogistico = directory_search_agent(DSO.AgenteLogistico,AgenteVentaProductos,DirectoryAgent,mss_cnt)
                     grm = build_message(gmess,
                         perf=ACL.request,

@@ -104,7 +104,8 @@ def getProducts(gr):
     nombre = None
     modelo = None
 
-    for s,p,o in gr.triples((None,RDF.type, AM2['Restricciones_cliente'])):
+    for s in gr.subjects(RDF.type, AM2['Restricciones_cliente']):
+        
         for s2,p2,o2 in gr.triples((s, AM2.marcaRestriccion, None)):
             print('restricciones: %s | %s | %s'%(s2,p2,o2))
             marca = Literal(o2)
