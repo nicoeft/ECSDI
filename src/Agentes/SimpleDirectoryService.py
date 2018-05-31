@@ -142,9 +142,11 @@ def register():
             for agente in rsearch:
                 agn_uri = agente[0]
                 agn_add = dsgraph.value(subject=agn_uri, predicate=DSO.Address)
+                agn_name = dsgraph.value(subject=agn_uri, predicate=FOAF.name)
                 rsp_obj = agn['Directory-response-'+str(i)]
                 gr.add((rsp_obj, DSO.Address, agn_add))
                 gr.add((rsp_obj, DSO.Uri, agn_uri))
+                gr.add((rsp_obj, FOAF.name, agn_name))
                 gr.add((rsp_obj, RDF.type, DSO.Response))
                 i=i+1
             return build_message(gr,
