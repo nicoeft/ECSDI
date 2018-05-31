@@ -109,12 +109,18 @@ def directory_search_agent(tipoDSO, origen,agenteDirectorio, mss_cnt):
     
     # Obtenemos la direccion del agente de la respuesta
     # No hacemos ninguna comprobacion sobre si es un mensaje valido
-    msg = gr.value(predicate=RDF.type, object=ACL.FipaAclMessage) #Obtenemos el mensaje fipa 
-    content = gr.value(subject=msg, predicate=ACL.content) #Obtenemos el contenido del mensaje fipa
-    ragn_addr = gr.value(subject=content, predicate=DSO.Address) #Obtenemos la adress del contenido
-    ragn_uri = gr.value(subject=content, predicate=DSO.Uri) #Obtenemos la uri del contenido
-    name = gr.value(subject=content, predicate=FOAF.name) #Obtenemos el nombre del agente del contenido
-    return Agent(name,ragn_uri,ragn_addr,None)
+    #msg = gr.value(predicate=RDF.type, object=ACL.FipaAclMessage) #Obtenemos el mensaje fipa 
+    #content = gr.value(subject=msg, predicate=ACL.content) #Obtenemos el contenido del mensaje fipa
+    sj_agentes = gr.triples((None,RDF.type, DSO.Response)) #Obtenemos la adress del contenido
+    agentArray = []
+    for agenteTuple in sj_agentes:
+        agn_uri = agenteTuple[0]
+        ragn_addr = gr.value(subject=agn_uri, predicate=DSO.Address) #Obtenemos la adress del contenido
+        ragn_uri = gr.value(subject=agn_uri, predicate=DSO.Uri) #Obtenemos la uri del contenido
+        name = gr.value(subject=agn_uri, predicate=FOAF.name) #Obtenemos el nombre del agente del contenido
+        agente = Agent(name,ragn_uri,ragn_addr,None)
+        agentArray.append(agente)
+    return agentArray
 
 
 def register_message(tipoDSO,agenteRegistrar,agenteDirectorio,mss_cnt):
