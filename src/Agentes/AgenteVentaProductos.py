@@ -167,6 +167,7 @@ def comunicacion():
                     gmess += productsGraph
                     # gmess.add((sj_contenido, AM2.Productos, URIRef(productSubject)))
 
+                    
                     agenteLogistico = directory_search_agent(DSO.AgenteLogistico,AgenteVentaProductos,DirectoryAgent,mss_cnt)[0]
                     grm = build_message(gmess,
                         perf=ACL.request,
@@ -174,18 +175,19 @@ def comunicacion():
                         receiver=agenteLogistico.uri,
                         content=sj_contenido,
                         msgcnt=mss_cnt)
-                    gr = send_message(grm,agenteLogistico.address)
+                    
+                    cola1.put(grm)
 
                     print("Aquiii!")
-                    # gmess2 = Graph()
-                    # sj_contenido = MSG[AgenteVentaProductos.name + '-Peticion_recibida-' + str(mss_cnt)]
-                    # gmess2.add((sj_contenido, RDF.type, AM2.Peticion_recibida))
-                    # gr = build_message(gmess2,
-                    #     ACL['inform-done'],
-                    #     sender=AgenteVentaProductos.uri,
-                    #     msgcnt=mss_cnt,
-                    #     content=sj_contenido,
-                    #     receiver=msgdic['sender'])
+                    gmess2 = Graph()
+                    sj_contenido = MSG[AgenteVentaProductos.name + '-Peticion_recibida-' + str(mss_cnt)]
+                    gmess2.add((sj_contenido, RDF.type, AM2.Peticion_recibida))
+                    gr = build_message(gmess2,
+                        ACL['inform-done'],
+                        sender=AgenteVentaProductos.uri,
+                        msgcnt=mss_cnt,
+                        content=sj_contenido,
+                        receiver=msgdic['sender'])
                     
                     # gr = build_message(Graph(), ACL['not-understood'], sender=AgenteVentaProductos.uri, msgcnt=mss_cnt)
                     logger.info('Se ha enviado al centro logístico la solicitud de envio')
@@ -239,14 +241,17 @@ def agentbehavior1(cola):
     logger.info('Nos registramos en el servicio de registro')
     register_message(DSO.AgenteVentaProductos,AgenteVentaProductos,DirectoryAgent,mss_cnt)
     fin = False
-    # while not fin:
-    #     while cola.empty():
-    #         pass
-    #     v = cola.get()
-    #     if v == 0:
-    #         fin = True
-    #     else:
-    #         print(v)
+    agenteLogistico = directory_search_agent(DSO.AgenteLogistico,AgenteVentaProductos,DirectoryAgent,mss_cnt)[0]
+
+    while not fin:
+        while cola.empty():
+            pass
+        v = cola.get()
+        if v == 0:
+            fin = True
+        else:
+            gr = send_message(v,agenteLogistico.address)
+            print("Recibida! %s "%gr)
 
 
 if __name__ == '__main__':

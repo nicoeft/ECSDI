@@ -6,3 +6,12 @@
 - 9013 AgenteLogistico
 - 9014 AgenteAlmacen
 - 9030 AgenteTransportista1
+
+# Orden de los agentes:
+- SimpleDirectoryService.py
+- AgenteMostrarProductos.py
+- AgenteLogistico.py
+- AgenteVentaProductos.py
+- AgenteAlmacen.py
+- AgenteTransportista1.py
+- AgenteCliente.py
