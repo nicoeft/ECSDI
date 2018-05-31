@@ -167,7 +167,7 @@ def comunicacion():
                     gmess += productsGraph
                     # gmess.add((sj_contenido, AM2.Productos, URIRef(productSubject)))
 
-                    agenteLogistico = directory_search_agent(DSO.AgenteLogistico,AgenteVentaProductos,DirectoryAgent,mss_cnt)
+                    agenteLogistico = directory_search_agent(DSO.AgenteLogistico,AgenteVentaProductos,DirectoryAgent,mss_cnt)[0]
                     grm = build_message(gmess,
                         perf=ACL.request,
                         sender=AgenteVentaProductos.uri,

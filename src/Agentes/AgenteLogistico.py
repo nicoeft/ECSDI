@@ -151,7 +151,7 @@ def comunicacion():
                     sj_contenido = MSG[AgenteLogistico.name + '-Realiza_envio-' + str(mss_cnt)]
                     gmess.add((sj_contenido, RDF.type, AM2.Realiza_envio))
                     gmess += products
-                    agenteAlmacen = directory_search_agent(DSO.AgenteAlmacen,AgenteLogistico,DirectoryAgent,mss_cnt)
+                    agenteAlmacen = directory_search_agent(DSO.AgenteAlmacen,AgenteLogistico,DirectoryAgent,mss_cnt)[0]
                     grm = build_message(gmess,
                         perf=ACL.request,
                         sender=AgenteLogistico.uri,
