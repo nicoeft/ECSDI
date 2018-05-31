@@ -140,7 +140,8 @@ def comunicacion():
                 if accion == AM2.Solicitud_envio: 
 
                     products = Graph()
-                    # TODO: Productos recibidos
+                    
+                    # Productos recibidos
                     for s in gm.subjects(RDF.type,AM2["Producto"]):
                         products += gm.triples((s,None,None))
                         # for s2,p,o in gm.triples((s,None,None)):

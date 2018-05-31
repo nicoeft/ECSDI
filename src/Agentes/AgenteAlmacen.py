@@ -134,6 +134,15 @@ def comunicacion():
                 # Aqui realizariamos lo que pide la accion
                 if accion == AM2.Realiza_envio:
                     logger.info('Realizando el envio')
+
+                    # TODO: como tratamos los productos?
+                    products = Graph()
+                    for s in gm.subjects(RDF.type,AM2["Producto"]):
+                        products += gm.triples((s,None,None))
+
+                    for s,p,o in products:
+                        print("Procesando productos: %s | %s | %s"%(s,p,o))
+
                     negociaEnvio()
                     gr = confirmaEnvio(msgdic)
                 else:
