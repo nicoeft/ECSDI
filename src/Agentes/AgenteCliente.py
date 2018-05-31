@@ -253,10 +253,49 @@ def stop():
 @app.route("/comm")
 def comunicacion():
     """
-    Entrypoint de comunicacion del agente
+    Entrypoint de comunicacion
     """
-    return "Hola"
+    global dsgraph
+    global mss_cnt
 
+    # Extraemos el mensaje y creamos un grafo con el
+    message = request.args['content']
+    gm = Graph()
+    gm.parse(data=message)
+    msgdic = get_message_properties(gm)
+    logger.info('eeeeeeeeeeeeeeeeeeeeeeeeee')
+    mss_cnt += 1
+    # Comprobamos que sea un mensaje FIPA ACL
+    if msgdic is None:
+        # Si no es, respondemos que no hemos entendido el mensaje
+        gr = build_message(Graph(), ACL['not-understood'], sender=AgenteCliente.uri, msgcnt=mss_cnt)
+
+    else:
+        # Obtenemos la performativa
+        perf = msgdic['performative']
+        if perf != ACL.request:
+            # Si no es un request, respondemos que no hemos entendido el mensaje
+            gr = build_message(Graph(), ACL['not-understood'], sender=AgenteCliente.uri, msgcnt=mss_cnt)
+
+        else:
+            # Extraemos el objeto del contenido que ha de ser una accion de la ontologia de acciones del agente
+            # de registro
+            # Averiguamos el tipo de la accion
+            if 'content' in msgdic:
+                content = msgdic['content']
+                accion = gm.value(subject=content, predicate=RDF.type)
+                # Aqui realizariamos lo que pide la accion
+                if accion == AM2.Emitir_factura:
+                    logger.info('Mostrando factura con detalles del envio')
+                    gr = build_message(Graph(), ACL['not-understood'], sender=AgenteCliente.uri, msgcnt=mss_cnt)
+
+                else:
+                    gr = build_message(Graph(), ACL['not-understood'], sender=AgenteCliente.uri, msgcnt=mss_cnt)
+
+            else:
+                gr = build_message(Graph(), ACL['not-understood'], sender=AgenteCliente.uri, msgcnt=mss_cnt)
+
+    return gr.serialize(format='xml')
 
 
 def tidyup():
