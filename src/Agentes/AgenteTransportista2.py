@@ -18,9 +18,8 @@ from __future__ import print_function
 from multiprocessing import Process, Queue
 import socket
 import argparse
-import sys
 
-from rdflib import Namespace, Graph,Literal
+from rdflib import Namespace, Graph,Literal,URIRef
 from rdflib.namespace import FOAF, RDF
 from flask import Flask, request
 
@@ -45,14 +44,14 @@ logger = config_logger(level=1)
 
 # Configuration stuff
 hostname = socket.gethostname()
-port = 9014
+port = 9031
 
 # parsing de los parametros de la linea de comandos
 args = parser.parse_args()
 
 # Configuration stuff
 if args.port is None:
-    port = 9014
+    port = 9031
 else:
     port = args.port
 
@@ -81,8 +80,8 @@ mss_cnt = 0
 
 # Datos del Agente
 
-AgenteAlmacen = Agent('AgenteAlmacen',
-                       agn.AgenteAlmacen,
+AgenteTransportista2 = Agent('AgenteTransportista2',
+                       agn.AgenteTransportista2,
                        'http://%s:%d/comm' % (hostname, port),
                        'http://%s:%d/Stop' % (hostname, port))
 
@@ -118,13 +117,13 @@ def comunicacion():
     # Comprobamos que sea un mensaje FIPA ACL
     if msgdic is None:
         # Si no es, respondemos que no hemos entendido el mensaje
-        gr = build_message(Graph(), ACL['not-understood'], sender=AgenteAlmacen.uri, msgcnt=mss_cnt)
+        gr = build_message(Graph(), ACL['not-understood'], sender=AgenteTransportista2.uri, msgcnt=mss_cnt)
     else:
         # Obtenemos la performativa
         perf = msgdic['performative']
         if perf != ACL.request:
             # Si no es un request, respondemos que no hemos entendido el mensaje
-            gr = build_message(Graph(), ACL['not-understood'], sender=AgenteAlmacen.uri, msgcnt=mss_cnt)
+            gr = build_message(Graph(), ACL['not-understood'], sender=AgenteTransportista2.uri, msgcnt=mss_cnt)
         else:
             # Extraemos el objeto del contenido que ha de ser una accion de la ontologia de acciones del agente
             # de registro
@@ -133,66 +132,31 @@ def comunicacion():
                 content = msgdic['content']
                 accion = gm.value(subject=content, predicate=RDF.type)
                 # Aqui realizariamos lo que pide la accion
-                if accion == AM2.Realiza_envio:
-                    logger.info('Realizando el envio')
-
-                    # TODO: como tratamos los productos?
-                    products = Graph()
-                    for s in gm.subjects(RDF.type,AM2["Producto"]):
-                        products += gm.triples((s,None,None))
-
-                    for s,p,o in products:
-                        print("Procesando productos: %s | %s | %s"%(s,p,o))
-
-                    negociaEnvio()
-                    gr = confirmaEnvio(msgdic)
+                if accion == AM2.Pedir_precio_envio:
+                    logger.info('Peticion de precio de envio recibida')
+                    gmess = Graph()
+                    sj_contenido = MSG[AgenteTransportista2.name + '-Precios_envio-' + str(mss_cnt)]
+                    gmess.add((sj_contenido, RDF.type, AM2.Confirmacion_envio))
+                    sj_nombre = AM2['Transportista1-Precios_envio-' + str(mss_cnt)] #creamos una instancia con nombre Modelo1..2.
+                    gmess.add((sj_nombre, RDF.type, AM2['Precios_envio'])) # indicamos que es de tipo Modelo
+                    gmess.add((sj_nombre, AM2.precioEnvioTransportista, Literal(1111111111))) #le damos valor a su data property (precio hardcoded)
+                    #añadimos el modelo al conenido con su object property
+                    gmess.add((sj_contenido, AM2.Precios_envio, URIRef(sj_nombre)))
+                    gr = build_message(gmess,
+                        ACL['inform-done'],
+                        sender=AgenteTransportista2.uri,
+                        msgcnt=mss_cnt,
+                        content=sj_contenido,
+                        receiver=msgdic['sender'])
+                    logger.info('Precio del envio Transportista 2')
                 else:
-                    gr = build_message(Graph(), ACL['not-understood'], sender=AgenteAlmacen.uri, msgcnt=mss_cnt)
+                    gr = build_message(Graph(), ACL['not-understood'], sender=AgenteTransportista2.uri, msgcnt=mss_cnt)
             else:
-                gr = build_message(Graph(), ACL['not-understood'], sender=AgenteAlmacen.uri, msgcnt=mss_cnt)
+                gr = build_message(Graph(), ACL['not-understood'], sender=AgenteTransportista2.uri, msgcnt=mss_cnt)
 
     mss_cnt += 1
-    logger.info('Confirmamos que se ha relizado el envio')
+    logger.info('Enviamos el precio del envio de nuestro transportista')
     return gr.serialize(format='xml')
-
-def confirmaEnvio(msgdic):
-    global mss_cnt
-    gmess = Graph()
-    sj_contenido = MSG[AgenteAlmacen.name + '-Confirmacion_envio-' + str(mss_cnt)]
-    gmess.add((sj_contenido, RDF.type, AM2.Confirmacion_envio))
-    gr = build_message(gmess,
-        ACL['inform-done'],
-        sender=AgenteAlmacen.uri,
-        msgcnt=mss_cnt,
-        content=sj_contenido,
-        receiver=msgdic['sender'])
-    logger.info('Confirmacion Envio')
-    return gr
-
-def negociaEnvio():
-    logger.info('Negociando el envio con transportistas')
-    global mss_cnt
-    gmess = Graph()
-    sj_contenido = MSG[AgenteAlmacen.name + '-Pedir_precio_envio-' + str(mss_cnt)]
-    gmess.add((sj_contenido, RDF.type, AM2.Pedir_precio_envio))
-    agentesTransportistas = directory_search_agent(DSO.AgenteTransportista,AgenteAlmacen,DirectoryAgent,mss_cnt)
-    mejorOferta = sys.maxint
-    for agenteTransportista in agentesTransportistas:
-        grm = build_message(gmess,
-            perf=ACL.request,
-            sender=AgenteAlmacen.uri,
-            receiver=agenteTransportista.uri,
-            content=sj_contenido,
-            msgcnt=mss_cnt)
-        gr = send_message(grm,agenteTransportista.address)
-        sj_precios = gr.value(predicate = RDF.type, object = AM2['Precios_envio'])
-        precio = gr.value(sj_precios,AM2.precioEnvioTransportista)
-        if int(precio)<mejorOferta:
-            mejorOferta = int(precio)
-            agenteElegido = agenteTransportista
-        logger.info(mejorOferta)
-    logger.info(agenteElegido.name)
-    
 
 
 @app.route("/Stop")
@@ -223,7 +187,7 @@ def agentbehavior1(cola):
     """
     global mss_cnt
     logger.info('Nos registramos en el servicio de registro')
-    register_message(DSO.AgenteAlmacen,AgenteAlmacen,DirectoryAgent,mss_cnt)
+    register_message(DSO.AgenteTransportista,AgenteTransportista2,DirectoryAgent,mss_cnt)
     fin = False
     # while not fin:
     #     while cola.empty():

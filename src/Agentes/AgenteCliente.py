@@ -129,7 +129,7 @@ def comprar(request):
 
         gmess.add((sj_contenido, AM2.Productos, URIRef(productSubject)))
 
-    vendedor = directory_search_agent(DSO.AgenteVentaProductos,AgenteCliente,DirectoryAgent,mss_cnt)
+    vendedor = directory_search_agent(DSO.AgenteVentaProductos,AgenteCliente,DirectoryAgent,mss_cnt)[0]
     msg = build_message(gmess, perf=ACL.request,
                 sender=AgenteCliente.uri,
                 receiver=vendedor.uri,
@@ -188,7 +188,7 @@ def mostrarProductosFiltrados(request):
         gmess.add((sj_precio, AM2.precioMaxRestriccion, Literal(precio))) 
         gmess.add((sj_contenido, AM2.Restricciones_clientes, URIRef(sj_precio)))
     
-    mostrador = directory_search_agent(DSO.AgenteMostrarProductos,AgenteCliente,DirectoryAgent,mss_cnt)
+    mostrador = directory_search_agent(DSO.AgenteMostrarProductos,AgenteCliente,DirectoryAgent,mss_cnt)[0]
     msg = build_message(gmess, perf=ACL.request,
                 sender=AgenteCliente.uri,
                 receiver=mostrador.uri,
@@ -279,7 +279,6 @@ def agentbehavior1():
     logger.info('Nos registramos en el servicio de registro')
     gr = register_message(DSO.AgenteCliente,AgenteCliente,DirectoryAgent,mss_cnt)
     
-
 
     # Ahora mandamos un objeto de tipo request mandando una accion de tipo Search
     # que esta en una supuesta ontologia de acciones de agentes
