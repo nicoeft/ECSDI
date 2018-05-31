@@ -280,7 +280,6 @@ def agentbehavior1():
     gr = register_message(DSO.AgenteCliente,AgenteCliente,DirectoryAgent,mss_cnt)
     
 
-
     # Ahora mandamos un objeto de tipo request mandando una accion de tipo Search
     # que esta en una supuesta ontologia de acciones de agentes
     #gr_productos = infoagent_search_message(AgenteMostrarProductos.address,AgenteMostrarProductos.uri)

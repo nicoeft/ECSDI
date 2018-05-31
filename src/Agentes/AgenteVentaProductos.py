@@ -175,6 +175,19 @@ def comunicacion():
                         content=sj_contenido,
                         msgcnt=mss_cnt)
                     gr = send_message(grm,agenteLogistico.address)
+
+                    print("Aquiii!")
+                    # gmess2 = Graph()
+                    # sj_contenido = MSG[AgenteVentaProductos.name + '-Peticion_recibida-' + str(mss_cnt)]
+                    # gmess2.add((sj_contenido, RDF.type, AM2.Peticion_recibida))
+                    # gr = build_message(gmess2,
+                    #     ACL['inform-done'],
+                    #     sender=AgenteVentaProductos.uri,
+                    #     msgcnt=mss_cnt,
+                    #     content=sj_contenido,
+                    #     receiver=msgdic['sender'])
+                    
+                    # gr = build_message(Graph(), ACL['not-understood'], sender=AgenteVentaProductos.uri, msgcnt=mss_cnt)
                     logger.info('Se ha enviado al centro logístico la solicitud de envio')
                 else:
                     gr = build_message(Graph(), ACL['not-understood'], sender=AgenteVentaProductos.uri, msgcnt=mss_cnt)
