@@ -15,7 +15,7 @@ import argparse
 
 from flask import Flask, request
 from rdflib import Graph, Namespace, Literal
-from rdflib.namespace import FOAF, RDF
+from rdflib.namespace import FOAF, RDF, XSD
 
 from AgentUtil.OntoNamespaces import ACL, DSO, AM2, RESTRICTION
 from AgentUtil.FlaskServer import shutdown_server
@@ -131,44 +131,105 @@ def getProducts(gr):
             print('restricciones: %s | %s | %s'%(s2,p2,o2))
             modelo = Literal(o2)
 
-    productsGraph = products
+    productsGraph = buscaProductos(marca, nombre, tipoProducto, modelo)
 
-    if marca != None:
-        marcaGraph = Graph()
-        for s in products.subjects(AM2.Marca,marca):
-            #print ('--> %s %s %s'%(s,p,o))
-            marcaGraph += products.triples((s,None,None))
-            # for s2,p2,o2 in products.triples((s,None,None)):
-            #     marcaGraph.add((s2,p2,o2))
-        productsGraph = productsGraph & marcaGraph
+    # if marca != None:
+    #     marcaGraph = Graph()
+    #     for s in products.subjects(AM2.Marca,marca):
+    #         #print ('--> %s %s %s'%(s,p,o))
+    #         marcaGraph += products.triples((s,None,None))
+    #         # for s2,p2,o2 in products.triples((s,None,None)):
+    #         #     marcaGraph.add((s2,p2,o2))
+    #     productsGraph = productsGraph & marcaGraph
     
-    if tipoProducto != None:
-        tipoProductoGraph = Graph()
-        for s in products.subjects(AM2.TipoProducto,tipoProducto):
-            tipoProductoGraph += products.triples((s,None,None))
-            # for s2,p2,o2 in products.triples((s,None,None)):
-            #     tipoProductoGraph.add((s2,p2,o2))
-        productsGraph = productsGraph & tipoProductoGraph
+    # if tipoProducto != None:
+    #     tipoProductoGraph = Graph()
+    #     for s in products.subjects(AM2.TipoProducto,tipoProducto):
+    #         tipoProductoGraph += products.triples((s,None,None))
+    #         # for s2,p2,o2 in products.triples((s,None,None)):
+    #         #     tipoProductoGraph.add((s2,p2,o2))
+    #     productsGraph = productsGraph & tipoProductoGraph
     
-    if modelo != None:
-        modeloGraph = Graph()
-        for s in products.subjects(AM2.Modelo,modelo):
-            #print ('--> %s %s %s'%(s,p,o))
-            modeloGraph += products.triples((s,None,None))
-            # for s2,p2,o2 in products.triples((s,None,None)):
-            #     modeloGraph.add((s2,p2,o2))
-        productsGraph = productsGraph & modeloGraph
+    # if modelo != None:
+    #     modeloGraph = Graph()
+    #     for s in products.subjects(AM2.Modelo,modelo):
+    #         #print ('--> %s %s %s'%(s,p,o))
+    #         modeloGraph += products.triples((s,None,None))
+    #         # for s2,p2,o2 in products.triples((s,None,None)):
+    #         #     modeloGraph.add((s2,p2,o2))
+    #     productsGraph = productsGraph & modeloGraph
     
-    if nombre != None:
-        nombreGraph = Graph()
-        for s in products.subjects(AM2.Nombre,nombre):
-            # print ('pasdf--> %s %s %s'%(s,p,o))
-            nombreGraph += products.triples((s,None,None))
-            # for s2,p2,o2 in products.triples((s,None,None)):
-            #     nombreGraph.add((s2,p2,o2))
-        productsGraph = productsGraph & nombreGraph
+    # if nombre != None:
+    #     nombreGraph = Graph()
+    #     for s in products.subjects(AM2.Nombre,nombre):
+    #         # print ('pasdf--> %s %s %s'%(s,p,o))
+    #         nombreGraph += products.triples((s,None,None))
+    #         # for s2,p2,o2 in products.triples((s,None,None)):
+    #         #     nombreGraph.add((s2,p2,o2))
+    #     productsGraph = productsGraph & nombreGraph
 
     return productsGraph
+
+def buscaProductos(marca, nombre, tipoProducto, modelo):
+    global products
+
+    afegit = False
+
+    query= """
+        prefix RDF:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        prefix AM2:<http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#>
+        SELECT DISTINCT ?producto ?id ?nombre ?tipoProducto ?precio ?modelo ?marca
+        where{
+            ?producto RDF:type AM2:Producto .
+            ?producto AM2:Id ?id .
+            ?producto AM2:Nombre ?nombre . 
+            ?producto AM2:TipoProducto ?tipoProducto .
+            ?producto AM2:Precio ?precio .
+            ?producto AM2:Modelo ?modelo .
+            ?producto AM2:Marca ?marca .
+            FILTER("""
+    if marca is not None:
+        query+= """str(?marca) = '""" + marca +"""'"""
+        afegit = True
+    if nombre is not None:
+        if afegit == True:
+            query+= """ && """
+        query+= """str(?nombre) = '""" + nombre +"""'"""
+        afegit = True
+    if tipoProducto is not None:
+        if afegit == True:
+            query+= """ && """
+        query+= """str(?tipoProducto) = '""" + tipoProducto +"""'"""
+        afegit = True
+    if modelo is not None:
+        if afegit == True:
+            query+= """ && """
+        query+= """str(?modelo) = '""" + modelo +"""'"""
+        afegit = True
+    
+    query+= """ )} """
+
+    graph_result = products.query(query)
+    result = Graph()
+    result.bind('AM2', AM2)
+    for row in graph_result:
+        Id = row.id
+        Name = row.nombre
+        Type = row.tipoProducto
+        Price = row.precio
+        Model = row.modelo
+        Brand = row.marca
+        print('Dintreeeee %s ' %(Id))
+        sujeto = row.producto
+        result.add((sujeto, RDF.type, AM2.Producto))
+        result.add((sujeto,AM2.Id,Literal(Id, datatype=XSD.int)))
+        result.add((sujeto,AM2.Nombre,Literal(Name, datatype=XSD.string)))
+        result.add((sujeto,AM2.TipoProducto,Literal(Type, datatype=XSD.string)))
+        result.add((sujeto,AM2.Precio,Literal(Price, datatype=XSD.int)))
+        result.add((sujeto,AM2.Modelo,Literal(Model, datatype=XSD.string)))
+        result.add((sujeto,AM2.Marca,Literal(Brand, datatype=XSD.string)))
+
+    return result
 
 def initProducts():
     global products
@@ -183,6 +244,7 @@ def initProducts():
     subjectProducto2 = AM2['Televisor_1']
     products.add((subjectProducto2, RDF.type, AM2.Producto))
     products.add((subjectProducto2, AM2.Id, Literal("2")))
+    products.add((subjectProducto2, AM2.Marca, Literal('Sony')))
     products.add((subjectProducto2, AM2.Nombre, Literal("Televisor")))
     products.add((subjectProducto2, AM2.TipoProducto, Literal("Electronica")))
     products.add((subjectProducto2, AM2.Precio, Literal(300)))
