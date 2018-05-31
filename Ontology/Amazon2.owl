@@ -37,10 +37,10 @@
         <Class IRI="#Devolucion"/>
     </Declaration>
     <Declaration>
-        <ObjectProperty IRI="#enviaLote"/>
+        <DataProperty IRI="#nombreRestriccion"/>
     </Declaration>
     <Declaration>
-        <DataProperty IRI="#nombreRestriccion"/>
+        <ObjectProperty IRI="#enviaLote"/>
     </Declaration>
     <Declaration>
         <DataProperty IRI="#Marca"/>
@@ -80,6 +80,9 @@
     </Declaration>
     <Declaration>
         <ObjectProperty IRI="#tieneRestriccion"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Televisor4K-2"/>
     </Declaration>
     <Declaration>
         <ObjectProperty IRI="#cumpleRestriccion"/>
@@ -142,6 +145,9 @@
         <Class IRI="#Restricciones_cliente"/>
     </Declaration>
     <Declaration>
+        <NamedIndividual IRI="#NikeAirMax-1"/>
+    </Declaration>
+    <Declaration>
         <DataProperty IRI="#Nombre"/>
     </Declaration>
     <Declaration>
@@ -175,6 +181,9 @@
         <Class IRI="#Envio_externo"/>
     </Declaration>
     <Declaration>
+        <NamedIndividual IRI="#TelevisorHD-1"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#Producto_devuelto"/>
     </Declaration>
     <Declaration>
@@ -190,7 +199,13 @@
         <DataProperty IRI="#tieneFecha"/>
     </Declaration>
     <Declaration>
+        <DataProperty IRI="#Valoracion"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#Razon_devolucion"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Modelo"/>
     </Declaration>
     <Declaration>
         <ObjectProperty IRI="#peticionDevolucionTiene"/>
@@ -317,6 +332,9 @@
     </Declaration>
     <Declaration>
         <ObjectProperty IRI="#devolucionProductoConfirmado"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Telvisor4K-1"/>
     </Declaration>
     <Declaration>
         <DataProperty IRI="#motivo"/>
@@ -456,6 +474,122 @@
         <Class IRI="#Toca_enviar_recomendacion"/>
         <Class IRI="#Mensaje"/>
     </SubClassOf>
+    <ClassAssertion>
+        <Class IRI="#Producto"/>
+        <NamedIndividual IRI="#NikeAirMax-1"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Producto"/>
+        <NamedIndividual IRI="#Televisor4K-2"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Producto"/>
+        <NamedIndividual IRI="#TelevisorHD-1"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Producto"/>
+        <NamedIndividual IRI="#Telvisor4K-1"/>
+    </ClassAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Marca"/>
+        <NamedIndividual IRI="#NikeAirMax-1"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">Nike</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Modelo"/>
+        <NamedIndividual IRI="#NikeAirMax-1"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">AirMax</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Nombre"/>
+        <NamedIndividual IRI="#NikeAirMax-1"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">Zapatilla</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Precio"/>
+        <NamedIndividual IRI="#NikeAirMax-1"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#double">80.0</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#TipoProducto"/>
+        <NamedIndividual IRI="#NikeAirMax-1"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">Ropa</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Marca"/>
+        <NamedIndividual IRI="#Televisor4K-2"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">Samsung</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Modelo"/>
+        <NamedIndividual IRI="#Televisor4K-2"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">HK990M</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Nombre"/>
+        <NamedIndividual IRI="#Televisor4K-2"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">Televisor</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Precio"/>
+        <NamedIndividual IRI="#Televisor4K-2"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#double">1200.0</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#TipoProducto"/>
+        <NamedIndividual IRI="#Televisor4K-2"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">Electronica</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Marca"/>
+        <NamedIndividual IRI="#TelevisorHD-1"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">LG</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Modelo"/>
+        <NamedIndividual IRI="#TelevisorHD-1"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">AZ23-45</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Nombre"/>
+        <NamedIndividual IRI="#TelevisorHD-1"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">Televisor</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Precio"/>
+        <NamedIndividual IRI="#TelevisorHD-1"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#double">400.0</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#TipoProducto"/>
+        <NamedIndividual IRI="#TelevisorHD-1"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">Electronica</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Marca"/>
+        <NamedIndividual IRI="#Telvisor4K-1"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">Samsung</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Modelo"/>
+        <NamedIndividual IRI="#Telvisor4K-1"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">HK2345Z</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Nombre"/>
+        <NamedIndividual IRI="#Telvisor4K-1"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#string">Televisor</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#Precio"/>
+        <NamedIndividual IRI="#Telvisor4K-1"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#double"></Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#TipoProducto"/>
+        <NamedIndividual IRI="#Telvisor4K-1"/>
+        <Literal datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">Electronica</Literal>
+    </DataPropertyAssertion>
     <SubObjectPropertyOf>
         <ObjectProperty IRI="#resultadoDevolucion"/>
         <ObjectProperty abbreviatedIRI="owl:topObjectProperty"/>
@@ -781,6 +915,10 @@
         <Class IRI="#Producto"/>
     </DataPropertyDomain>
     <DataPropertyDomain>
+        <DataProperty IRI="#Modelo"/>
+        <Class IRI="#Producto"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
         <DataProperty IRI="#Nombre"/>
         <Class IRI="#Producto"/>
     </DataPropertyDomain>
@@ -790,6 +928,10 @@
     </DataPropertyDomain>
     <DataPropertyDomain>
         <DataProperty IRI="#TipoProducto"/>
+        <Class IRI="#Producto"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#Valoracion"/>
         <Class IRI="#Producto"/>
     </DataPropertyDomain>
     <DataPropertyDomain>
@@ -837,6 +979,10 @@
         <Datatype abbreviatedIRI="xsd:string"/>
     </DataPropertyRange>
     <DataPropertyRange>
+        <DataProperty IRI="#Modelo"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
         <DataProperty IRI="#Nombre"/>
         <Datatype abbreviatedIRI="xsd:string"/>
     </DataPropertyRange>
@@ -847,6 +993,10 @@
     <DataPropertyRange>
         <DataProperty IRI="#TipoProducto"/>
         <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#Valoracion"/>
+        <Datatype abbreviatedIRI="xsd:int"/>
     </DataPropertyRange>
     <DataPropertyRange>
         <DataProperty IRI="#fechaPedido"/>
