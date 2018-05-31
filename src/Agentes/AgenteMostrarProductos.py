@@ -134,44 +134,38 @@ def getProducts(gr):
 
     if marca != None:
         marcaGraph = Graph()
-        for s,p,o in products.triples((None,AM2.Marca,marca)):
+        for s in products.subjects(AM2.Marca,marca):
             #print ('--> %s %s %s'%(s,p,o))
-            for s2,p2,o2 in products.triples((s,None,None)):
-                marcaGraph.add((s2,p2,o2))
+            marcaGraph += products.triples((s,None,None))
+            # for s2,p2,o2 in products.triples((s,None,None)):
+            #     marcaGraph.add((s2,p2,o2))
         productsGraph = productsGraph & marcaGraph
     
     if tipoProducto != None:
         tipoProductoGraph = Graph()
-        for s,p,o in products.triples((None,AM2.TipoProducto,tipoProducto)):
-            for s2,p2,o2 in products.triples((s,None,None)):
-                tipoProductoGraph.add((s2,p2,o2))
+        for s in products.subjects(AM2.TipoProducto,tipoProducto):
+            tipoProductoGraph += products.triples((s,None,None))
+            # for s2,p2,o2 in products.triples((s,None,None)):
+            #     tipoProductoGraph.add((s2,p2,o2))
         productsGraph = productsGraph & tipoProductoGraph
     
     if modelo != None:
         modeloGraph = Graph()
-        for s,p,o in products.triples((None,AM2.Modelo,modelo)):
+        for s in products.subjects(AM2.Modelo,modelo):
             #print ('--> %s %s %s'%(s,p,o))
-            for s2,p2,o2 in products.triples((s,None,None)):
-                modeloGraph.add((s2,p2,o2))
+            modeloGraph += products.triples((s,None,None))
+            # for s2,p2,o2 in products.triples((s,None,None)):
+            #     modeloGraph.add((s2,p2,o2))
         productsGraph = productsGraph & modeloGraph
     
     if nombre != None:
-        # print("EEeEUU")
         nombreGraph = Graph()
-        # for s,p,o in productsGraph.triples((None,AM2.Nombre,Literal('Televisor'))):
-        #     print ('productsGraphaa--> %s %s %s'%(s,p,o))
-
-        for s,p,o in products.triples((None,AM2.Nombre,nombre)):
+        for s in products.subjects(AM2.Nombre,nombre):
             # print ('pasdf--> %s %s %s'%(s,p,o))
-            for s2,p2,o2 in products.triples((s,None,None)):
-                nombreGraph.add((s2,p2,o2))
+            nombreGraph += products.triples((s,None,None))
+            # for s2,p2,o2 in products.triples((s,None,None)):
+            #     nombreGraph.add((s2,p2,o2))
         productsGraph = productsGraph & nombreGraph
-
-    #for s,p,o in productsGraph:
-        # print ('kkkk -> %s %s %s'%(s,p,o))
-        #productsGraph.add((s,p,o))
-
-    # logger.info("EOO" + productsGraph)
 
     return productsGraph
 

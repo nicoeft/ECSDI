@@ -148,10 +148,16 @@ def comunicacion():
                 # Aqui realizariamos lo que pide la accion
                 if accion == AM2.Peticion_Compra:
                     # productsGraph = getProducts(gm)
+                    productsGraph = Graph()
 
+                    for s in gm.subjects(RDF.type,AM2["Producto"]):
+                        # print("Productos a comprar: %s | %s | %s"%(s,p,o))
+                        productsGraph += gm.triples((s,None,None))
+                    
                     # TODO: productos --> hay que tratarlos 
-                    for s,p,o in gm.triples((None,RDF.type,AM2["Producto"])):
-                        print("EOOO: %s | %s | %s"%(s,p,o))
+                    for s2,p2,o2 in productsGraph:
+                        print("Productos recibidos: %s | %s | %s"%(s2,p2,o2))
+
                     gmess = Graph()
                     sj_contenido = MSG[AgenteVentaProductos.name + '-Solicitud_envio-' + str(mss_cnt)]
                     gmess.add((sj_contenido, RDF.type, AM2.Solicitud_envio))
