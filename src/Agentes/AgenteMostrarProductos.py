@@ -240,6 +240,9 @@ def initProducts():
     products.add((subjectProducto, AM2.Nombre, Literal("DVD")))
     products.add((subjectProducto, AM2.TipoProducto, Literal("Electronica")))
     products.add((subjectProducto, AM2.Precio, Literal(50)))
+    products.add((subjectProducto, AM2.Modelo, Literal('250MBS')))
+    products.add((subjectProducto, AM2.Marca, Literal('Kingston')))
+
 
     subjectProducto2 = AM2['Televisor_1']
     products.add((subjectProducto2, RDF.type, AM2.Producto))

@@ -121,7 +121,7 @@ def comprar(request):
     # gmess.add((sujetoProductos,))
     for id in request.form.getlist('productsToBuy'):
         # print("Ids: %s"%id)
-        productSubject = current_products.value(predicate=AM2.Id, object=Literal(id))
+        productSubject = current_products.value(predicate=AM2.Id, object=Literal(id, datatype=XSD.int))
 
         gmess.add((productSubject, RDF.type, AM2['Producto'])) 
 
