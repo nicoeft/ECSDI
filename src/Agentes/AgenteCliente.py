@@ -106,6 +106,15 @@ def browser_busca():
             return mostrarProductosFiltrados(request)
         elif request.form['submit'] == 'Comprar':
             return comprar(request)
+        elif request.form['submit'] == 'Devoluciones':
+            return devoluciones(request)
+
+def devoluciones(request):
+    product_list = request.form.getlist('productos')
+    print(product_list)
+    return render_template('cestaCompra.html',devolucion=True, products=product_list)
+
+
 
 def comprar(request):
     global mss_cnt
