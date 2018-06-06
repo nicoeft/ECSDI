@@ -104,7 +104,7 @@ def browser_busca():
         # Hacer peticion de busqueda de productos con las restricciones del form
         if request.form['submit'] == 'Buscar':
             return mostrarProductosFiltrados(request)
-        else:
+        elif request.form['submit'] == 'Comprar':
             return comprar(request)
 
 def comprar(request):
@@ -139,11 +139,12 @@ def comprar(request):
     gr = send_message(msg, vendedor.address)
     print("message SENT")
     mss_cnt += 1
-    msgdic = get_message_properties(gr)
-    content = msgdic['content']
-    accion = gr.value(subject=content, predicate=RDF.type)
-    logger.info(accion)
-    return accion
+    #msgdic = get_message_properties(gr)
+    #content = msgdic['content']
+    #accion = gr.value(subject=content, predicate=RDF.type)
+    #logger.info(accion)
+    product_list = getProductListFromGraph(gr)
+    return render_template('cestaCompra.html', products=product_list)
 
 def mostrarProductosFiltrados(request):
     global mss_cnt
@@ -197,6 +198,13 @@ def mostrarProductosFiltrados(request):
     current_products = send_message(msg, mostrador.address)
     mss_cnt += 1
     logger.info('Recibimos respuesta a la peticion al servicio de informacion')
+    
+    
+    product_list = getProductListFromGraph(current_products)
+
+    return render_template('busquedaYCompra.html', products=product_list)
+
+def getProductListFromGraph(current_products):
     index = 0
     subject_pos = {}
     product_list = []
@@ -220,8 +228,7 @@ def mostrarProductosFiltrados(request):
             elif p == AM2.TipoProducto:
                 subject_dict['tipo'] = o
             product_list[subject_pos[s]] = subject_dict
-
-    return render_template('busquedaYCompra.html', products=product_list)
+    return product_list
 
 
 @app.route("/iface", methods=['GET', 'POST'])
@@ -288,7 +295,6 @@ def comunicacion():
                 if accion == AM2.Emitir_factura:
                     logger.info('Mostrando factura con detalles del envio')
                     gr = build_message(Graph(), ACL['not-understood'], sender=AgenteCliente.uri, msgcnt=mss_cnt)
-
                 else:
                     gr = build_message(Graph(), ACL['not-understood'], sender=AgenteCliente.uri, msgcnt=mss_cnt)
 

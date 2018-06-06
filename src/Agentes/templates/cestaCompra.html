@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Amazon 2 </title>
+</head>
+<body>
+    {% if not devolucion %}
+    <h1>Cesta de productos comprados</h1>
+    <table cellpadding="5px">
+        {% set total = [0] %}
+        <tr>
+            <th><b>ID</b></th>
+            <th><b>NOMBRE</b></th>
+            <th><b>TIPO</b></th>
+            <th><b>MARCA</b></th>
+            <th><b>MODELO</b></th>
+            <th><b>PRECIO</b></th>
+        </tr>
+        {% for item in products %}
+            <tr>
+            {% if item.id %}
+                <td>{{ item.id }}</td>
+                <td>{{ item.nombre }}</td>
+                <td>{{ item.tipo }}</td>
+                <td>{{ item.marca }}</td>
+                <td>{{ item.modelo }}</td>
+                <td>{{ item.precio }}</td> 
+                {% set _ = total.append(total.pop() + item.precio|int) %}
+            {% endif %}
+            </tr>
+        {% endfor %}
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th padding-left:50px;><b>TOTAL</b></th>
+        </tr>
+        <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th ><b>{{ total[0] }}</b></th>
+        </tr>
+    </table>
+    <p><b>En breves recibira los detalles del envio, gracias por comprar en AMAZON2</b></p>
+    <pre>
+    Si quieres devolver 
+       algun producto
+    click en Devoluciones</pre>
+    <form method="post">
+        <input type="submit" name="submit" value="Devoluciones">
+    </form>
+    {% else %}
+    <h1>Devolver Productos</h1>
+        <form method="post">
+            <table cellpadding="5px">
+                <tr>
+                    <th><b>ID</b></th>
+                    <th><b>NOMBRE</b></th>
+                    <th><b>TIPO</b></th>
+                    <th><b>MARCA</b></th>
+                    <th><b>MODELO</b></th>
+                    <th><b>PRECIO</b></th>
+                </tr>
+                {% for item in products %}
+                    <tr>
+                    {% if item.id %}
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.nombre }}</td>
+                        <td>{{ item.tipo }}</td>
+                        <td>{{ item.marca }}</td>
+                        <td>{{ item.modelo }}</td>
+                        <td>{{ item.precio }}</td>
+                        <td><input type="checkbox" name="productsToReturn" value="{{ item.id }}"></td>
+                    {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+            <input type="submit" name="submit" value="Devolver">
+        </form>
+    {% endif %}
+</body>
+</html>

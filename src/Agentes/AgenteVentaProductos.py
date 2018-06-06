@@ -181,6 +181,7 @@ def comunicacion():
                     gmess2 = Graph()
                     sj_contenido = MSG[AgenteVentaProductos.name + '-Confirmacion_cesta-' + str(mss_cnt)]
                     gmess2.add((sj_contenido, RDF.type, AM2.Confirmacion_cesta))
+                    gmess2 += productsGraph
                     gr = build_message(gmess2,
                         ACL['inform-done'],
                         sender=AgenteVentaProductos.uri,
