@@ -273,7 +273,14 @@ def agentbehavior1(cola):
             fin = True
         else:
             gr = send_message(v,agenteLogistico.address)
-            # TODO: send message to client
+            envioInterno = gr.value(predicate=RDF.type,object=AM2.Confirmacion_envio)
+            envioExterno = gr.value(predicate=RDF.type,object=AM2.Confirmacion_envio_externo)
+            
+            #feo pero testesando
+            if envioInterno != None:
+                logger.info("Se ha confirmado un envio INTERNO")
+            if envioExterno != None:
+                logger.info("Se ha confirmado un envio EXTERNO")
 
             print("Recibida! %s "%gr)
             gmess = Graph()

@@ -139,27 +139,35 @@ def comunicacion():
 
                 if accion == AM2.Solicitud_envio: 
 
-                    products = Graph()
-                    
+                    productsInternos = Graph()
+                    productsExternos = Graph()
                     # Productos recibidos
+                    hayExterno = False
                     for s in gm.subjects(RDF.type,AM2["Producto"]):
-                        products += gm.triples((s,None,None))
+                        tipoEnvio = gm.value(s,AM2.TipoEnvio)
+                        if str(tipoEnvio) == 'Interno':
+                            productsInternos += gm.triples((s,None,None))
+                        else:
+                            hayExterno = True
+                            productsExternos += gm.triples((s,None,None))
+                    if hayExterno:
+                        gr = confirmaEnvio(msgdic,productsExternos)
                         # for s2,p,o in gm.triples((s,None,None)):
                         #     print("Productos a Enviar: %s | %s | %s"%(s2,p,o))
-
-                    gmess = Graph()
-                    sj_contenido = MSG[AgenteLogistico.name + '-Realiza_envio-' + str(mss_cnt)]
-                    gmess.add((sj_contenido, RDF.type, AM2.Realiza_envio))
-                    gmess += products
-                    agenteAlmacen = directory_search_agent(DSO.AgenteAlmacen,AgenteLogistico,DirectoryAgent,mss_cnt)[0]
-                    grm = build_message(gmess,
-                        perf=ACL.request,
-                        sender=AgenteLogistico.uri,
-                        receiver=agenteAlmacen.uri,
-                        content=sj_contenido,
-                        msgcnt=mss_cnt)
-                    gr = send_message(grm,agenteAlmacen.address)
-                    logger.info('Se ha informado al almacen que para realizar envio')
+                    else:
+                        gmess = Graph()
+                        sj_contenido = MSG[AgenteLogistico.name + '-Realiza_envio-' + str(mss_cnt)]
+                        gmess.add((sj_contenido, RDF.type, AM2.Realiza_envio))
+                        gmess += productsInternos
+                        agenteAlmacen = directory_search_agent(DSO.AgenteAlmacen,AgenteLogistico,DirectoryAgent,mss_cnt)[0]
+                        grm = build_message(gmess,
+                            perf=ACL.request,
+                            sender=AgenteLogistico.uri,
+                            receiver=agenteAlmacen.uri,
+                            content=sj_contenido,
+                            msgcnt=mss_cnt)
+                        gr = send_message(grm,agenteAlmacen.address)
+                        logger.info('Se ha informado al almacen que para realizar envio')
                 else:
                     gr = build_message(Graph(), ACL['not-understood'], sender=AgenteLogistico.uri, msgcnt=mss_cnt)
             else:
@@ -169,6 +177,20 @@ def comunicacion():
     logger.info('Respondemos a la solicitud de envio')
     return gr.serialize(format='xml')
 
+def confirmaEnvio(msgdic,productsExternos):
+    global mss_cnt
+    gmess = Graph()
+    sj_contenido = MSG[AgenteLogistico.name + '-Confirmacion_envio_externo-' + str(mss_cnt)]
+    gmess.add((sj_contenido, RDF.type, AM2.Confirmacion_envio_externo))
+    gmess += productsExternos
+    gr = build_message(gmess,
+        ACL['inform-done'],
+        sender=AgenteLogistico.uri,
+        msgcnt=mss_cnt,
+        content=sj_contenido,
+        receiver=msgdic['sender'])
+    logger.info('Confirmacion Envio Externo')
+    return gr
 
 @app.route("/Stop")
 def stop():
