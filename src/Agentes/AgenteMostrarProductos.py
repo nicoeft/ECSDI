@@ -137,11 +137,8 @@ def getProducts(gr):
 def buscaProductos(marca, nombre, tipoProducto, modelo, precioMax):
 
     products = Graph()
-    ontologyFile = open('../../Ontology/Amazon2Turtle.owl')
+    ontologyFile = open('../datos/productos')
     products.parse(ontologyFile, format='turtle')
-
-    for s2,p2,o2 in products:
-        print('restricciones: %s | %s | %s'%(s2,p2,o2))
 
     afegit = False
 
