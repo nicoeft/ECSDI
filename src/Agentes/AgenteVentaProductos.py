@@ -44,7 +44,7 @@ logger = config_logger(level=1)
 
 # Configuration stuff
 hostname = socket.gethostname()
-port = 9010
+port = 9012
 
 # parsing de los parametros de la linea de comandos
 args = parser.parse_args()
