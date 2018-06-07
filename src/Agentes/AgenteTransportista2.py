@@ -149,6 +149,23 @@ def comunicacion():
                         content=sj_contenido,
                         receiver=msgdic['sender'])
                     logger.info('Precio del envio Transportista 2')
+                elif accion == AM2.Contraoferta_envio:
+                    logger.info('Contraoferta de precio de envio recibida')
+                    gmess = Graph()
+                    sj_contenido = MSG[AgenteTransportista2.name + '-Precios_envio-' + str(mss_cnt)]
+                    gmess.add((sj_contenido, RDF.type, AM2.Confirmacion_envio))
+                    sj_nombre = AM2['Transportista2-Precios_envio-' + str(mss_cnt)] #creamos una instancia con nombre Modelo1..2.
+                    gmess.add((sj_nombre, RDF.type, AM2['Precios_envio'])) # indicamos que es de tipo Modelo
+                    gmess.add((sj_nombre, AM2.precioEnvioTransportista, Literal(900))) #le damos valor a su data property (precio hardcoded)
+                    #añadimos el modelo al conenido con su object property
+                    gmess.add((sj_contenido, AM2.Precios_envio, URIRef(sj_nombre)))
+                    gr = build_message(gmess,
+                        ACL['inform-done'],
+                        sender=AgenteTransportista2.uri,
+                        msgcnt=mss_cnt,
+                        content=sj_contenido,
+                        receiver=msgdic['sender'])
+                    logger.info('Contraoferta del envio Transportista 2')
                 else:
                     gr = build_message(Graph(), ACL['not-understood'], sender=AgenteTransportista2.uri, msgcnt=mss_cnt)
             else:

@@ -19,8 +19,9 @@ from multiprocessing import Process, Queue
 import socket
 import argparse
 import sys
+import time
 
-from rdflib import Namespace, Graph,Literal
+from rdflib import Namespace, Graph,Literal, URIRef
 from rdflib.namespace import FOAF, RDF
 from flask import Flask, request
 
@@ -145,6 +146,7 @@ def comunicacion():
                         print("Procesando productos: %s | %s | %s"%(s,p,o))
 
                     negociaEnvio()
+                    time.sleep(10) #Hacemos que tarde un tiempo en procesar antes de confirmar el envio
                     gr = confirmaEnvio(msgdic)
                 else:
                     gr = build_message(Graph(), ACL['not-understood'], sender=AgenteAlmacen.uri, msgcnt=mss_cnt)
@@ -190,8 +192,43 @@ def negociaEnvio():
         if int(precio)<mejorOferta:
             mejorOferta = int(precio)
             agenteElegido = agenteTransportista
-        logger.info(mejorOferta)
-    logger.info(agenteElegido.name)
+    
+    transportistaContraoferta = contraOfertaEnvio(mejorOferta,agentesTransportistas)
+    if(agenteElegido.name != transportistaContraoferta.name):
+        logger.info("Se ha mejorado la oferta")
+    logger.info(transportistaContraoferta.name)
+
+def contraOfertaEnvio(mejorOferta, agentesTransportistas):
+    logger.info("Realizando Contraoferta")
+    gmess = Graph
+    precioContraoferta = mejorOferta -10
+    gmess = Graph()
+    sj_contenido = MSG[AgenteAlmacen.name + '-Contraoferta_envio-' + str(mss_cnt)]
+    gmess.add((sj_contenido, RDF.type, AM2.Contraoferta_envio))
+    sj_contraoferta = AM2['Contraoferta' + str(mss_cnt)]
+    gmess.add((sj_contraoferta, RDF.type, AM2['Contraoferta'])) 
+    gmess.add((sj_contraoferta, AM2.precioContraoferta, Literal(precioContraoferta))) 
+    gmess.add((sj_contenido, AM2.tieneContraoferta, URIRef(sj_contraoferta)))
+    for agenteTransportista in agentesTransportistas:
+        grm= build_message(gmess,
+            perf=ACL.request,
+            sender=AgenteAlmacen.uri,
+            receiver=agenteTransportista.uri,
+            content=sj_contenido,
+            msgcnt=mss_cnt)
+        gr = send_message(grm,agenteTransportista.address)
+        sj_precios = gr.value(predicate = RDF.type, object = AM2['Precios_envio'])
+        precio = gr.value(sj_precios,AM2.precioEnvioTransportista)
+        if int(precio)<mejorOferta:
+            mejorOferta = int(precio)
+            agenteElegidoContraoferta = agenteTransportista
+    return agenteElegidoContraoferta
+
+    
+    
+
+
+
     
 
 
