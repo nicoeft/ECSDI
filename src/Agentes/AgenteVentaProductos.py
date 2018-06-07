@@ -273,16 +273,15 @@ def agentbehavior1(cola):
             fin = True
         else:
             gr = send_message(v,agenteLogistico.address)
-            envioInterno = gr.value(predicate=RDF.type,object=AM2.Confirmacion_envio)
-            envioExterno = gr.value(predicate=RDF.type,object=AM2.Confirmacion_envio_externo)
-            
-            #feo pero testesando
-            if envioInterno != None:
-                logger.info("Se ha confirmado un envio INTERNO")
-            if envioExterno != None:
-                logger.info("Se ha confirmado un envio EXTERNO")
-
-            print("Recibida! %s "%gr)
+            msgdic = get_message_properties(gr)
+            content = msgdic['content']
+            confirmacion = gr.value(subject=content, predicate=RDF.type)
+            if confirmacion == AM2.Confirmacion_envio:
+                logger.info("Confirmacion del envio")
+            elif confirmacion == AM2.Confirmacion_envio_externo:
+                logger.info("Confirmacion del envio externo")
+            elif confirmacion == AM2.Confirmacion_envio_externo_interno:
+                logger.info("Confirmacion del envio externo e interno")
             gmess = Graph()
             sj_contenido = MSG[AgenteVentaProductos.name + '-Factura_Compra-' + str(mss_cnt)]
             gmess.add((sj_contenido, RDF.type, AM2.Emitir_factura))

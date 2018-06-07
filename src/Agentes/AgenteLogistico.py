@@ -143,14 +143,16 @@ def comunicacion():
                     productsExternos = Graph()
                     # Productos recibidos
                     hayExterno = False
+                    hayInterno = False
                     for s in gm.subjects(RDF.type,AM2["Producto"]):
                         tipoEnvio = gm.value(s,AM2.TipoEnvio)
                         if str(tipoEnvio) == 'Interno':
+                            hayInterno = True
                             productsInternos += gm.triples((s,None,None))
                         else:
                             hayExterno = True
                             productsExternos += gm.triples((s,None,None))
-                    if hayExterno:
+                    if hayExterno and not hayInterno:
                         gr = confirmaEnvio(msgdic,productsExternos)
                         # for s2,p,o in gm.triples((s,None,None)):
                         #     print("Productos a Enviar: %s | %s | %s"%(s2,p,o))
@@ -158,7 +160,6 @@ def comunicacion():
                         gmess = Graph()
                         sj_contenido = MSG[AgenteLogistico.name + '-Realiza_envio-' + str(mss_cnt)]
                         gmess.add((sj_contenido, RDF.type, AM2.Realiza_envio))
-                        gmess += productsInternos
                         agenteAlmacen = directory_search_agent(DSO.AgenteAlmacen,AgenteLogistico,DirectoryAgent,mss_cnt)[0]
                         grm = build_message(gmess,
                             perf=ACL.request,
@@ -168,6 +169,16 @@ def comunicacion():
                             msgcnt=mss_cnt)
                         gr = send_message(grm,agenteAlmacen.address)
                         logger.info('Se ha informado al almacen que para realizar envio')
+                        if hayExterno:
+                            gmess2 = Graph()
+                            sj_contenido = MSG[AgenteLogistico.name + '-Confirmacion_envio_externo_interno-' + str(mss_cnt)]
+                            gmess2.add((sj_contenido, RDF.type, AM2.Confirmacion_envio_externo_interno))
+                            gr = build_message(gmess2,
+                                ACL['inform-done'],
+                                sender=AgenteLogistico.uri,
+                                msgcnt=mss_cnt,
+                                content=sj_contenido,
+                                receiver=msgdic['sender'])       
                 else:
                     gr = build_message(Graph(), ACL['not-understood'], sender=AgenteLogistico.uri, msgcnt=mss_cnt)
             else:
