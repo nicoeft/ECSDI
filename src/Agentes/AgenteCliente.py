@@ -16,6 +16,8 @@ from __future__ import print_function
 from multiprocessing import Process
 import socket
 import argparse
+import json
+import re
 
 from flask import Flask, render_template, request
 from rdflib import Graph, Namespace, RDF, URIRef, Literal, XSD
@@ -99,6 +101,16 @@ DirectoryAgent = Agent('DirectoryAgent',
 # Global current_products triplestore
 current_products = Graph()
 
+# @app.route("/devolver/:id", methods=['GET', 'POST'])
+
+# def devoluciones(request):
+#     gr.parse(compras.txt)
+#     listProd = getProductListFromGraph(gr)
+#     for s in listProd:
+#         s[0] = s[0].strip(',')
+#         print("-------> %s"%(s))
+#     return render_template('cestaCompra.html',devolucion=True, products=listProd)
+
 
 @app.route("/busca", methods=['GET', 'POST'])
 def browser_busca():
@@ -115,13 +127,6 @@ def browser_busca():
             return mostrarProductosFiltrados(request)
         elif request.form['submit'] == 'Comprar':
             return comprar(request)
-        elif request.form['submit'] == 'Devoluciones':
-            return devoluciones(request)
-
-def devoluciones(request):
-    product_list = request.form.getlist('productos')
-    print(product_list)
-    return render_template('cestaCompra.html',devolucion=True, products=product_list)
 
 
 
@@ -219,7 +224,7 @@ def mostrarProductosFiltrados(request):
     
     
     product_list = getProductListFromGraph(current_products)
-
+    print("EEUUU: %s"%(product_list))
     return render_template('busquedaYCompra.html', products=product_list)
 
 def getProductListFromGraph(current_products):
@@ -312,7 +317,8 @@ def comunicacion():
                 # Aqui realizariamos lo que pide la accion
                 if accion == AM2.Emitir_factura:
                     logger.info('Mostrando factura con detalles del envio')
-                    gr = build_message(Graph(), ACL['not-understood'], sender=AgenteCliente.uri, msgcnt=mss_cnt)
+                    gr = build_message(Graph(), ACL['not-understood'], sender=AgenteCliente.uri, msgcnt=mss_cnt) #CAL retornar algo sempre?
+                    
                 else:
                     gr = build_message(Graph(), ACL['not-understood'], sender=AgenteCliente.uri, msgcnt=mss_cnt)
 
