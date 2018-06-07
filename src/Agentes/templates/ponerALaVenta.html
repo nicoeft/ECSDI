@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Amazon 2 </title>
+</head>
+<body>
+    <h1>Poner a la venta productos</h1>
+    {% if vendido == None %}
+        <form method="post">
+            <input type="text" name="nombre" placeholder="Nombre del producto"/><br>
+            <input type="text" name="tipoProducto" placeholder="Tipo del producto"/><br>
+            <input type="text" name="modelo" placeholder="Modelo del producto"/><br>
+            <input type="text" name="precio"  placeholder="Precio del producto..."/><br>
+            <input type="text" name="marca"  placeholder="Marca del producto..."/><br>
+            <li> Tipo de envio </li>
+            <input type="radio" name="tipoEnvio" value="Externo"> Externo <br>
+            <input type="radio" name="tipoEnvio" value="Interno"> Interno <br>
+            <input type="submit" name="submit" value="Poner a la venta">
+        </form>
+    {% else %}
+       <h2>Productos vendidos correctamente</h2>
+    {% endif %}
+</body>
+</html>

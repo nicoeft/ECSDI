@@ -109,7 +109,7 @@ def browser_vende():
     via un formulario
     """
     if request.method == 'GET':
-        return render_template('ponerALaVenta.html', products=None)
+        return render_template('ponerALaVenta.html', vendido = None)
 
     elif request.method == 'POST':
         # Hacer peticion de busqueda de productos con las restricciones del form
@@ -117,9 +117,45 @@ def browser_vende():
             return ponerALaVenta(request)
     
 def ponerALaVenta(request):
+    global mss_cnt
+
+    gmess = Graph()
+
+    sj_contenido = agn[AgenteVendedorExterno.name + 'Add_producto_externo' + str(mss_cnt)]
+
+    gmess.add((sj_contenido, RDF.type, AM2.Add_producto_externo))
+
+    nombre = request.form['nombre']
+    marca = request.form['marca']
+    tipoProducto = request.form['tipoProducto']
+    precio = request.form['precio']
+    modelo = request.form['modelo']
+    tipoEnvio = request.form['tipoEnvio']
+
+    if nombre and marca and tipoProducto and precio and modelo and tipoEnvio:
+        sujeto = AM2['Producto_externo' + str(mss_cnt)]
+        gmess.add((sujeto, RDF.type, AM2.Producto))
+        gmess.add((sujeto, AM2.Nombre, Literal(nombre)))
+        gmess.add((sujeto ,AM2.Marca, Literal(marca)))
+        gmess.add((sujeto, AM2.TipoProducto, Literal(tipoProducto)))
+        gmess.add((sujeto, AM2.Precio, Literal(precio)))
+        gmess.add((sujeto, AM2.Modelo, Literal(modelo)))
+        gmess.add((sujeto, AM2.TipoEnvio, Literal(tipoEnvio)))
+    else:
+        logger.info('Falta algun camp')
     
+    mostrador = directory_search_agent(DSO.AgenteProductosExternos,AgenteVendedorExterno,DirectoryAgent,mss_cnt)[0]
+    msg = build_message(gmess, perf=ACL.request,
+                sender=AgenteVendedorExterno.uri,
+                receiver=mostrador.uri,
+                content=sj_contenido,
+                msgcnt=mss_cnt)
+    puesto_a_la_venta = send_message(msg, mostrador.address)
+    mss_cnt += 1
 
+    logger.info('Recibimos respuesta a la peticion al servicio de informacion')
 
+    return render_template('ponerALaVenta.html', vendido = puesto_a_la_venta)
 
 @app.route("/Stop")
 def stop():

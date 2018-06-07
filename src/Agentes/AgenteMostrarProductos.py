@@ -95,8 +95,6 @@ products = Graph()
 
 
 def getProducts(gr):
-    global products
-
     marca = None
     precioMax = None
     tipoProducto = None
@@ -113,10 +111,6 @@ def getProducts(gr):
             print('restricciones: %s | %s | %s'%(s2,p2,o2))
             precioMax = Literal(o2)
             # Provar precio
-        
-        for s2,p2,o2 in gr.triples((s, AM2.valoracionRestriccion, None)):
-            print('restricciones: %s | %s | %s'%(s2,p2,o2))
-            valoracion = o2
                 
         for s2,p2,o2 in gr.triples((s, AM2.tipoProductoRestriccion, None)):
             print('restricciones: %s | %s | %s'%(s2,p2,o2))
@@ -130,15 +124,14 @@ def getProducts(gr):
             print('restricciones: %s | %s | %s'%(s2,p2,o2))
             modelo = Literal(o2)
 
-    productsGraph = buscaProductos(marca, nombre, tipoProducto, modelo, precioMax)
+    return buscaProductos(marca, nombre, tipoProducto, modelo, precioMax)
 
-    return productsGraph
 
 def buscaProductos(marca, nombre, tipoProducto, modelo, precioMax):
 
     products = Graph()
-    ontologyFile = open('../datos/productos')
-    products.parse(ontologyFile, format='turtle')
+    datosProductos = open('../datos/productos')
+    products.parse(datosProductos, format='turtle')
 
     afegit = False
     # products.serialize('../path', format='turtle') para guardar

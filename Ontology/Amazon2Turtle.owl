@@ -4,7 +4,7 @@
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#> .
+@base <http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2> .
 
 <http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2> rdf:type owl:Ontology .
 
@@ -281,6 +281,12 @@
 :Precio rdf:type owl:DatatypeProperty ;
         rdfs:domain :Producto ;
         rdfs:range xsd:double .
+
+
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Producto_added
+:Producto_added rdf:type owl:DatatypeProperty ;
+                rdfs:domain :Confirmacion_producto_externo_añadido ;
+                rdfs:range xsd:string .
 
 
 ###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#TipoEnvio
