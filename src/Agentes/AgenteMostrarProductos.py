@@ -99,7 +99,6 @@ def getProducts(gr):
 
     marca = None
     precioMax = None
-    valoracion = None
     tipoProducto = None
     nombre = None
     modelo = None
@@ -131,62 +130,36 @@ def getProducts(gr):
             print('restricciones: %s | %s | %s'%(s2,p2,o2))
             modelo = Literal(o2)
 
-    productsGraph = buscaProductos(marca, nombre, tipoProducto, modelo)
-
-    # if marca != None:
-    #     marcaGraph = Graph()
-    #     for s in products.subjects(AM2.Marca,marca):
-    #         #print ('--> %s %s %s'%(s,p,o))
-    #         marcaGraph += products.triples((s,None,None))
-    #         # for s2,p2,o2 in products.triples((s,None,None)):
-    #         #     marcaGraph.add((s2,p2,o2))
-    #     productsGraph = productsGraph & marcaGraph
-    
-    # if tipoProducto != None:
-    #     tipoProductoGraph = Graph()
-    #     for s in products.subjects(AM2.TipoProducto,tipoProducto):
-    #         tipoProductoGraph += products.triples((s,None,None))
-    #         # for s2,p2,o2 in products.triples((s,None,None)):
-    #         #     tipoProductoGraph.add((s2,p2,o2))
-    #     productsGraph = productsGraph & tipoProductoGraph
-    
-    # if modelo != None:
-    #     modeloGraph = Graph()
-    #     for s in products.subjects(AM2.Modelo,modelo):
-    #         #print ('--> %s %s %s'%(s,p,o))
-    #         modeloGraph += products.triples((s,None,None))
-    #         # for s2,p2,o2 in products.triples((s,None,None)):
-    #         #     modeloGraph.add((s2,p2,o2))
-    #     productsGraph = productsGraph & modeloGraph
-    
-    # if nombre != None:
-    #     nombreGraph = Graph()
-    #     for s in products.subjects(AM2.Nombre,nombre):
-    #         # print ('pasdf--> %s %s %s'%(s,p,o))
-    #         nombreGraph += products.triples((s,None,None))
-    #         # for s2,p2,o2 in products.triples((s,None,None)):
-    #         #     nombreGraph.add((s2,p2,o2))
-    #     productsGraph = productsGraph & nombreGraph
+    productsGraph = buscaProductos(marca, nombre, tipoProducto, modelo, precioMax)
 
     return productsGraph
 
-def buscaProductos(marca, nombre, tipoProducto, modelo):
-    global products
+def buscaProductos(marca, nombre, tipoProducto, modelo, precioMax):
+
+    products = Graph()
+    ontologyFile = open('../../Ontology/Amazon2Turtle.owl')
+    products.parse(ontologyFile, format='turtle')
+
+    for s2,p2,o2 in products:
+        print('restricciones: %s | %s | %s'%(s2,p2,o2))
 
     afegit = False
 
     query= """
-        prefix RDF:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        prefix rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        prefix xsd:<http://www.w3.org/2001/XMLSchema#>
         prefix AM2:<http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#>
-        SELECT DISTINCT ?producto ?id ?nombre ?tipoProducto ?precio ?modelo ?marca
+        prefix owl:<http://www.w3.org/2002/07/owl#>
+        SELECT DISTINCT ?producto ?id ?nombre ?tipoProducto ?precio ?modelo ?marca ?tipoEnvio
         where{
-            ?producto RDF:type AM2:Producto .
+            ?producto rdf:type AM2:Producto .
             ?producto AM2:Id ?id .
             ?producto AM2:Nombre ?nombre . 
             ?producto AM2:TipoProducto ?tipoProducto .
             ?producto AM2:Precio ?precio .
             ?producto AM2:Modelo ?modelo .
             ?producto AM2:Marca ?marca .
+            ?producto AM2:TipoEnvio ?tipoEnvio
             FILTER("""
     if marca is not None:
         query+= """str(?marca) = '""" + marca +"""'"""
@@ -206,8 +179,12 @@ def buscaProductos(marca, nombre, tipoProducto, modelo):
             query+= """ && """
         query+= """str(?modelo) = '""" + modelo +"""'"""
         afegit = True
+    if precioMax is not None:
+        if afegit == True:
+            query+= """ && """
+        query+= """ ?precio <= """ + str(precioMax)
     
-    query+= """ )} """
+    query+= """ )} order by asc(UCASE(str(?nombre)))"""
 
     graph_result = products.query(query)
     result = Graph()
@@ -219,6 +196,7 @@ def buscaProductos(marca, nombre, tipoProducto, modelo):
         Price = row.precio
         Model = row.modelo
         Brand = row.marca
+        Envio = row.tipoEnvio
         print('Dintreeeee %s ' %(Id))
         sujeto = row.producto
         result.add((sujeto, RDF.type, AM2.Producto))
@@ -228,20 +206,22 @@ def buscaProductos(marca, nombre, tipoProducto, modelo):
         result.add((sujeto,AM2.Precio,Literal(Price, datatype=XSD.int)))
         result.add((sujeto,AM2.Modelo,Literal(Model, datatype=XSD.string)))
         result.add((sujeto,AM2.Marca,Literal(Brand, datatype=XSD.string)))
+        result.add((sujeto,AM2.TipoEnvio, Literal(Envio, datatype=XSD.string)))
 
     return result
 
 def initProducts():
     global products
     # Atención: Ojo, el atributo Id tiene que ser unico
-    subjectProducto = AM2['DVD']
+    subjectProducto = AM2['USB_1']
     products.add((subjectProducto, RDF.type, AM2.Producto))
     products.add((subjectProducto, AM2.Id, Literal("1")))
-    products.add((subjectProducto, AM2.Nombre, Literal("DVD")))
+    products.add((subjectProducto, AM2.Nombre, Literal("USB")))
     products.add((subjectProducto, AM2.TipoProducto, Literal("Electronica")))
     products.add((subjectProducto, AM2.Precio, Literal(50)))
-    products.add((subjectProducto, AM2.Modelo, Literal('250MBS')))
+    products.add((subjectProducto, AM2.Modelo, Literal('32GB')))
     products.add((subjectProducto, AM2.Marca, Literal('Kingston')))
+    products.add((subjectProducto, AM2.TipoEnvio, Literal('Externo')))
 
 
     subjectProducto2 = AM2['Televisor_1']
@@ -252,13 +232,17 @@ def initProducts():
     products.add((subjectProducto2, AM2.TipoProducto, Literal("Electronica")))
     products.add((subjectProducto2, AM2.Precio, Literal(300)))
     products.add((subjectProducto2, AM2.Modelo, Literal('E1234H')))
+    products.add((subjectProducto2, AM2.TipoEnvio, Literal('Interno')))
 
     subjectProducto3 = AM2['Camisa']
     products.add((subjectProducto3, RDF.type, AM2.Producto))
     products.add((subjectProducto3, AM2.Id, Literal("3")))
     products.add((subjectProducto3, AM2.Nombre, Literal("Camisa")))
     products.add((subjectProducto3, AM2.TipoProducto, Literal("Ropa")))
+    products.add((subjectProducto3, AM2.Marca, Literal("H&M")))
     products.add((subjectProducto3, AM2.Precio, Literal(15)))
+    products.add((subjectProducto3, AM2.Modelo, Literal('Hombre-L')))
+    products.add((subjectProducto3, AM2.TipoEnvio, Literal('Interno')))
 
     subjectProducto4 = AM2['Televisor_2']
     products.add((subjectProducto4, RDF.type, AM2.Producto))
@@ -268,6 +252,7 @@ def initProducts():
     products.add((subjectProducto4, AM2.TipoProducto, Literal("Electronica")))
     products.add((subjectProducto4, AM2.Precio, Literal(550)))
     products.add((subjectProducto4, AM2.Modelo, Literal('H456K')))
+    products.add((subjectProducto4, AM2.TipoEnvio, Literal('Interno')))
 
     subjectProducto5 = AM2['Televisor_3']
     products.add((subjectProducto5, RDF.type, AM2.Producto))
@@ -275,8 +260,9 @@ def initProducts():
     products.add((subjectProducto5, AM2.Nombre, Literal('Televisor')))
     products.add((subjectProducto5, AM2.Marca, Literal('LG')))
     products.add((subjectProducto5, AM2.TipoProducto, Literal("Electronica")))
-    products.add((subjectProducto5, AM2.Precio, Literal(750)))
+    products.add((subjectProducto5, AM2.Precio, Literal(749.99)))
     products.add((subjectProducto5, AM2.Modelo, Literal('H456KHD')))
+    products.add((subjectProducto5, AM2.TipoEnvio, Literal('Interno')))
 
     subjectProducto5 = AM2['Televisor_4']
     products.add((subjectProducto5, RDF.type, AM2.Producto))
@@ -286,6 +272,7 @@ def initProducts():
     products.add((subjectProducto5, AM2.TipoProducto, Literal("Electronica")))
     products.add((subjectProducto5, AM2.Precio, Literal(124)))
     products.add((subjectProducto5, AM2.Modelo, Literal('H4589KHD')))
+    products.add((subjectProducto5, AM2.TipoEnvio, Literal('Interno')))
     return
 
 @app.route("/iface", methods=['GET', 'POST'])
