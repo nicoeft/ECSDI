@@ -141,7 +141,7 @@ def comprar(request):
     sj_contenido = agn[AgenteCliente.name + '-Peticion_Compra-' + str(mss_cnt)]
     # le damos un tipo
     gmess.add((sj_contenido, RDF.type, AM2.Peticion_Compra))
-    gmess.add((sj_contenido, AM2.username, username))
+    gmess.add((sj_contenido, AM2.username, Literal(username)))
     # sujetoProductos = AM2["Productos"]
     # gmess.add((sujetoProductos,))
     for id in request.form.getlist('productsToBuy'):
