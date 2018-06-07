@@ -37,12 +37,21 @@ parser.add_argument('--open', help="Define si el servidor est abierto al exterio
 parser.add_argument('--port', type=int, help="Puerto de comunicacion del agente")
 parser.add_argument('--dhost', default='localhost', help="Host del agente de directorio")
 parser.add_argument('--dport', type=int, help="Puerto de comunicacion del agente de directorio")
+parser.add_argument('--username', type=str, help="Puerto de comunicacion del agente de directorio")
 
 # Logging
 logger = config_logger(level=1)
 
 # parsing de los parametros de la linea de comandos
 args = parser.parse_args()
+
+# user Identifier:
+username = "generic"
+
+if args.username is None:
+    username = "generic"
+else:
+    username = args.username
 
 # Configuration stuff
 if args.port is None:
