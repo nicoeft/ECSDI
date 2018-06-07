@@ -133,6 +133,7 @@ def browser_busca():
 def comprar(request):
     global mss_cnt
     global current_products
+    global username
     logger.info("Comprando productos")
     print(request.form.getlist('productsToBuy'))
     gmess = Graph()
@@ -140,6 +141,7 @@ def comprar(request):
     sj_contenido = agn[AgenteCliente.name + '-Peticion_Compra-' + str(mss_cnt)]
     # le damos un tipo
     gmess.add((sj_contenido, RDF.type, AM2.Peticion_Compra))
+    gmess.add((sj_contenido, AM2.username, username))
     # sujetoProductos = AM2["Productos"]
     # gmess.add((sujetoProductos,))
     for id in request.form.getlist('productsToBuy'):

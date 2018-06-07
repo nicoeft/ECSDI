@@ -107,7 +107,6 @@ def comunicacion():
     """
     global dsgraph
     global mss_cnt
-    # TODO: quitar el pass y hacer la funcion
 
     logger.info('Peticion de Compra')
 
@@ -154,6 +153,7 @@ def comunicacion():
                         # print("Productos a comprar: %s | %s | %s"%(s,p,o))
                         productsGraph += gm.triples((s,None,None))
                     
+                    addPurchaseToBD(productsGraph)
                     # TODO: productos --> hay que tratarlos?
                     # for s2,p2,o2 in productsGraph:
                     #     print("Productos recibidos: %s | %s | %s"%(s2,p2,o2))
@@ -204,7 +204,17 @@ def comunicacion():
     logger.info('Respondemos a la peticion')
     return gr.serialize(format='xml')
 
+def addPurchaseToBD(gr):
+    # purchases = Graph()
+    # print("ADDPURCHASE TO BD!")
+    # ontologyFile = open('../datos/compras')
+    # purchases.parse(ontologyFile, format='turtle')
 
+    # for s,p,o in gr:
+    #     print("Compras added: %s | %s | %s"%(s,p,o))
+
+    # purchases.serialize('../path', format='turtle') 
+    return
 
 @app.route("/")
 def ventas():
