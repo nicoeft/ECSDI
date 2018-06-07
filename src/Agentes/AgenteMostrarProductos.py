@@ -141,7 +141,7 @@ def buscaProductos(marca, nombre, tipoProducto, modelo, precioMax):
     products.parse(ontologyFile, format='turtle')
 
     afegit = False
-
+    # products.serialize('../path', format='turtle') para guardar
     query= """
         prefix rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         prefix xsd:<http://www.w3.org/2001/XMLSchema#>

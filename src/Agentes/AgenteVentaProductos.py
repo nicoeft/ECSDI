@@ -19,7 +19,7 @@ from multiprocessing import Process, Queue
 import socket
 import argparse
 
-from rdflib import Namespace, Graph,Literal
+from rdflib import Namespace, Graph,Literal, URIRef
 from rdflib.namespace import FOAF, RDF
 from flask import Flask, request, render_template
 
@@ -107,7 +107,6 @@ def comunicacion():
     """
     global dsgraph
     global mss_cnt
-    # TODO: quitar el pass y hacer la funcion
 
     logger.info('Peticion de Compra')
 
@@ -153,7 +152,12 @@ def comunicacion():
                     for s in gm.subjects(RDF.type,AM2["Producto"]):
                         # print("Productos a comprar: %s | %s | %s"%(s,p,o))
                         productsGraph += gm.triples((s,None,None))
-                    
+
+
+                    username = gm.value(subject=content, predicate=AM2.username)
+
+                    # print("EEOOOO:%s"%(username))
+                    addPurchaseToBD(productsGraph, username)
                     # TODO: productos --> hay que tratarlos?
                     # for s2,p2,o2 in productsGraph:
                     #     print("Productos recibidos: %s | %s | %s"%(s2,p2,o2))
@@ -204,7 +208,25 @@ def comunicacion():
     logger.info('Respondemos a la peticion')
     return gr.serialize(format='xml')
 
+def addPurchaseToBD(gr, username):
+    purchases = Graph()
+    print("ADDPURCHASE TO BD!")
+    ontologyFile = open('../datos/compras')
+    purchases.parse(ontologyFile, format='turtle')
+    index = purchases.__len__()
+    currentPurchase = Graph()
+    sujeto = AM2['compra-'+str(index)]
+    currentPurchase.add((sujeto,AM2.username,username))
+    for s,p,o in gr:
+        print("purchase %s|%s|%s"%(s,p,o))
+        currentPurchase.add((sujeto,AM2.productos,URIRef(s)))
 
+    purchases += currentPurchase
+    # for s,p,o in gr:
+    #     print("Compras added: %s | %s | %s"%(s,p,o))
+
+    purchases.serialize('../datos/compras', format='turtle') 
+    return
 
 @app.route("/")
 def ventas():

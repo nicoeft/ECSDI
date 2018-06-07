@@ -16,6 +16,8 @@ from __future__ import print_function
 from multiprocessing import Process
 import socket
 import argparse
+import json
+import re
 
 from flask import Flask, render_template, request
 from rdflib import Graph, Namespace, RDF, URIRef, Literal, XSD
@@ -37,12 +39,21 @@ parser.add_argument('--open', help="Define si el servidor est abierto al exterio
 parser.add_argument('--port', type=int, help="Puerto de comunicacion del agente")
 parser.add_argument('--dhost', default='localhost', help="Host del agente de directorio")
 parser.add_argument('--dport', type=int, help="Puerto de comunicacion del agente de directorio")
+parser.add_argument('--username', type=str, help="Puerto de comunicacion del agente de directorio")
 
 # Logging
 logger = config_logger(level=1)
 
 # parsing de los parametros de la linea de comandos
 args = parser.parse_args()
+
+# user Identifier:
+username = "generic"
+
+if args.username is None:
+    username = "generic"
+else:
+    username = args.username
 
 # Configuration stuff
 if args.port is None:
@@ -90,6 +101,16 @@ DirectoryAgent = Agent('DirectoryAgent',
 # Global current_products triplestore
 current_products = Graph()
 
+# @app.route("/devolver/:id", methods=['GET', 'POST'])
+
+# def devoluciones(request):
+#     gr.parse(compras.txt)
+#     listProd = getProductListFromGraph(gr)
+#     for s in listProd:
+#         s[0] = s[0].strip(',')
+#         print("-------> %s"%(s))
+#     return render_template('cestaCompra.html',devolucion=True, products=listProd)
+
 
 @app.route("/busca", methods=['GET', 'POST'])
 def browser_busca():
@@ -106,19 +127,13 @@ def browser_busca():
             return mostrarProductosFiltrados(request)
         elif request.form['submit'] == 'Comprar':
             return comprar(request)
-        elif request.form['submit'] == 'Devoluciones':
-            return devoluciones(request)
-
-def devoluciones(request):
-    product_list = request.form.getlist('productos')
-    print(product_list)
-    return render_template('cestaCompra.html',devolucion=True, products=product_list)
 
 
 
 def comprar(request):
     global mss_cnt
     global current_products
+    global username
     logger.info("Comprando productos")
     print(request.form.getlist('productsToBuy'))
     gmess = Graph()
@@ -126,6 +141,7 @@ def comprar(request):
     sj_contenido = agn[AgenteCliente.name + '-Peticion_Compra-' + str(mss_cnt)]
     # le damos un tipo
     gmess.add((sj_contenido, RDF.type, AM2.Peticion_Compra))
+    gmess.add((sj_contenido, AM2.username, Literal(username)))
     # sujetoProductos = AM2["Productos"]
     # gmess.add((sujetoProductos,))
     for id in request.form.getlist('productsToBuy'):
@@ -210,7 +226,7 @@ def mostrarProductosFiltrados(request):
     
     
     product_list = getProductListFromGraph(current_products)
-
+    print("EEUUU: %s"%(product_list))
     return render_template('busquedaYCompra.html', products=product_list)
 
 def getProductListFromGraph(current_products):
@@ -303,7 +319,8 @@ def comunicacion():
                 # Aqui realizariamos lo que pide la accion
                 if accion == AM2.Emitir_factura:
                     logger.info('Mostrando factura con detalles del envio')
-                    gr = build_message(Graph(), ACL['not-understood'], sender=AgenteCliente.uri, msgcnt=mss_cnt)
+                    gr = build_message(Graph(), ACL['not-understood'], sender=AgenteCliente.uri, msgcnt=mss_cnt) #CAL retornar algo sempre?
+                    
                 else:
                     gr = build_message(Graph(), ACL['not-understood'], sender=AgenteCliente.uri, msgcnt=mss_cnt)
 
