@@ -1,10 +1,10 @@
-- Agentes que escriben en ficheros:
-  - AgenteVentaProductos : registroCompras.txt
-  - Agente
-
-Templates
-- AgenteCliente: mostrarCestaConfirmacion
-
+1- Templates : MostrarCesta, Factura, FormProductosExternos, DevolucionProductos
+2- Agentes:
+AgenteVentaProductos: permite añadir productos externos
+AgenteLogistico: delega envio al vendedor externo
+AgenteDevoluciones: Crearlo y que gestione devoluciones
+AgentesTransportista no prefijados, servicio de registro y descubrimirnto de transportistas(✅)
+Negociacion Compleja Transportistas
 
 Doc:
 - hay un avis en el Racó.

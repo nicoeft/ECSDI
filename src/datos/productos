@@ -13,6 +13,24 @@ ns1:Camisa a ns1:Producto ;
     ns1:TipoEnvio "Interno" ;
     ns1:TipoProducto "Ropa" .
 
+ns1:Producto_externo0 a ns1:Producto ;
+    ns1:Id 12952 ;
+    ns1:Marca "Apple" ;
+    ns1:Modelo "Macbook pro" ;
+    ns1:Nombre "Macbook" ;
+    ns1:Precio "1050" ;
+    ns1:TipoEnvio "Externo" ;
+    ns1:TipoProducto "Electronica" .
+
+ns1:Producto_externo1 a ns1:Producto ;
+    ns1:Id 6966 ;
+    ns1:Marca "Samsung" ;
+    ns1:Modelo "HD123" ;
+    ns1:Nombre "Cable HDMI" ;
+    ns1:Precio "5" ;
+    ns1:TipoEnvio "Interno" ;
+    ns1:TipoProducto "Electronica" .
+
 ns1:Televisor_1 a ns1:Producto ;
     ns1:Id "2" ;
     ns1:Marca "Sony" ;

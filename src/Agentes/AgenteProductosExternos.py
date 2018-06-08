@@ -18,6 +18,7 @@ from __future__ import print_function
 from multiprocessing import Process, Queue
 import socket
 import argparse
+import random
 
 from rdflib import Namespace, Graph,Literal
 from rdflib.namespace import FOAF, RDF, XSD
@@ -140,7 +141,8 @@ def addProductoExterno(gr):
             tipoEnvio = Literal(o2)
 
     productes.add((sujeto, RDF.type, AM2.Producto))
-    productes.add((sujeto,AM2.Id,Literal('500')))
+
+    productes.add((sujeto,AM2.Id,Literal(random.randint(0, 500000))))
     productes.add((sujeto,AM2.Nombre,Literal(nombre)))
     productes.add((sujeto,AM2.TipoProducto,Literal(tipoProducto)))
     productes.add((sujeto,AM2.Precio,Literal(precio)))

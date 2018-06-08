@@ -39,7 +39,7 @@ parser.add_argument('--open', help="Define si el servidor est abierto al exterio
 parser.add_argument('--port', type=int, help="Puerto de comunicacion del agente")
 parser.add_argument('--dhost', default='localhost', help="Host del agente de directorio")
 parser.add_argument('--dport', type=int, help="Puerto de comunicacion del agente de directorio")
-parser.add_argument('--username', type=str, help="Puerto de comunicacion del agente de directorio")
+parser.add_argument('--username', type=str, help="Username del cliente")
 
 # Logging
 logger = config_logger(level=1)
@@ -226,7 +226,7 @@ def mostrarProductosFiltrados(request):
     
     
     product_list = getProductListFromGraph(current_products)
-    print("EEUUU: %s"%(product_list))
+    # print("EEUUU: %s"%(product_list))
     return render_template('busquedaYCompra.html', products=product_list)
 
 def getProductListFromGraph(current_products):
@@ -295,7 +295,6 @@ def comunicacion():
     gm = Graph()
     gm.parse(data=message)
     msgdic = get_message_properties(gm)
-    logger.info('eeeeeeeeeeeeeeeeeeeeeeeeee')
     mss_cnt += 1
     # Comprobamos que sea un mensaje FIPA ACL
     if msgdic is None:
