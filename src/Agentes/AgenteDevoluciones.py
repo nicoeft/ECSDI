@@ -217,9 +217,6 @@ def agentbehavior1(cola):
             # requests.get(AgenteDevoluciones.stop)
 
 if __name__ == '__main__':
-
-    # Inicializacion de datos
-    initProducts()
     
     # Ponemos en marcha los behaviors
     ab1 = Process(target=agentbehavior1, args=(cola1,))

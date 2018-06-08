@@ -101,16 +101,40 @@ DirectoryAgent = Agent('DirectoryAgent',
 # Global current_products triplestore
 current_products = Graph()
 
-# @app.route("/devolver/:id", methods=['GET', 'POST'])
+@app.route("/devolver", methods=['GET', 'POST'])
+def devoluciones():
+    global username
 
-# def devoluciones(request):
-#     gr.parse(compras.txt)
-#     listProd = getProductListFromGraph(gr)
-#     for s in listProd:
-#         s[0] = s[0].strip(',')
-#         print("-------> %s"%(s))
-#     return render_template('cestaCompra.html',devolucion=True, products=listProd)
+    if request.method == 'GET':
+        # TODO: mirar si externalizamos el acceso a BD a AgenteDevoluciones
+        compras = getCompras(username)
+        return render_template('devolucion.html', products=None)
+    elif request.method == 'POST':
+        # Hacer peticion de busqueda de productos con las restricciones del form
+        if request.form['submit'] == 'Devolver':
+            return render_template('busquedaYCompra.html', products=None)
 
+
+    # gr.parse(compras.txt)
+    # listProd = getProductListFromGraph(gr)
+    # for s in listProd:
+    #     s[0] = s[0].strip(',')
+    #     print("-------> %s"%(s))
+    # return render_template('cestaCompra.html',devolucion=True, products=listProd)
+
+def getCompras(username):
+
+    productos = Graph()
+    datosProductos = open('../datos/productos')
+    productos.parse(datosProductos, format='turtle')
+
+    compras = Graph()
+    compraProductos = open('../datos/compras')
+    compras.parse(compraProductos,format='turtle')
+
+    for s,p,o in compras:
+        print("mis compras: %s | %s | %s"%(s,p,o))
+    return compras
 
 @app.route("/busca", methods=['GET', 'POST'])
 def browser_busca():
@@ -127,8 +151,8 @@ def browser_busca():
             return mostrarProductosFiltrados(request)
         elif request.form['submit'] == 'Comprar':
             return comprar(request)
-
-
+        elif request.form['submit'] == 'Devoluciones':
+            return render_template('devolucion.html', products=None)
 
 def comprar(request):
     global mss_cnt
