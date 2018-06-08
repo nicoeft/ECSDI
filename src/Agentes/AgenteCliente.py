@@ -19,7 +19,7 @@ import argparse
 import json
 import re
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from rdflib import Graph, Namespace, RDF, URIRef, Literal, XSD
 from rdflib.namespace import FOAF, RDF
 import requests
@@ -108,33 +108,75 @@ def devoluciones():
     if request.method == 'GET':
         # TODO: mirar si externalizamos el acceso a BD a AgenteDevoluciones
         compras = getCompras(username)
-        return render_template('devolucion.html', products=None)
+        compras_list = getComprasListFromGraph(compras)
+        return render_template('devolucion.html', compras=compras_list)
     elif request.method == 'POST':
         # Hacer peticion de busqueda de productos con las restricciones del form
         if request.form['submit'] == 'Devolver':
-            return render_template('busquedaYCompra.html', products=None)
+            return devolverCompras(request)
+            # return render_template('busquedaYCompra.html', products=None)
 
+def devolverCompras(request):
+    global mss_cnt
+    global username
+    # for id in request.form.getlist('comprasToReturn'):
+    #     print("Ids: %s"%id)
 
-    # gr.parse(compras.txt)
-    # listProd = getProductListFromGraph(gr)
-    # for s in listProd:
-    #     s[0] = s[0].strip(',')
-    #     print("-------> %s"%(s))
-    # return render_template('cestaCompra.html',devolucion=True, products=listProd)
-
-def getCompras(username):
-
-    productos = Graph()
-    datosProductos = open('../datos/productos')
-    productos.parse(datosProductos, format='turtle')
+    gmess = Graph()
+    # Creamos el sujeto -> contenido del mensaje
+    sj_contenido = agn[AgenteCliente.name + '-Peticion_devolucion-' + str(mss_cnt)]
+    # le damos un tipo
+    gmess.add((sj_contenido, RDF.type, AM2.Peticion_devolucion))
+    gmess.add((sj_contenido, AM2.username, Literal(username)))
 
     compras = Graph()
     compraProductos = open('../datos/compras')
     compras.parse(compraProductos,format='turtle')
 
-    for s,p,o in compras:
+    # misCompras = Graph()
+
+    # for compra in compras.subjects(AM2.username,Literal(username)):
+    #     misCompras += compras.triples((compra,None,None))
+
+    for id in request.form.getlist('comprasToReturn'):
+        # print("Ids: %s"%id)
+        sj_nombre =AM2[id] #creamos una instancia con nombre Modelo1..2.
+        gmess.add((sj_nombre, RDF.type, AM2['Compra'])) # indicamos que es de tipo Modelo
+        gmess += compras.triples((AM2[id],None,None))
+
+        # gmess.add((sj_contenido, AM2.Compras, URIRef(sj_nombre)))
+
+    agenteDevolucion = directory_search_agent(DSO.AgenteDevoluciones,AgenteCliente,DirectoryAgent,mss_cnt)[0]
+    msg = build_message(gmess, perf=ACL.request,
+                sender=AgenteCliente.uri,
+                receiver=agenteDevolucion.uri,
+                content=sj_contenido,
+                msgcnt=mss_cnt)
+    print("devolverCompras BUILD")
+    gr = send_message(msg, agenteDevolucion.address)
+    print("devolverCompras SENT")
+    mss_cnt += 1
+    return 'caca'
+
+def getCompras(username):
+
+    # productos = Graph()
+    # datosProductos = open('../datos/productos')
+    # productos.parse(datosProductos, format='turtle')
+
+    compras = Graph()
+    compraProductos = open('../datos/compras')
+    compras.parse(compraProductos,format='turtle')
+
+    misCompras = Graph()
+
+    for compra in compras.subjects(AM2.username,Literal(username)):
+        misCompras += compras.triples((compra,None,None))
+
+    for s,p,o in misCompras:
         print("mis compras: %s | %s | %s"%(s,p,o))
-    return compras
+
+    return misCompras
 
 @app.route("/busca", methods=['GET', 'POST'])
 def browser_busca():
@@ -152,7 +194,7 @@ def browser_busca():
         elif request.form['submit'] == 'Comprar':
             return comprar(request)
         elif request.form['submit'] == 'Devoluciones':
-            return render_template('devolucion.html', products=None)
+            return redirect("/devolver", code=302)
 
 def comprar(request):
     global mss_cnt
@@ -279,6 +321,21 @@ def getProductListFromGraph(current_products):
             product_list[subject_pos[s]] = subject_dict
     return product_list
 
+def getComprasListFromGraph(compras):
+    index = 0
+    subject_pos = {}
+    compras_list = []
+    for s, p, o in compras:
+        if s not in subject_pos:
+            subject_pos[s] = index
+            compras_list.append({})
+            index += 1
+        if s in subject_pos:
+            subject_dict = compras_list[subject_pos[s]]
+            if p == AM2.username:
+                subject_dict['compra'] = s[59:]
+            compras_list[subject_pos[s]] = subject_dict
+    return compras_list
 
 @app.route("/iface", methods=['GET', 'POST'])
 def browser_iface():

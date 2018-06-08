@@ -8,7 +8,7 @@
 
 <body>
   <h1>Devolver Productos</h1>
-  {% if not products %}
+  {% if not compras %}
   <p>No puede devolver ningún producto si no ha comprado nada. Haga una compra en nuestra tienda antes.</p>
   <a href="/busca">Volver a Amazon2</a>
   {% else %}
@@ -16,37 +16,15 @@
     <table cellpadding="5px">
       <tr>
         <th>
-          <b>ID</b>
-        </th>
-        <th>
-          <b>NOMBRE</b>
-        </th>
-        <th>
-          <b>TIPO</b>
-        </th>
-        <th>
-          <b>MARCA</b>
-        </th>
-        <th>
-          <b>MODELO</b>
-        </th>
-        <th>
-          <b>PRECIO</b>
+          <b>COMPRA</b>
         </th>
       </tr>
-      {% for item in products %}
+      {% for item in compras %}
       <tr>
-        {% if item.id %}
-        <td>{{ item.id }}</td>
-        <td>{{ item.nombre }}</td>
-        <td>{{ item.tipo }}</td>
-        <td>{{ item.marca }}</td>
-        <td>{{ item.modelo }}</td>
-        <td>{{ item.precio }}</td>
+        <td>{{ item.compra }}</td>
         <td>
-          <input type="checkbox" name="productsToReturn" value="{{ item.id }}">
+          <input type="checkbox" name="comprasToReturn" value="{{ item.compra }}">
         </td>
-        {% endif %}
       </tr>
       {% endfor %}
     </table>
