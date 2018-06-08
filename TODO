@@ -1,13 +1,16 @@
-1- Templates : MostrarCesta, Factura, FormProductosExternos, DevolucionProductos
+1- Templates : MostrarCesta(✅), FormProductosExternos(✅), DevolucionProductos(✅)
 2- Agentes:
-AgenteVentaProductos: permite añadir productos externos
-AgenteLogistico: delega envio al vendedor externo
-AgenteDevoluciones: Crearlo y que gestione devoluciones
-AgentesTransportista no prefijados, servicio de registro y descubrimirnto de transportistas(✅)
-Negociacion Compleja Transportistas
+AgenteVentaProductos: permite añadir productos externos (✅)
+AgenteLogistico: delega envio al vendedor externo (✅)
+AgenteDevoluciones: Crearlo y que gestione devoluciones 
+AgentesTransportista: no prefijados, servicio de registro y descubrimirnto de transportistas(✅)
+Negociacion Compleja Transportistas(✅)
 
 Doc:
 - hay un avis en el Racó.
 
 Jocs de prova:
 - es a nosotros de definir que hacemos 
+
+Cambios en la ontologia:
+Solo hay Devolucion, y ahora tiene una data property que se llama resultadoDevolucion (AenteDevoluciones linea 192)

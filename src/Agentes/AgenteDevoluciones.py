@@ -14,7 +14,7 @@ import socket
 import argparse
 
 from flask import Flask, request
-from rdflib import Graph, Namespace, Literal
+from rdflib import Graph, Namespace, Literal, URIRef
 from rdflib.namespace import FOAF, RDF, XSD
 
 from AgentUtil.OntoNamespaces import ACL, DSO, AM2, RESTRICTION
@@ -167,7 +167,37 @@ def comunicacion():
 
                 # Aqui realizariamos lo que pide la accion
                 if accion == AM2.Peticion_devolucion:
-                    logger.info('Aceptamos la devolucion')
+                    gmess = Graph()
+                    sj_contenido = AM2[AgenteDevoluciones.name + '-Comunicacion_resultado_devolucion-' + str(mss_cnt)]
+                    gmess.add((sj_contenido, RDF.type, AM2.Comunicacion_resultado_devolucion))
+                    username = gm.value(subject=content, predicate=AM2.username)
+                    
+                    devolucionValida = True
+                    for s in gm.subjects(RDF.type,AM2.Compra):
+                        if not checkProductosComprados(s,username):
+                            devolucionValida = False
+
+                    if devolucionValida:
+                        sj_estado = AM2['Devolucion_acpetada-' + str(mss_cnt)]
+                        gmess.add((sj_estado, RDF.type, AM2.Devolucion))
+                        gmess.add((sj_estado, AM2.resultadoDevolucion, Literal("Devolucion Aceptada"))) 
+                        gmess.add((sj_contenido, AM2.tieneResultado, URIRef(sj_estado)))
+                        productsGraph = Graph()
+                        for s in gm.subjects(RDF.type,AM2["Producto"]):
+                            productsGraph += gm.triples((s,None,None))
+                        addDevolutionToBD(productsGraph,username)
+                    else:
+                        sj_estado = AM2['Devolucion_denegada-' + str(mss_cnt)]
+                        gmess.add((sj_estado, RDF.type, AM2.Devolucion))
+                        gmess.add((sj_estado, AM2.resultadoDevolucion, Literal("Devolucion Denegada"))) 
+                        gmess.add((sj_contenido, AM2.resultadoDevolucion, URIRef(sj_estado)))
+                    gr = build_message(gmess,
+                        perf=ACL.request,
+                        sender=AgenteDevoluciones.uri,
+                        content=sj_contenido,
+                        msgcnt=mss_cnt)
+                   
+                    
                     
                 else:
                     gr = build_message(Graph(), ACL['not-understood'], sender=AgenteDevoluciones.uri, msgcnt=mss_cnt)
@@ -182,6 +212,36 @@ def comunicacion():
     logger.info('Respondemos a la peticion')
     return gr.serialize(format='xml')
 
+
+def checkProductosComprados(sujetoCompra,username):
+    compras = Graph()
+    datosProductos = open('../datos/compras')
+    compras.parse(datosProductos, format='turtle')
+    for s in compras.subjects(RDF.type,AM2.Compra):
+        usernameCompra = compras.value(s, predicate=AM2.username)
+        if s == sujetoCompra and username == usernameCompra:
+            return True
+    return False
+
+
+def addDevolutionToBD(gr, username):
+    devoluciones = Graph()
+    ontologyFile = open('../datos/devoluciones')
+    devoluciones.parse(ontologyFile, format='turtle')
+    index = devoluciones.__len__()
+    currentDevolucion = Graph()
+    sujeto = AM2['devolucion-'+str(index)]
+    currentDevolucion.add((sujeto,AM2.username,username))
+    for s,p,o in gr:
+        print("devolucion %s|%s|%s"%(s,p,o))
+        currentDevolucion.add((sujeto,AM2.productos,URIRef(s)))
+
+    devoluciones += currentDevolucion
+    # for s,p,o in gr:
+    #     print("Compras added: %s | %s | %s"%(s,p,o))
+
+    devoluciones.serialize('../datos/devoluciones', format='turtle') 
+    return
 
 def tidyup():
     """

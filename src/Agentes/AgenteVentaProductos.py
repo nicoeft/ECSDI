@@ -23,7 +23,7 @@ from rdflib import Namespace, Graph,Literal, URIRef
 from rdflib.namespace import FOAF, RDF
 from flask import Flask, request, render_template
 
-from AgentUtil.OntoNamespaces import ACL, DSO, AM2, RESTRICTION,MSG
+from AgentUtil.OntoNamespaces import ACL, DSO, AM2
 from AgentUtil.ACLMessages import build_message, send_message, get_message_properties, directory_search_agent, register_message
 from AgentUtil.FlaskServer import shutdown_server
 from AgentUtil.Agent import Agent
@@ -163,7 +163,7 @@ def comunicacion():
                     #     print("Productos recibidos: %s | %s | %s"%(s2,p2,o2))
 
                     gmess = Graph()
-                    sj_contenido = MSG[AgenteVentaProductos.name + '-Solicitud_envio-' + str(mss_cnt)]
+                    sj_contenido = AM2[AgenteVentaProductos.name + '-Solicitud_envio-' + str(mss_cnt)]
                     gmess.add((sj_contenido, RDF.type, AM2.Solicitud_envio))
 
                     # productSubject = current_products.value(predicate=AM2.Id, object=Literal(id))
@@ -183,7 +183,7 @@ def comunicacion():
                     cola1.put(grm)
 
                     gmess2 = Graph()
-                    sj_contenido = MSG[AgenteVentaProductos.name + '-Confirmacion_cesta-' + str(mss_cnt)]
+                    sj_contenido = AM2[AgenteVentaProductos.name + '-Confirmacion_cesta-' + str(mss_cnt)]
                     gmess2.add((sj_contenido, RDF.type, AM2.Confirmacion_cesta))
                     gmess2 += productsGraph
                     gr = build_message(gmess2,
@@ -283,7 +283,7 @@ def agentbehavior1(cola):
             elif confirmacion == AM2.Confirmacion_envio_externo_interno:
                 logger.info("Confirmacion del envio externo e interno")
             gmess = Graph()
-            sj_contenido = MSG[AgenteVentaProductos.name + '-Factura_Compra-' + str(mss_cnt)]
+            sj_contenido = AM2[AgenteVentaProductos.name + '-Factura_Compra-' + str(mss_cnt)]
             gmess.add((sj_contenido, RDF.type, AM2.Emitir_factura))
             grm = build_message(gmess,
                     perf=ACL.request,
