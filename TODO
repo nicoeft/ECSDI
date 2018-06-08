@@ -2,7 +2,7 @@
 2- Agentes:
 AgenteVentaProductos: permite añadir productos externos (✅)
 AgenteLogistico: delega envio al vendedor externo (✅)
-AgenteDevoluciones: Crearlo y que gestione devoluciones 
+AgenteDevoluciones: Crearlo y que gestione devoluciones  (✅)
 AgentesTransportista: no prefijados, servicio de registro y descubrimirnto de transportistas(✅)
 Negociacion Compleja Transportistas(✅)
 
@@ -14,3 +14,7 @@ Jocs de prova:
 
 Cambios en la ontologia:
 Solo hay Devolucion, y ahora tiene una data property que se llama resultadoDevolucion (AenteDevoluciones linea 192)
+
+
+
+Las devoluciones se muestran todas las compras, tanto nuestras como no, mirar en /datos/compras las que tengan username != generic

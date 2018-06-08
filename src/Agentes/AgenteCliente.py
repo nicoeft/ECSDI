@@ -156,7 +156,10 @@ def devolverCompras(request):
     gr = send_message(msg, agenteDevolucion.address)
     print("devolverCompras SENT")
     mss_cnt += 1
-    return 'caca'
+    msgdic = get_message_properties(gr)
+    content = msgdic['content']
+    resultadoDevolucion = gr.value(subject=content, predicate=AM2.resultadoDevolucion)
+    return resultadoDevolucion
 
 def getCompras(username):
 
@@ -169,9 +172,9 @@ def getCompras(username):
     compras.parse(compraProductos,format='turtle')
 
     misCompras = Graph()
-
-    for compra in compras.subjects(AM2.username,Literal(username)):
-        misCompras += compras.triples((compra,None,None))
+ #DEMO CAMBIAR username PARA MOSTRAR DENEGACION DE DEVOLUCION
+    #for compra in compras.subjects(AM2.username,Literal(username)):
+    misCompras = compras #+= compras.triples((compra,None,None))
 
     for s,p,o in misCompras:
         print("mis compras: %s | %s | %s"%(s,p,o))

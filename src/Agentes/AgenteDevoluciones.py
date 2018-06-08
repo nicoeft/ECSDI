@@ -41,7 +41,7 @@ args = parser.parse_args()
 
 # Configuration stuff
 if args.port is None:
-    port = 9011
+    port = 9050
 else:
     port = args.port
 
@@ -167,30 +167,31 @@ def comunicacion():
 
                 # Aqui realizariamos lo que pide la accion
                 if accion == AM2.Peticion_devolucion:
+                    print("ACCIONMAN")
                     gmess = Graph()
                     sj_contenido = AM2[AgenteDevoluciones.name + '-Comunicacion_resultado_devolucion-' + str(mss_cnt)]
                     gmess.add((sj_contenido, RDF.type, AM2.Comunicacion_resultado_devolucion))
                     username = gm.value(subject=content, predicate=AM2.username)
-                    
+                    print("---------> %s"%(username))
                     devolucionValida = True
                     for s in gm.subjects(RDF.type,AM2.Compra):
-                        if not checkProductosComprados(s,username):
+                        print("----FOR-----> %s"%(s))
+                        esValido = checkProductosComprados(s,username)
+                        if not esValido: 
                             devolucionValida = False
 
                     if devolucionValida:
-                        sj_estado = AM2['Devolucion_acpetada-' + str(mss_cnt)]
-                        gmess.add((sj_estado, RDF.type, AM2.Devolucion))
-                        gmess.add((sj_estado, AM2.resultadoDevolucion, Literal("Devolucion Aceptada"))) 
-                        gmess.add((sj_contenido, AM2.tieneResultado, URIRef(sj_estado)))
-                        productsGraph = Graph()
-                        for s in gm.subjects(RDF.type,AM2["Producto"]):
-                            productsGraph += gm.triples((s,None,None))
-                        addDevolutionToBD(productsGraph,username)
+                        print("ACEPTADA")
+                        gmess.add((sj_contenido, AM2.resultadoDevolucion, Literal("Devolucion Aceptada"))) 
+                        compraGraph = Graph()
+                        for s in gm.subjects(RDF.type,AM2.Compra):
+                            compraGraph += gm.triples((s,None,None))
+                        addDevolutionToBD(compraGraph,username)
                     else:
+                        print("DENEGADA")
                         sj_estado = AM2['Devolucion_denegada-' + str(mss_cnt)]
-                        gmess.add((sj_estado, RDF.type, AM2.Devolucion))
-                        gmess.add((sj_estado, AM2.resultadoDevolucion, Literal("Devolucion Denegada"))) 
-                        gmess.add((sj_contenido, AM2.resultadoDevolucion, URIRef(sj_estado)))
+                        gmess.add((sj_contenido, AM2.resultadoDevolucion, Literal("Devolucion Denegada")))
+                    
                     gr = build_message(gmess,
                         perf=ACL.request,
                         sender=AgenteDevoluciones.uri,
@@ -217,11 +218,12 @@ def checkProductosComprados(sujetoCompra,username):
     compras = Graph()
     datosProductos = open('../datos/compras')
     compras.parse(datosProductos, format='turtle')
-    for s in compras.subjects(RDF.type,AM2.Compra):
-        usernameCompra = compras.value(s, predicate=AM2.username)
+    esValido=False
+    for s,p,o in compras:
+        usernameCompra = compras.value(s,AM2.username)
         if s == sujetoCompra and username == usernameCompra:
-            return True
-    return False
+            esValido = True
+    return esValido
 
 
 def addDevolutionToBD(gr, username):

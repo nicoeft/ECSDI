@@ -52,5 +52,5 @@ ns1:compra-4 ns1:productos ns1:Televisor_2,
 
 ns1:compra-7 ns1:productos ns1:Televisor_2,
         ns1:Televisor_3 ;
-    ns1:username "generic" .
+    ns1:username "username2" .
 
