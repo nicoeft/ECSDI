@@ -41,7 +41,7 @@ args = parser.parse_args()
 
 # Configuration stuff
 if args.port is None:
-    port = 9016
+    port = 9015
 else:
     port = args.port
 
@@ -71,8 +71,8 @@ agn = Namespace("http://www.agentes.org#")
 mss_cnt = 0
 
 # Datos del Agente
-AgenteDevoluciones = Agent('AgenteDevoluciones',
-                  agn.AgenteDevoluciones,
+AgenteRecomendador = Agent('AgenteRecomendador',
+                  agn.AgenteRecomendador,
                   'http://%s:%d/comm' % (hostname, port),
                   'http://%s:%d/Stop' % (hostname, port))
 
@@ -131,8 +131,6 @@ def comunicacion():
     global dsgraph
     global mss_cnt
 
-    logger.info('Peticion de devolucion recibida')
-
     # Extraemos el mensaje y creamos un grafo con el
     message = request.args['content']
     gm = Graph()
@@ -146,7 +144,7 @@ def comunicacion():
     # Comprobamos que sea un mensaje FIPA ACL
     if msgdic is None:
         # Si no es, respondemos que no hemos entendido el mensaje
-        gr = build_message(Graph(), ACL['not-understood'], sender=AgenteDevoluciones.uri, msgcnt=mss_cnt)
+        gr = build_message(Graph(), ACL['not-understood'], sender=AgenteRecomendador.uri, msgcnt=mss_cnt)
     else:
         # Obtenemos la performativa
         perf = msgdic['performative']
@@ -154,7 +152,7 @@ def comunicacion():
         if perf != ACL.request:
             # logger.info("NOT UNDERSTOOD!")
             # Si no es un request, respondemos que no hemos entendido el mensaje
-            gr = build_message(Graph(), ACL['not-understood'], sender=AgenteDevoluciones.uri, msgcnt=mss_cnt)
+            gr = build_message(Graph(), ACL['not-understood'], sender=AgenteRecomendador.uri, msgcnt=mss_cnt)
         else:
             # Extraemos el objeto del contenido que ha de ser una accion de la ontologia de acciones del agente
             # de registro
@@ -163,40 +161,18 @@ def comunicacion():
             if 'content' in msgdic:
                 content = msgdic['content']
                 accion = gm.value(subject=content, predicate=RDF.type)
+                # logger.info("PPPPvPPPPPPPPP %s %s",accion, AM2.Peticion_productos_disponibles )
 
                 # Aqui realizariamos lo que pide la accion
-                if accion == AM2.Peticion_devolucion:
-                    gmess = Graph()
-                    sj_contenido = AM2[AgenteDevoluciones.name + '-Comunicacion_resultado_devolucion-' + str(mss_cnt)]
-                    gmess.add((sj_contenido, RDF.type, AM2.Comunicacion_resultado_devolucion))
-                    username = gm.value(subject=content, predicate=AM2.username)
-                    devolucionValida = True
-                    for s in gm.subjects(RDF.type,AM2.Compra):
-                        # print("----FOR-----> %s"%(s))
-                        esValido = checkProductosComprados(s,username)
-                        if not esValido: 
-                            devolucionValida = False
-
-                    if devolucionValida:
-                        print("Devolución ACEPTADA")
-                        gmess.add((sj_contenido, AM2.resultadoDevolucion, Literal("Devolución Aceptada"))) 
-                        compraGraph = Graph()
-                        for s in gm.subjects(RDF.type,AM2.Compra):
-                            compraGraph += gm.triples((s,None,None))
-                        addDevolutionToBD(compraGraph,username)
-                    else:
-                        print("Devolución DENEGADA")
-                        gmess.add((sj_contenido, AM2.resultadoDevolucion, Literal("Devolución Denegada")))
+                if accion == AM2.Productos:
+                   
+                   
                     
-                    gr = build_message(gmess,
-                        perf=ACL['inform-done'],
-                        sender=AgenteDevoluciones.uri,
-                        content=sj_contenido,
-                        msgcnt=mss_cnt)
+                    
                 else:
-                    gr = build_message(Graph(), ACL['not-understood'], sender=AgenteDevoluciones.uri, msgcnt=mss_cnt)
+                    gr = build_message(Graph(), ACL['not-understood'], sender=AgenteRecomendador.uri, msgcnt=mss_cnt)
             else:
-                gr = build_message(Graph(), ACL['not-understood'], sender=AgenteDevoluciones.uri, msgcnt=mss_cnt)
+                gr = build_message(Graph(), ACL['not-understood'], sender=AgenteRecomendador.uri, msgcnt=mss_cnt)
 
 
     # for s,p,o in gr:
@@ -206,37 +182,6 @@ def comunicacion():
     logger.info('Respondemos a la peticion')
     return gr.serialize(format='xml')
 
-
-def checkProductosComprados(sujetoCompra,username):
-    compras = Graph()
-    datosProductos = open('../datos/compras')
-    compras.parse(datosProductos, format='turtle')
-    esValido=False
-    for s,p,o in compras:
-        usernameCompra = compras.value(s,AM2.username)
-        if s == sujetoCompra and username == usernameCompra:
-            esValido = True
-    return esValido
-
-
-def addDevolutionToBD(gr, username):
-    devoluciones = Graph()
-    ontologyFile = open('../datos/devoluciones')
-    devoluciones.parse(ontologyFile, format='turtle')
-    index = devoluciones.__len__()
-    currentDevolucion = Graph()
-    sujeto = AM2['devolucion-'+str(index)]
-    currentDevolucion.add((sujeto,AM2.username,username))
-    for s,p,o in gr:
-        print("devolucion %s|%s|%s"%(s,p,o))
-        currentDevolucion.add((sujeto,AM2.productos,URIRef(s)))
-
-    devoluciones += currentDevolucion
-    # for s,p,o in gr:
-    #     print("Compras added: %s | %s | %s"%(s,p,o))
-
-    devoluciones.serialize('../datos/devoluciones', format='turtle') 
-    return
 
 def tidyup():
     """
@@ -255,7 +200,7 @@ def agentbehavior1(cola):
     """
     global mss_cnt
     # Registramos el agente
-    gr = register_message(DSO.AgenteDevoluciones,AgenteDevoluciones,DirectoryAgent,mss_cnt)
+    gr = register_message(DSO.AgenteRecomendador,AgenteRecomendador,DirectoryAgent,mss_cnt)
 
     # Escuchando la cola hasta que llegue un 0
     fin = False
@@ -269,7 +214,7 @@ def agentbehavior1(cola):
     #         print(v)
 
             # Selfdestruct
-            # requests.get(AgenteDevoluciones.stop)
+            # requests.get(AgenteRecomendador.stop)
 
 if __name__ == '__main__':
     

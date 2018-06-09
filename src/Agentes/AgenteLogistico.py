@@ -152,16 +152,15 @@ def comunicacion():
                         else:
                             hayExterno = True
                             productsExternos += gm.triples((s,None,None))
+                    
                     if hayExterno and not hayInterno:
                         gr = confirmaEnvio(msgdic,productsExternos)
-                        # TODO: cola para enviar mensajes al AgenteVendedorExterno
-                        
-                        # for s2,p,o in gm.triples((s,None,None)):
-                        #     print("Productos a Enviar: %s | %s | %s"%(s2,p,o))
+                        colaAvisarAgenteVendedorExterno(productsExternos)
                     else:
                         gmess = Graph()
                         sj_contenido = MSG[AgenteLogistico.name + '-Realiza_envio-' + str(mss_cnt)]
                         gmess.add((sj_contenido, RDF.type, AM2.Realiza_envio))
+                        gmess += productsInternos
                         agenteAlmacen = directory_search_agent(DSO.AgenteAlmacen,AgenteLogistico,DirectoryAgent,mss_cnt)[0]
                         grm = build_message(gmess,
                             perf=ACL.request,
@@ -170,7 +169,7 @@ def comunicacion():
                             content=sj_contenido,
                             msgcnt=mss_cnt)
                         gr = send_message(grm,agenteAlmacen.address)
-                        logger.info('Se ha informado al almacen que para realizar envio')
+                        logger.info('Se ha informado al almacen que debe realizar envio')
                         if hayExterno:
                             gmess2 = Graph()
                             sj_contenido = MSG[AgenteLogistico.name + '-Confirmacion_envio_externo_interno-' + str(mss_cnt)]
@@ -180,7 +179,8 @@ def comunicacion():
                                 sender=AgenteLogistico.uri,
                                 msgcnt=mss_cnt,
                                 content=sj_contenido,
-                                receiver=msgdic['sender'])       
+                                receiver=msgdic['sender'])
+                            colaAvisarAgenteVendedorExterno(productsExternos)      
                 else:
                     gr = build_message(Graph(), ACL['not-understood'], sender=AgenteLogistico.uri, msgcnt=mss_cnt)
             else:
@@ -189,6 +189,14 @@ def comunicacion():
     mss_cnt += 1
     logger.info('Respondemos a la solicitud de envio')
     return gr.serialize(format='xml')
+
+def colaAvisarAgenteVendedorExterno(productsExternos):
+    gmess = Graph()
+    global cola1
+    sj_contenido = MSG[AgenteLogistico.name + '-Avisar_vendedor_externo_envio-' + str(mss_cnt)]
+    gmess.add((sj_contenido, RDF.type, AM2.Avisar_vendedor_externo_envio))
+    gmess += productsExternos
+    cola1.put(gmess)
 
 def confirmaEnvio(msgdic,productsExternos):
     global mss_cnt
@@ -235,15 +243,22 @@ def agentbehavior1(cola):
     logger.info('Nos registramos en el servicio de registro')
     register_message(DSO.AgenteLogistico,AgenteLogistico,DirectoryAgent,mss_cnt)
     fin = False
-    # while not fin:
-    #     while cola.empty():
-    #         pass
-    #     v = cola.get()
-    #     if v == 0:
-    #         fin = True
-    #     else:
-    #         print(v)
-
+    while not fin:
+        while cola.empty():
+            pass
+        gmess = cola.get()
+        if gmess == 0:
+            fin = True
+        else:
+            agenteVendedorExterno = directory_search_agent(DSO.AgenteVendedorExterno,AgenteLogistico,DirectoryAgent,mss_cnt)[0]
+            content = gmess.value(predicate=RDF.type,object=AM2.Avisar_vendedor_externo_envio)
+            grm = build_message(gmess,
+                perf=ACL.request,
+                sender=AgenteLogistico.uri,
+                receiver=agenteVendedorExterno.uri,
+                content=content,
+                msgcnt=mss_cnt)
+            send_message(grm,agenteVendedorExterno.address)
 
 if __name__ == '__main__':
     # Ponemos en marcha los behaviors
