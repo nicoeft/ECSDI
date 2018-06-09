@@ -263,8 +263,6 @@ def agentbehavior1(cola):
     logger.info('Nos registramos en el servicio de registro')
     register_message(DSO.AgenteVentaProductos,AgenteVentaProductos,DirectoryAgent,mss_cnt)
     fin = False
-    agenteLogistico = directory_search_agent(DSO.AgenteLogistico,AgenteVentaProductos,DirectoryAgent,mss_cnt)[0]
-    agenteCliente = directory_search_agent(DSO.AgenteCliente,AgenteVentaProductos,DirectoryAgent,mss_cnt)[0]
     while not fin:
         while cola.empty():
             pass
@@ -272,6 +270,8 @@ def agentbehavior1(cola):
         if v == 0:
             fin = True
         else:
+            agenteLogistico = directory_search_agent(DSO.AgenteLogistico,AgenteVentaProductos,DirectoryAgent,mss_cnt)[0]
+            agenteCliente = directory_search_agent(DSO.AgenteCliente,AgenteVentaProductos,DirectoryAgent,mss_cnt)[0]
             gr = send_message(v,agenteLogistico.address)
             msgdic = get_message_properties(gr)
             content = msgdic['content']
