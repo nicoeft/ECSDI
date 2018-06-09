@@ -93,10 +93,6 @@ cola1 = Queue()
 # Productos
 products = Graph()
 
-
-
-
-
 @app.route("/iface", methods=['GET', 'POST'])
 def browser_iface():
     """
@@ -168,6 +164,7 @@ def comunicacion():
                 # Aqui realizariamos lo que pide la accion
                 if accion == AM2.Nueva_compra:
                     time.sleep(10)
+                    logger.info("Nueva compra efectuada")
                     productsGraph = Graph()
                     for s in gm.subjects(RDF.type,AM2["Producto"]):
                         productsGraph += gm.triples((s,None,None))
@@ -190,7 +187,7 @@ def comunicacion():
     #     print('sujeto:%s | predicado: %s | objeto: %s'%( s, p,o))
 
     mss_cnt += 1
-    logger.info('Respondemos a la peticion')
+    logger.info('Respondemos a con un ack')
     return gr.serialize(format='xml')
 
 def addValoracionToBD(gr):
