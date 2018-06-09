@@ -21,6 +21,7 @@ import re
 
 import time
 
+from random import randint
 from flask import Flask, render_template, request, redirect
 from rdflib import Graph, Namespace, RDF, URIRef, Literal, XSD
 from rdflib.namespace import FOAF, RDF
@@ -404,7 +405,24 @@ def comunicacion():
                 if accion == AM2.Emitir_factura:
                     logger.info('Mostrando factura con detalles del envio')
                     gr = build_message(Graph(), ACL['inform-done'], sender=AgenteCliente.uri, msgcnt=mss_cnt) #CAL retornar algo sempre?
+                elif accion == AM2.Peticion_valoracion:
+                    logger.info('Contestando a la peticion de valoraciones')
+                    gmess = Graph()
+                    sj_contenido = AM2[AgenteCliente.name + '-Respuesta_valoracion-' + str(mss_cnt)]
+                    gmess.add((sj_contenido, RDF.type, AM2.Respuesta_valoracion))
                     
+                    productsValoracionGraph = Graph()
+                    for s in gm.subjects(RDF.type,AM2["Producto"]):
+                        productsValoracionGraph += gm.triples((s,None,None))
+                        productsValoracionGraph.add((s,AM2.Valoracion,Literal(randint(0, 9))))
+                    
+                    gmess += productsValoracionGraph
+                    gr = build_message(gmess,
+                        ACL['inform-done'],
+                        sender=AgenteCliente.uri,
+                        msgcnt=mss_cnt,
+                        content=sj_contenido,
+                        receiver=msgdic['sender'])
                 else:
                     gr = build_message(Graph(), ACL['not-understood'], sender=AgenteCliente.uri, msgcnt=mss_cnt)
 

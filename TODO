@@ -13,8 +13,10 @@ Jocs de prova:
 - es a nosotros de definir que hacemos 
 
 Cambios en la ontologia:
-Solo hay Devolucion, y ahora tiene una data property que se llama resultadoDevolucion (AenteDevoluciones linea 192)
-Nuevo Mensaje:Avisar_vendedor_externo_envio
+-Solo hay Devolucion, y ahora tiene una data property que se llama resultadoDevolucion (AenteDevoluciones linea 192)
+-Nuevos Mensajes de la ontologia: Avisar_vendedor_externo_envio, Peticion_valoracion, Respuesta_valoracion
+-Nueva_compra_producto pasa a llamarse Nueva_compra
+
 
 
 Las devoluciones se muestran todas las compras, tanto nuestras como no, mirar en /datos/compras las que tengan username != generic

@@ -1,0 +1,32 @@
+@prefix ns1: <http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns1:valoracion-0 ns1:Valoracion 3,
+        4,
+        6,
+        9 ;
+    ns1:productos ns1:Televisor_2,
+        ns1:Televisor_3,
+        ns1:Televisor_4,
+        ns1:USB_1 .
+
+ns1:valoracion-21 ns1:productos ns1:Camisa ;
+    ns1:valoraciones 7 .
+
+ns1:valoracion-8 ns1:productos ns1:Producto_externo0,
+        ns1:Producto_externo1,
+        ns1:Televisor_1,
+        ns1:Televisor_2,
+        ns1:Televisor_3,
+        ns1:Televisor_4,
+        ns1:USB_1 ;
+    ns1:valoraciones 0,
+        1,
+        5,
+        6,
+        7,
+        8 .
+

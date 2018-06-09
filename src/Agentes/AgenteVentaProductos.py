@@ -149,37 +149,31 @@ def comunicacion():
                     productsGraph = Graph()
 
                     for s in gm.subjects(RDF.type,AM2["Producto"]):
-                        # print("Productos a comprar: %s | %s | %s"%(s,p,o))
                         productsGraph += gm.triples((s,None,None))
+
+                    #añadimos a la cola un aviso al AgenteRecomendador sobre la compra, para que pasado un tiempo pida valoraciones
+                    grecommend = Graph()
+                    sj_contenido = AM2[AgenteVentaProductos.name + '-Nueva_compra-' + str(mss_cnt)]
+                    grecommend.add((sj_contenido, RDF.type, AM2.Nueva_compra))
+                    grecommend += productsGraph
+
+                    cola1.put(grecommend)
 
 
                     username = gm.value(subject=content, predicate=AM2.username)
 
-                    # print("EEOOOO:%s"%(username))
                     addPurchaseToBD(productsGraph, username)
                     # for s2,p2,o2 in productsGraph:
                     #     print("Productos recibidos: %s | %s | %s"%(s2,p2,o2))
 
+                    #añadimos a la cola una solicitud de envio para el AgenteLogistico
                     gmess = Graph()
                     sj_contenido = AM2[AgenteVentaProductos.name + '-Solicitud_envio-' + str(mss_cnt)]
                     gmess.add((sj_contenido, RDF.type, AM2.Solicitud_envio))
-
-                    # productSubject = current_products.value(predicate=AM2.Id, object=Literal(id))
-                    # gmess.add((productSubject, RDF.type, AM2['Producto'])) 
                     gmess += productsGraph
-                    # gmess.add((sj_contenido, AM2.Productos, URIRef(productSubject)))
+                    cola1.put(gmess)
 
-                    
-                    agenteLogistico = directory_search_agent(DSO.AgenteLogistico,AgenteVentaProductos,DirectoryAgent,mss_cnt)[0]
-                    grm = build_message(gmess,
-                        perf=ACL.request,
-                        sender=AgenteVentaProductos.uri,
-                        receiver=agenteLogistico.uri,
-                        content=sj_contenido,
-                        msgcnt=mss_cnt)
-                    
-                    cola1.put(grm)
-
+                    #retornamos un inform-done con los productos a mostar en la cesta
                     gmess2 = Graph()
                     sj_contenido = AM2[AgenteVentaProductos.name + '-Confirmacion_cesta-' + str(mss_cnt)]
                     gmess2.add((sj_contenido, RDF.type, AM2.Confirmacion_cesta))
@@ -190,9 +184,7 @@ def comunicacion():
                         msgcnt=mss_cnt,
                         content=sj_contenido,
                         receiver=msgdic['sender'])
-                    
-                    # gr = build_message(Graph(), ACL['not-understood'], sender=AgenteVentaProductos.uri, msgcnt=mss_cnt)
-                    logger.info('Se ha enviado al centro logístico la solicitud de envio')
+                
                 else:
                     gr = build_message(Graph(), ACL['not-understood'], sender=AgenteVentaProductos.uri, msgcnt=mss_cnt)
             else:
@@ -268,28 +260,59 @@ def agentbehavior1(cola):
         if v == 0:
             fin = True
         else:
-            agenteLogistico = directory_search_agent(DSO.AgenteLogistico,AgenteVentaProductos,DirectoryAgent,mss_cnt)[0]
-            agenteCliente = directory_search_agent(DSO.AgenteCliente,AgenteVentaProductos,DirectoryAgent,mss_cnt)[0]
-            gr = send_message(v,agenteLogistico.address)
-            msgdic = get_message_properties(gr)
-            content = msgdic['content']
-            confirmacion = gr.value(subject=content, predicate=RDF.type)
-            if confirmacion == AM2.Confirmacion_envio:
-                logger.info("Confirmacion del envio")
-            elif confirmacion == AM2.Confirmacion_envio_externo:
-                logger.info("Confirmacion del envio externo")
-            elif confirmacion == AM2.Confirmacion_envio_externo_interno:
-                logger.info("Confirmacion del envio externo e interno")
-            gmess = Graph()
-            sj_contenido = AM2[AgenteVentaProductos.name + '-Factura_Compra-' + str(mss_cnt)]
-            gmess.add((sj_contenido, RDF.type, AM2.Emitir_factura))
-            grm = build_message(gmess,
+            sj_avisar_recomendador = v.value(predicate=RDF.type,object=AM2.Nueva_compra)
+            sj_solicitud_envio = v.value(predicate=RDF.type,object=AM2.Solicitud_envio)
+            print("-------->sj_avisar_recomendador-->%s"%(sj_avisar_recomendador))
+            print("-------->sj_solicitud_envio-->%s"%(sj_solicitud_envio))
+
+            if sj_solicitud_envio != None:
+                #enviamos mensaje
+                agenteLogistico = directory_search_agent(DSO.AgenteLogistico,AgenteVentaProductos,DirectoryAgent,mss_cnt)[0]
+                grm = build_message(v,
                     perf=ACL.request,
                     sender=AgenteVentaProductos.uri,
-                    receiver=agenteCliente.uri,
-                    content=sj_contenido,
+                    receiver=agenteLogistico.uri,
+                    content=sj_solicitud_envio,
                     msgcnt=mss_cnt)
-            send_message(grm,agenteCliente.address)
+                logger.info('Se ha enviado al centro logístico la solicitud de envio')                
+                gr = send_message(grm,agenteLogistico.address)
+                logger.info('Se ha recibido la respuesta del centro logístico, notificando al cliente')
+                
+                agenteCliente = directory_search_agent(DSO.AgenteCliente,AgenteVentaProductos,DirectoryAgent,mss_cnt)[0]
+                msgdic = get_message_properties(gr)
+                content = msgdic['content']
+                confirmacion = gr.value(subject=content, predicate=RDF.type)
+                if confirmacion == AM2.Confirmacion_envio:
+                    logger.info("Confirmacion del envio")
+                elif confirmacion == AM2.Confirmacion_envio_externo:
+                    logger.info("Confirmacion del envio externo")
+                elif confirmacion == AM2.Confirmacion_envio_externo_interno:
+                    logger.info("Confirmacion del envio externo e interno")
+                gmess = Graph()
+                sj_contenido = AM2[AgenteVentaProductos.name + '-Factura_Compra-' + str(mss_cnt)]
+                gmess.add((sj_contenido, RDF.type, AM2.Emitir_factura))
+                grm = build_message(gmess,
+                        perf=ACL.request,
+                        sender=AgenteVentaProductos.uri,
+                        receiver=agenteCliente.uri,
+                        content=sj_contenido,
+                        msgcnt=mss_cnt)
+                send_message(grm,agenteCliente.address)
+                logger.info('Se han enviado los detalles de la entrega al cliente')
+            elif sj_avisar_recomendador != None:
+                #avisar al recomendador
+                agenteRecomendador = directory_search_agent(DSO.AgenteRecomendador,AgenteVentaProductos,DirectoryAgent,mss_cnt)[0]
+                grm = build_message(v,
+                    perf=ACL.request,
+                    sender=AgenteVentaProductos.uri,
+                    receiver=agenteRecomendador.uri,
+                    content=sj_avisar_recomendador,
+                    msgcnt=mss_cnt) 
+                send_message(grm,agenteRecomendador.address)
+                logger.info('El AgenteRecomendador ha sido notificado de la compra')
+                
+
+
 
 
 if __name__ == '__main__':

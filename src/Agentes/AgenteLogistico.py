@@ -257,6 +257,7 @@ def agentbehavior1(cola):
                 content=content,
                 msgcnt=mss_cnt)
             send_message(grm,agenteVendedorExterno.address)
+            logger.info('Se ha notificado al vendedor externo para que se encargue del envio')
 
 if __name__ == '__main__':
     # Ponemos en marcha los behaviors

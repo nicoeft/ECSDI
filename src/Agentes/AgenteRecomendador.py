@@ -12,6 +12,8 @@ from __future__ import print_function
 from multiprocessing import Process, Queue
 import socket
 import argparse
+import schedule
+import time
 
 from flask import Flask, request
 from rdflib import Graph, Namespace, Literal, URIRef
@@ -19,7 +21,7 @@ from rdflib.namespace import FOAF, RDF, XSD
 
 from AgentUtil.OntoNamespaces import ACL, DSO, AM2, RESTRICTION
 from AgentUtil.FlaskServer import shutdown_server
-from AgentUtil.ACLMessages import build_message, send_message, get_message_properties, register_message
+from AgentUtil.ACLMessages import build_message, send_message, get_message_properties,directory_search_agent, register_message
 from AgentUtil.Agent import Agent
 from AgentUtil.Logging import config_logger
 
@@ -164,11 +166,20 @@ def comunicacion():
                 # logger.info("PPPPvPPPPPPPPP %s %s",accion, AM2.Peticion_productos_disponibles )
 
                 # Aqui realizariamos lo que pide la accion
-                if accion == AM2.Productos:
-                   
-                   
-                    
-                    
+                if accion == AM2.Nueva_compra:
+                    time.sleep(10)
+                    productsGraph = Graph()
+                    for s in gm.subjects(RDF.type,AM2["Producto"]):
+                        productsGraph += gm.triples((s,None,None))
+
+                    gmess = Graph()
+                    sj_contenido = AM2[AgenteRecomendador.name + '-Peticion_valoracion-' + str(mss_cnt)]
+                    gmess.add((sj_contenido, RDF.type, AM2.Peticion_valoracion))
+                    gmess += productsGraph
+                    cola1.put(gmess)
+
+                    gr = build_message(Graph(), ACL['inform-done'], sender=AgenteRecomendador.uri, msgcnt=mss_cnt)
+
                 else:
                     gr = build_message(Graph(), ACL['not-understood'], sender=AgenteRecomendador.uri, msgcnt=mss_cnt)
             else:
@@ -182,6 +193,25 @@ def comunicacion():
     logger.info('Respondemos a la peticion')
     return gr.serialize(format='xml')
 
+def addValoracionToBD(gr):
+    valoraciones = Graph()
+    ontologyFile = open('../datos/valoraciones')
+    valoraciones.parse(ontologyFile, format='turtle')
+    index = valoraciones.__len__()
+    currentValoracion = Graph()
+    sujeto = AM2['valoracion-'+str(index)]
+    #currentValoracion.add((sujeto,AM2.username,username))
+    for s,p,o in gr.triples((None,AM2.Valoracion,None)):
+        currentValoracion.add((sujeto,AM2.productos,URIRef(s)))
+        currentValoracion.add((sujeto,AM2.valoraciones,Literal(o)))
+
+    valoraciones += currentValoracion
+    # for s,p,o in gr:
+    #     print("Compras added: %s | %s | %s"%(s,p,o))
+
+    valoraciones.serialize('../datos/valoraciones', format='turtle') 
+    return
+
 
 def tidyup():
     """
@@ -191,6 +221,8 @@ def tidyup():
     global cola1
     cola1.put(0)
 
+def recomendar():
+    print("I'm working...")
 
 def agentbehavior1(cola):
     """
@@ -204,17 +236,32 @@ def agentbehavior1(cola):
 
     # Escuchando la cola hasta que llegue un 0
     fin = False
-    # while not fin:
-    #     while cola.empty():
-    #         pass
-    #     v = cola.get()
-    #     if v == 0:
-    #         fin = True
-    #     else:
-    #         print(v)
+    schedule.every(10).seconds.do(recomendar)
+    while not fin:
+        while cola.empty():
+            schedule.run_pending()
+            pass
+        v = cola.get()
+        if v == 0:
+            fin = True
+        else:
+            agenteCliente = directory_search_agent(DSO.AgenteCliente,AgenteRecomendador,DirectoryAgent,mss_cnt)[0]
+            content = v.value(predicate=RDF.type,object=AM2.Peticion_valoracion)
+            grm = build_message(v,
+                perf=ACL.request,
+                sender=AgenteRecomendador.uri,
+                receiver=agenteCliente.uri,
+                content=content,
+                msgcnt=mss_cnt)
+            gRespuesta = send_message(grm,agenteCliente.address)
+            logger.info('Se ha enviado una peticion de valoraciones al cliente')
+            gValoraciones = Graph()
+            for s in gRespuesta.subjects(RDF.type,AM2.Producto):
+                print("------------------>%s"%(s))
+                gValoraciones += gRespuesta.triples((s,None,None))
+            addValoracionToBD(gValoraciones)
+            logger.info('Se ha añadido la valoracion a la base de datos')
 
-            # Selfdestruct
-            # requests.get(AgenteRecomendador.stop)
 
 if __name__ == '__main__':
     
