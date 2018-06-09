@@ -172,12 +172,12 @@ def getCompras(username):
     compras.parse(compraProductos,format='turtle')
 
     misCompras = Graph()
- #DEMO CAMBIAR username PARA MOSTRAR DENEGACION DE DEVOLUCION
+    # DEMO CAMBIAR username PARA MOSTRAR DENEGACION DE DEVOLUCION
     #for compra in compras.subjects(AM2.username,Literal(username)):
     misCompras = compras #+= compras.triples((compra,None,None))
 
-    for s,p,o in misCompras:
-        print("mis compras: %s | %s | %s"%(s,p,o))
+    # for s,p,o in misCompras:
+    #     print("mis compras: %s | %s | %s"%(s,p,o))
 
     return misCompras
 
@@ -229,9 +229,9 @@ def comprar(request):
                 receiver=vendedor.uri,
                 content=sj_contenido,
                 msgcnt=mss_cnt)
-    print("message BUILD")
+    # print("message BUILD")
     gr = send_message(msg, vendedor.address)
-    print("message SENT")
+    # print("message SENT")
     mss_cnt += 1
     #msgdic = get_message_properties(gr)
     #content = msgdic['content']

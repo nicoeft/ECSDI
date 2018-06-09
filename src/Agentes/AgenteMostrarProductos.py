@@ -187,7 +187,7 @@ def buscaProductos(marca, nombre, tipoProducto, modelo, precioMax):
         Model = row.modelo
         Brand = row.marca
         Envio = row.tipoEnvio
-        print('Dintreeeee %s ' %(Id))
+        # print('Dintreeeee %s ' %(Id))
         sujeto = row.producto
         result.add((sujeto, RDF.type, AM2.Producto))
         result.add((sujeto,AM2.Id,Literal(Id, datatype=XSD.int)))
@@ -329,7 +329,6 @@ def comunicacion():
             # Extraemos el objeto del contenido que ha de ser una accion de la ontologia de acciones del agente
             # de registro
             # Averiguamos el tipo de la accion
-            # logger.info("GOT this one %s", msgdic)
             if 'content' in msgdic:
                 content = msgdic['content']
                 accion = gm.value(subject=content, predicate=RDF.type)
