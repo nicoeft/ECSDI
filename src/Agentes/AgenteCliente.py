@@ -19,6 +19,8 @@ import argparse
 import json
 import re
 
+import time
+
 from flask import Flask, render_template, request, redirect
 from rdflib import Graph, Namespace, RDF, URIRef, Literal, XSD
 from rdflib.namespace import FOAF, RDF
@@ -402,7 +404,7 @@ def comunicacion():
                 # Aqui realizariamos lo que pide la accion
                 if accion == AM2.Emitir_factura:
                     logger.info('Mostrando factura con detalles del envio')
-                    gr = build_message(Graph(), ACL['not-understood'], sender=AgenteCliente.uri, msgcnt=mss_cnt) #CAL retornar algo sempre?
+                    gr = build_message(Graph(), ACL['inform-done'], sender=AgenteCliente.uri, msgcnt=mss_cnt) #CAL retornar algo sempre?
                     
                 else:
                     gr = build_message(Graph(), ACL['not-understood'], sender=AgenteCliente.uri, msgcnt=mss_cnt)

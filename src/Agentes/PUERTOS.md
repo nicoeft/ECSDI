@@ -8,6 +8,7 @@
 - 9015 AgenteRecomendador
 - 9016 AgenteDevoluciones
 - 9030 al 9039 AgenteTransportista
+- 9040 AgenteVendedorExterno
 
 
 # Orden de los agentes:
