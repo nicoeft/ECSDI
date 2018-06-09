@@ -151,7 +151,7 @@ def comunicacion():
                 accion = gm.value(subject=content, predicate=RDF.type)
                 # Aqui realizariamos lo que pide la accion
                 if accion == AM2.Pedir_precio_envio:
-                    logger.info('Peticion de precio de envio recibida')
+                    logger.info('Petición de precio de envio recibida')
                     gmess = Graph()
                     sj_contenido = MSG[AgenteTransportista.name + '-Precios_envio-' + str(mss_cnt)]
                     gmess.add((sj_contenido, RDF.type, AM2.Confirmacion_envio))
