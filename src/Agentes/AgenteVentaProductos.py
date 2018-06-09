@@ -138,14 +138,13 @@ def comunicacion():
             # Extraemos el objeto del contenido que ha de ser una accion de la ontologia de acciones del agente
             # de registro
             # Averiguamos el tipo de la accion
-            # logger.info("GOT this one %s", msgdic)
             if 'content' in msgdic:
                 content = msgdic['content']
                 accion = gm.value(subject=content, predicate=RDF.type)
-                # logger.info("PPPPvPPPPPPPPP %s %s",accion, AM2.Peticion_productos_disponibles )
 
                 # Aqui realizariamos lo que pide la accion
                 if accion == AM2.Peticion_Compra:
+                    logger.info("Petición de Compra recibida")
                     # productsGraph = getProducts(gm)
                     productsGraph = Graph()
 
@@ -158,7 +157,6 @@ def comunicacion():
 
                     # print("EEOOOO:%s"%(username))
                     addPurchaseToBD(productsGraph, username)
-                    # TODO: productos --> hay que tratarlos?
                     # for s2,p2,o2 in productsGraph:
                     #     print("Productos recibidos: %s | %s | %s"%(s2,p2,o2))
 
@@ -205,7 +203,7 @@ def comunicacion():
     #     print('sujeto:%s | predicado: %s | objeto: %s'%( s, p,o))
 
     mss_cnt += 1
-    logger.info('Respondemos a la peticion')
+    logger.info('Respondemos a la peticion de compra')
     return gr.serialize(format='xml')
 
 def addPurchaseToBD(gr, username):
