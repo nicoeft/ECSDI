@@ -163,43 +163,36 @@ def comunicacion():
             if 'content' in msgdic:
                 content = msgdic['content']
                 accion = gm.value(subject=content, predicate=RDF.type)
-                # logger.info("PPPPvPPPPPPPPP %s %s",accion, AM2.Peticion_productos_disponibles )
 
                 # Aqui realizariamos lo que pide la accion
                 if accion == AM2.Peticion_devolucion:
-                    print("ACCIONMAN")
                     gmess = Graph()
                     sj_contenido = AM2[AgenteDevoluciones.name + '-Comunicacion_resultado_devolucion-' + str(mss_cnt)]
                     gmess.add((sj_contenido, RDF.type, AM2.Comunicacion_resultado_devolucion))
                     username = gm.value(subject=content, predicate=AM2.username)
-                    print("---------> %s"%(username))
                     devolucionValida = True
                     for s in gm.subjects(RDF.type,AM2.Compra):
-                        print("----FOR-----> %s"%(s))
+                        # print("----FOR-----> %s"%(s))
                         esValido = checkProductosComprados(s,username)
                         if not esValido: 
                             devolucionValida = False
 
                     if devolucionValida:
-                        print("ACEPTADA")
-                        gmess.add((sj_contenido, AM2.resultadoDevolucion, Literal("Devolucion Aceptada"))) 
+                        print("Devolución ACEPTADA")
+                        gmess.add((sj_contenido, AM2.resultadoDevolucion, Literal("Devolución Aceptada"))) 
                         compraGraph = Graph()
                         for s in gm.subjects(RDF.type,AM2.Compra):
                             compraGraph += gm.triples((s,None,None))
                         addDevolutionToBD(compraGraph,username)
                     else:
-                        print("DENEGADA")
-                        sj_estado = AM2['Devolucion_denegada-' + str(mss_cnt)]
-                        gmess.add((sj_contenido, AM2.resultadoDevolucion, Literal("Devolucion Denegada")))
+                        print("Devolución DENEGADA")
+                        gmess.add((sj_contenido, AM2.resultadoDevolucion, Literal("Devolución Denegada")))
                     
                     gr = build_message(gmess,
-                        perf=ACL.request,
+                        perf=ACL['inform-done'],
                         sender=AgenteDevoluciones.uri,
                         content=sj_contenido,
                         msgcnt=mss_cnt)
-                   
-                    
-                    
                 else:
                     gr = build_message(Graph(), ACL['not-understood'], sender=AgenteDevoluciones.uri, msgcnt=mss_cnt)
             else:

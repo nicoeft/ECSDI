@@ -154,6 +154,8 @@ def comunicacion():
                             productsExternos += gm.triples((s,None,None))
                     if hayExterno and not hayInterno:
                         gr = confirmaEnvio(msgdic,productsExternos)
+                        # TODO: cola para enviar mensajes al AgenteVendedorExterno
+                        
                         # for s2,p,o in gm.triples((s,None,None)):
                         #     print("Productos a Enviar: %s | %s | %s"%(s2,p,o))
                     else:
