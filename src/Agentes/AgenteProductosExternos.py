@@ -198,7 +198,7 @@ def comunicacion():
                 #     print("EOOO: %s | %s | %s"%(s,p,o))
 
                 if accion == AM2.Add_producto_externo: 
-
+                    logger.info("Petición de nuevo producto externo a añadir")
                     ok = addProductoExterno(gm)
 
                     gr = build_message(ok,
@@ -213,7 +213,7 @@ def comunicacion():
                 gr = build_message(Graph(), ACL['not-understood'], sender=AgenteProductosExternos.uri, msgcnt=mss_cnt)
 
     mss_cnt += 1
-    logger.info('Respondemos a la solicitud de envio')
+    logger.info('Respondemos a la solicitud nuevo producto externo')
     return gr.serialize(format='xml')
 
 

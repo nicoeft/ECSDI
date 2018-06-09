@@ -134,11 +134,9 @@ def comunicacion():
                 content = msgdic['content']
                 accion = gm.value(subject=content, predicate=RDF.type)
                 # Aqui realizariamos lo que pide la accion
-                # for s,p,o in gm:
-                #     print("EOOO: %s | %s | %s"%(s,p,o))
 
                 if accion == AM2.Solicitud_envio: 
-
+                    logger.info("Petición de envio recibida")
                     productsInternos = Graph()
                     productsExternos = Graph()
                     # Productos recibidos

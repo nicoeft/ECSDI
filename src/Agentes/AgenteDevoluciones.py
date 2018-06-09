@@ -150,22 +150,20 @@ def comunicacion():
     else:
         # Obtenemos la performativa
         perf = msgdic['performative']
-        # logger.info("OOOEOEOEOE %s", perf)
         if perf != ACL.request:
-            # logger.info("NOT UNDERSTOOD!")
             # Si no es un request, respondemos que no hemos entendido el mensaje
             gr = build_message(Graph(), ACL['not-understood'], sender=AgenteDevoluciones.uri, msgcnt=mss_cnt)
         else:
             # Extraemos el objeto del contenido que ha de ser una accion de la ontologia de acciones del agente
             # de registro
             # Averiguamos el tipo de la accion
-            # logger.info("GOT this one %s", msgdic)
             if 'content' in msgdic:
                 content = msgdic['content']
                 accion = gm.value(subject=content, predicate=RDF.type)
 
                 # Aqui realizariamos lo que pide la accion
                 if accion == AM2.Peticion_devolucion:
+                    logger.info("Nueva petición de devolución recibida")
                     gmess = Graph()
                     sj_contenido = AM2[AgenteDevoluciones.name + '-Comunicacion_resultado_devolucion-' + str(mss_cnt)]
                     gmess.add((sj_contenido, RDF.type, AM2.Comunicacion_resultado_devolucion))
@@ -203,7 +201,7 @@ def comunicacion():
     #     print('sujeto:%s | predicado: %s | objeto: %s'%( s, p,o))
 
     mss_cnt += 1
-    logger.info('Respondemos a la peticion')
+    logger.info('Respondiendo a la peticion')
     return gr.serialize(format='xml')
 
 
@@ -228,7 +226,7 @@ def addDevolutionToBD(gr, username):
     sujeto = AM2['devolucion-'+str(index)]
     currentDevolucion.add((sujeto,AM2.username,username))
     for s,p,o in gr:
-        print("devolucion %s|%s|%s"%(s,p,o))
+        # print("devolucion %s|%s|%s"%(s,p,o))
         currentDevolucion.add((sujeto,AM2.productos,URIRef(s)))
 
     devoluciones += currentDevolucion

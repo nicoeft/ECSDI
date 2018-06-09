@@ -46,8 +46,32 @@ ns1:compra-34 ns1:productos ns1:Televisor_2,
         ns1:Televisor_3 ;
     ns1:username "generic" .
 
+ns1:compra-37 ns1:productos ns1:Televisor_1 ;
+    ns1:username "generic" .
+
+ns1:compra-39 ns1:productos ns1:Televisor_1 ;
+    ns1:username "generic" .
+
 ns1:compra-4 ns1:productos ns1:Televisor_2,
         ns1:Televisor_3 ;
+    ns1:username "generic" .
+
+ns1:compra-41 ns1:productos ns1:Televisor_1 ;
+    ns1:username "generic" .
+
+ns1:compra-43 ns1:productos ns1:Televisor_3 ;
+    ns1:username "generic" .
+
+ns1:compra-45 ns1:productos ns1:Televisor_3 ;
+    ns1:username "generic" .
+
+ns1:compra-47 ns1:productos ns1:Televisor_2 ;
+    ns1:username "generic" .
+
+ns1:compra-49 ns1:productos ns1:Televisor_2 ;
+    ns1:username "generic" .
+
+ns1:compra-51 ns1:productos ns1:Televisor_3 ;
     ns1:username "generic" .
 
 ns1:compra-7 ns1:productos ns1:Televisor_2,

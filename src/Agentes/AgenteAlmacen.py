@@ -137,13 +137,12 @@ def comunicacion():
                 if accion == AM2.Realiza_envio:
                     logger.info('Realizando el envio')
 
-                    # TODO: como tratamos los productos?
                     products = Graph()
                     for s in gm.subjects(RDF.type,AM2["Producto"]):
                         products += gm.triples((s,None,None))
 
-                    for s,p,o in products:
-                        print("Procesando productos: %s | %s | %s"%(s,p,o))
+                    # for s,p,o in products:
+                    #     print("Procesando productos: %s | %s | %s"%(s,p,o))
 
                     negociaEnvio()
                     time.sleep(10) #Hacemos que tarde un tiempo en procesar antes de confirmar el envio
@@ -223,14 +222,6 @@ def contraOfertaEnvio(mejorOferta, agentesTransportistas):
             mejorOferta = int(precio)
             agenteElegidoContraoferta = agenteTransportista
     return agenteElegidoContraoferta
-
-    
-    
-
-
-
-    
-
 
 @app.route("/Stop")
 def stop():

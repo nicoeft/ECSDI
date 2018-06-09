@@ -187,7 +187,6 @@ def buscaProductos(marca, nombre, tipoProducto, modelo, precioMax):
         Model = row.modelo
         Brand = row.marca
         Envio = row.tipoEnvio
-        # print('Dintreeeee %s ' %(Id))
         sujeto = row.producto
         result.add((sujeto, RDF.type, AM2.Producto))
         result.add((sujeto,AM2.Id,Literal(Id, datatype=XSD.int)))
@@ -332,10 +331,10 @@ def comunicacion():
             if 'content' in msgdic:
                 content = msgdic['content']
                 accion = gm.value(subject=content, predicate=RDF.type)
-                # logger.info("PPPPvPPPPPPPPP %s %s",accion, AM2.Peticion_productos_disponibles )
 
                 # Aqui realizariamos lo que pide la accion
                 if accion == AM2.Peticion_productos_disponibles:
+                    logger.info("Nueva petición de mostrar productos")
                     productsGraph = getProducts(gm)
                     gr = build_message(productsGraph,
                         ACL['inform-done'],

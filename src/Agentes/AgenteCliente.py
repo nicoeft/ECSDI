@@ -108,7 +108,6 @@ def devoluciones():
     global username
 
     if request.method == 'GET':
-        # TODO: mirar si externalizamos el acceso a BD a AgenteDevoluciones
         compras = getCompras(username)
         compras_list = getComprasListFromGraph(compras)
         return render_template('devolucion.html', compras=compras_list)
@@ -154,9 +153,9 @@ def devolverCompras(request):
                 receiver=agenteDevolucion.uri,
                 content=sj_contenido,
                 msgcnt=mss_cnt)
-    print("devolverCompras BUILD")
+    # print("devolverCompras BUILD")
     gr = send_message(msg, agenteDevolucion.address)
-    print("devolverCompras SENT")
+    # print("devolverCompras SENT")
     mss_cnt += 1
     msgdic = get_message_properties(gr)
     content = msgdic['content']

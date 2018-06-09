@@ -5025,8 +5025,8 @@ finish</field>
 		    </field>
 		    <field name="location">
 			<object type="Coordinate" id="375">
-			    <field name="x">238</field>
-			    <field name="y">81</field>
+			    <field name="x">272</field>
+			    <field name="y">96</field>
 			</object>
 		    </field>
 		</object>
