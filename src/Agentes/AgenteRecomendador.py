@@ -15,6 +15,7 @@ import argparse
 import schedule
 import time
 
+from random import randint
 from flask import Flask, request
 from rdflib import Graph, Namespace, Literal, URIRef
 from rdflib.namespace import FOAF, RDF, XSD
@@ -218,8 +219,78 @@ def tidyup():
     global cola1
     cola1.put(0)
 
-def recomendar():
-    print("I'm working...")
+def buscaCompras(username):
+    # tiene que devolver el tipo y los sujetos de los productos comprados por el cliente identificado por username
+    compras = Graph()
+    datosCompras = open('../datos/compras')
+    compras.parse(datosCompras, format='turtle')
+    
+    query= """
+        @prefix ns1: <http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#> .
+        @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+        @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+        @prefix xml: <http://www.w3.org/XML/1998/namespace> .
+        @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+        SELECT DISTINCT ?compra ?productos ?tipoProducto
+        where{ 
+            ?compra rdf:type AM2:Compra .
+            ?producto rdf:type AM2:Producto .
+            ?username AM2:Username ?username .
+            FILTER("""
+    if username is not None:
+        query+= """str(?username) = '""" + username +"""'"""
+    query+= """ )} order by asc(UCASE(str(?nombre)))"""
+    graph_result = products.query(query)
+    return 0
+
+def buscaProductosRecomendables(productosCategorias):
+    #tiene que devolver los productos de categorias que aparecen en el parametro
+    # y que no este entre los productos del parametro
+    return 0
+
+def graphProductoRecomendar(productosRecomendables,agenteCliente):
+    totalProductos = productosRecomendables.__len__()
+    numRandom = randint(0, int(totalProductos)-1)
+    i = 0
+    for s in productosRecomendables.subjects(RDF.type,AM2.Producto):
+        if i == int(numRandom):
+            productoRecomendado = productosRecomendables.triples((s,None,None))
+            break
+        i += 1
+    
+    grecommend = Graph()
+    sj_contenido = AM2[AgenteRecomendador.name + '-Recomendacion-' + str(mss_cnt)]
+    grecommend.add((sj_contenido, RDF.type, AM2.Recomendacion))
+    sj_producto = AM2['Producto' + str(mss_cnt)]
+    grecommend.add((sj_producto, RDF.type, AM2.Producto))
+    grecommend.add((sj_producto, AM2.Producto, URIRef(productoRecomendado.uri))) 
+    grecommend.add((sj_contenido, AM2.procuctoRecomendado, URIRef(sj_producto)))
+    
+    grm = build_message(grecommend,
+    perf=ACL.request,
+    sender=AgenteRecomendador.uri,
+    receiver=agenteCliente.uri,
+    content=sj_contenido,
+    msgcnt=mss_cnt)
+
+                    
+    gr = send_message(grm,agenteCliente.address)
+    logger.info('Se ha enviado una recomendacion a un cliente')
+    
+
+
+
+
+def recomendarProductosClientes():
+    agentesCliente = directory_search_agent(DSO.AgenteCliente,AgenteRecomendador,DirectoryAgent,mss_cnt)
+    for agenteCliente in agentesCliente:
+        #obtenemos los productos de las compras del cliente
+        comprasCliente = buscaCompras(agenteCliente.name)
+        #buscamos los productos de tipo que ha comprado el cliente y que este no haya comprado aun
+        productosRecomendables = buscaProductosRecomendables(comprasCliente)
+        #elegimos de entre los productos relevantes uno al azar y enviamos la recomendacion al cliente
+        graphProductoRecomendar(productosRecomendables,agenteCliente)
+
 
 def agentbehavior1(cola):
     """
@@ -233,7 +304,7 @@ def agentbehavior1(cola):
 
     # Escuchando la cola hasta que llegue un 0
     fin = False
-    schedule.every(10).seconds.do(recomendar)
+    schedule.every(10).seconds.do(recomendarProductosClientes)
     while not fin:
         while cola.empty():
             schedule.run_pending()

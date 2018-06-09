@@ -14,9 +14,10 @@ Jocs de prova:
 
 Cambios en la ontologia:
 -Solo hay Devolucion, y ahora tiene una data property que se llama resultadoDevolucion (AenteDevoluciones linea 192)
--Nuevos Mensajes de la ontologia: Avisar_vendedor_externo_envio, Peticion_valoracion, Respuesta_valoracion
+-Nuevos Mensajes de la ontologia: Avisar_vendedor_externo_envio, Peticion_valoracion, 
+-Nueva_reseña pasa a llamarse Nueva_valoracion (a python no le gusta la Ñ)
 -Nueva_compra_producto pasa a llamarse Nueva_compra
-
+-Recomendacion tiene un object property que es productoRecomendado
 
 
 Las devoluciones se muestran todas las compras, tanto nuestras como no, mirar en /datos/compras las que tengan username != generic

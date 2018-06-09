@@ -6,7 +6,8 @@
 - 9013 AgenteLogistico
 - 9014 AgenteAlmacen
 - 9015 AgenteRecomendador
-- 9016 AgenteDevoluciones
+- 9016 AgenteProductosExternos
+- 9017 AgenteDevoluciones
 - 9030 al 9039 AgenteTransportista
 - 9040 AgenteVendedorExterno
 

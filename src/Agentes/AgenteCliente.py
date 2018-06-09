@@ -90,7 +90,7 @@ agn = Namespace("http://www.agentes.org#")
 mss_cnt = 0
 
 # Datos del Agente
-AgenteCliente = Agent('AgenteCliente',
+AgenteCliente = Agent(str(username),
                        agn.AgenteCliente,
                        'http://%s:%d/comm' % (hostname, port),
                        'http://%s:%d/Stop' % (hostname, port))
@@ -200,6 +200,28 @@ def browser_busca():
             return comprar(request)
         elif request.form['submit'] == 'Devoluciones':
             return redirect("/devolver", code=302)
+
+def comprarRecomendado(grRecomendado):
+
+    logger.info("Comprando producto recomendado")
+    gmess = Graph()
+    sj_contenido = agn[AgenteCliente.name + '-Peticion_Compra-' + str(mss_cnt)]
+    gmess.add((sj_contenido, RDF.type, AM2.Peticion_Compra))
+    gmess.add((sj_contenido, AM2.username, Literal(username)))
+    productSubject = grRecomendado.value(predicate=RDF.type, object=AM2.Producto)
+    gmess.add((productSubject, RDF.type, AM2['Producto'])) 
+    gmess += grRecomendado.triples((productSubject,None,None))
+    gmess.add((sj_contenido, AM2.Productos, URIRef(productSubject)))
+
+    vendedor = directory_search_agent(DSO.AgenteVentaProductos,AgenteCliente,DirectoryAgent,mss_cnt)[0]
+    msg = build_message(gmess, perf=ACL.request,
+                sender=AgenteCliente.uri,
+                receiver=vendedor.uri,
+                content=sj_contenido,
+                msgcnt=mss_cnt)
+    # print("message BUILD")
+    send_message(msg, vendedor.address)
+
 
 def comprar(request):
     global mss_cnt
@@ -408,8 +430,8 @@ def comunicacion():
                 elif accion == AM2.Peticion_valoracion:
                     logger.info('Contestando a la peticion de valoraciones')
                     gmess = Graph()
-                    sj_contenido = AM2[AgenteCliente.name + '-Respuesta_valoracion-' + str(mss_cnt)]
-                    gmess.add((sj_contenido, RDF.type, AM2.Respuesta_valoracion))
+                    sj_contenido = AM2[AgenteCliente.name + '-Nueva_valoracion-' + str(mss_cnt)]
+                    gmess.add((sj_contenido, RDF.type, AM2.Nueva_valoracion))
                     
                     productsValoracionGraph = Graph()
                     for s in gm.subjects(RDF.type,AM2["Producto"]):
@@ -423,6 +445,10 @@ def comunicacion():
                         msgcnt=mss_cnt,
                         content=sj_contenido,
                         receiver=msgdic['sender'])
+                elif accion == AM2.Recomendacion:
+                    sj_producto = gm.value(predicate=RDF.type,object=AM2["Producto"])
+                    productoRecomendado = gm.triples((sj_producto,None,None))
+                    comprarRecomendado(productoRecomendado)
                 else:
                     gr = build_message(Graph(), ACL['not-understood'], sender=AgenteCliente.uri, msgcnt=mss_cnt)
 

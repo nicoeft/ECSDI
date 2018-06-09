@@ -207,9 +207,10 @@ def addPurchaseToBD(gr, username):
     currentPurchase = Graph()
     sujeto = AM2['compra-'+str(index)]
     currentPurchase.add((sujeto,AM2.username,username))
-    for s,p,o in gr:
+    for s,p,o in gr.triples((None,AM2.TipoProducto,None)):
         # print("purchase %s|%s|%s"%(s,p,o))
         currentPurchase.add((sujeto,AM2.productos,URIRef(s)))
+        currentPurchase.add((sujeto,AM2.TipoProducto,URIRef(o)))
 
     purchases += currentPurchase
     # for s,p,o in gr:
