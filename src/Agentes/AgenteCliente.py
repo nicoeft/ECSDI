@@ -43,6 +43,8 @@ parser.add_argument('--port', type=int, help="Puerto de comunicacion del agente"
 parser.add_argument('--dhost', default='localhost', help="Host del agente de directorio")
 parser.add_argument('--dport', type=int, help="Puerto de comunicacion del agente de directorio")
 parser.add_argument('--username', type=str, help="Username del cliente")
+parser.add_argument('--recomendado', type=str, help="0-No compra recomendado, 1-Compra todo lo que se le recomienda, 2-Decision aleatoria sobre comrar o no lo recomendado")
+
 
 # Logging
 logger = config_logger(level=1)
@@ -52,11 +54,18 @@ args = parser.parse_args()
 
 # user Identifier:
 username = "generic"
+recomendado = 1
 
 if args.username is None:
     username = "generic"
 else:
     username = args.username
+
+# user behavior
+if args.recomendado is None:
+    recomendado = 1
+else:
+    recomendado = args.recomendado
 
 # Configuration stuff
 if args.port is None:
@@ -446,9 +455,15 @@ def comunicacion():
                         content=sj_contenido,
                         receiver=msgdic['sender'])
                 elif accion == AM2.Recomendacion:
+                    global recomendado
+                    productoRecomendado = Graph()
                     sj_producto = gm.value(predicate=RDF.type,object=AM2["Producto"])
-                    productoRecomendado = gm.triples((sj_producto,None,None))
-                    comprarRecomendado(productoRecomendado)
+                    productoRecomendado += gm.triples((sj_producto,None,None))
+                    if decisionComprar():
+                        comprarRecomendado(productoRecomendado)
+
+                    gr = build_message(Graph(), ACL['inform-done'], sender=AgenteCliente.uri, msgcnt=mss_cnt)
+
                 else:
                     gr = build_message(Graph(), ACL['not-understood'], sender=AgenteCliente.uri, msgcnt=mss_cnt)
 
@@ -456,6 +471,16 @@ def comunicacion():
                 gr = build_message(Graph(), ACL['not-understood'], sender=AgenteCliente.uri, msgcnt=mss_cnt)
 
     return gr.serialize(format='xml')
+
+def decisionComprar():
+    if recomendado == 1:
+        return True
+    elif recomendado == 2:
+        quieroComprar = randint(0,1)
+        if quieroComprar:
+            return True
+        else :
+            return False
 
 
 def tidyup():

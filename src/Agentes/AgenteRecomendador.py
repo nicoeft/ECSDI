@@ -327,23 +327,12 @@ def buscaProductosRecomendables(username):
     
     return result
 
-def graphProductoRecomendar(productosRecomendables,agenteCliente):
-    totalProductos = productosRecomendables.__len__()
-    numRandom = randint(0, int(totalProductos)-1)
-    i = 0
-    for s in productosRecomendables.subjects(RDF.type,AM2.Producto):
-        if i == int(numRandom):
-            productoRecomendado = productosRecomendables.triples((s,None,None))
-            break
-        i += 1
+def sendProductoRecomendado(productoRecomendado,agenteCliente):
     
     grecommend = Graph()
     sj_contenido = AM2[AgenteRecomendador.name + '-Recomendacion-' + str(mss_cnt)]
     grecommend.add((sj_contenido, RDF.type, AM2.Recomendacion))
-    sj_producto = AM2['Producto' + str(mss_cnt)]
-    grecommend.add((sj_producto, RDF.type, AM2.Producto))
-    grecommend.add((sj_producto, AM2.Producto, URIRef(productoRecomendado.uri))) 
-    grecommend.add((sj_contenido, AM2.procuctoRecomendado, URIRef(sj_producto)))
+    grecommend += productoRecomendado
     
     grm = build_message(grecommend,
     perf=ACL.request,
@@ -352,7 +341,6 @@ def graphProductoRecomendar(productosRecomendables,agenteCliente):
     content=sj_contenido,
     msgcnt=mss_cnt)
 
-                    
     gr = send_message(grm,agenteCliente.address)
     logger.info('Se ha enviado una recomendacion a un cliente')
     
@@ -364,9 +352,9 @@ def recomendarProductosClientes():
     agentesCliente = directory_search_agent(DSO.AgenteCliente,AgenteRecomendador,DirectoryAgent,mss_cnt)
     for agenteCliente in agentesCliente:
         #buscamos los productos de tipo que ha comprado el cliente y que este no haya comprado aun
-        productosRecomendables = buscaProductosRecomendables(agenteCliente.name)
+        productoRecomendado = buscaProductosRecomendables(agenteCliente.name)
         #elegimos de entre los productos relevantes uno al azar y enviamos la recomendacion al cliente
-        graphProductoRecomendar(productosRecomendables,agenteCliente)
+        sendProductoRecomendado(productoRecomendado,agenteCliente)
 
 
 def agentbehavior1(cola):
