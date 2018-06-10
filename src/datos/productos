@@ -31,6 +31,15 @@ ns1:Producto_externo1 a ns1:Producto ;
     ns1:TipoEnvio "Interno" ;
     ns1:TipoProducto "Electronica" .
 
+ns1:Producto_externo365341 a ns1:Producto ;
+    ns1:Id 116936 ;
+    ns1:Marca "Samsung" ;
+    ns1:Modelo "RF56M9540SR" ;
+    ns1:Nombre "Nevera" ;
+    ns1:Precio "1399.99" ;
+    ns1:TipoEnvio "Interno" ;
+    ns1:TipoProducto "Electrodomestico" .
+
 ns1:Televisor_1 a ns1:Producto ;
     ns1:Id "2" ;
     ns1:Marca "Sony" ;

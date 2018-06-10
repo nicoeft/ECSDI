@@ -4,77 +4,16 @@
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:compra-0 ns1:productos ns1:Televisor_3 ;
+ns1:compra-2 a ns1:Compra ;
+    ns1:TipoProducto <Electrodomestico>,
+        <Electronica> ;
+    ns1:productos ns1:Producto_externo1,
+        ns1:Producto_externo365341 ;
     ns1:username "generic" .
 
-ns1:compra-10 ns1:productos ns1:Televisor_2,
+ns1:compra-6 a ns1:Compra ;
+    ns1:TipoProducto <Electronica> ;
+    ns1:productos ns1:Producto_externo0,
         ns1:USB_1 ;
     ns1:username "generic" .
-
-ns1:compra-13 ns1:productos ns1:Televisor_2,
-        ns1:Televisor_4 ;
-    ns1:username "generic" .
-
-ns1:compra-16 ns1:productos ns1:Producto_externo0,
-        ns1:Producto_externo1 ;
-    ns1:username "generic" .
-
-ns1:compra-19 ns1:productos ns1:Televisor_4,
-        ns1:USB_1 ;
-    ns1:username "generic" .
-
-ns1:compra-2 ns1:productos ns1:USB_1 ;
-    ns1:username "generic" .
-
-ns1:compra-22 ns1:productos ns1:Producto_externo0,
-        ns1:Televisor_3 ;
-    ns1:username "generic" .
-
-ns1:compra-25 ns1:productos ns1:Televisor_2,
-        ns1:Televisor_3 ;
-    ns1:username "generic" .
-
-ns1:compra-28 ns1:productos ns1:Producto_externo0,
-        ns1:Televisor_3 ;
-    ns1:username "generic" .
-
-ns1:compra-31 ns1:productos ns1:Producto_externo0,
-        ns1:Televisor_2 ;
-    ns1:username "generic" .
-
-ns1:compra-34 ns1:productos ns1:Televisor_2,
-        ns1:Televisor_3 ;
-    ns1:username "generic" .
-
-ns1:compra-37 ns1:productos ns1:Televisor_1 ;
-    ns1:username "generic" .
-
-ns1:compra-39 ns1:productos ns1:Televisor_1 ;
-    ns1:username "generic" .
-
-ns1:compra-4 ns1:productos ns1:Televisor_2,
-        ns1:Televisor_3 ;
-    ns1:username "generic" .
-
-ns1:compra-41 ns1:productos ns1:Televisor_1 ;
-    ns1:username "generic" .
-
-ns1:compra-43 ns1:productos ns1:Televisor_3 ;
-    ns1:username "generic" .
-
-ns1:compra-45 ns1:productos ns1:Televisor_3 ;
-    ns1:username "generic" .
-
-ns1:compra-47 ns1:productos ns1:Televisor_2 ;
-    ns1:username "generic" .
-
-ns1:compra-49 ns1:productos ns1:Televisor_2 ;
-    ns1:username "generic" .
-
-ns1:compra-51 ns1:productos ns1:Televisor_3 ;
-    ns1:username "generic" .
-
-ns1:compra-7 ns1:productos ns1:Televisor_2,
-        ns1:Televisor_3 ;
-    ns1:username "username2" .
 

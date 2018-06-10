@@ -15,6 +15,8 @@ import argparse
 import schedule
 import time
 
+from sets import Set
+
 from random import randint
 from flask import Flask, request
 from rdflib import Graph, Namespace, Literal, URIRef
@@ -225,23 +227,32 @@ def buscaCompras(username):
     datosCompras = open('../datos/compras')
     compras.parse(datosCompras, format='turtle')
     
+    compras = Graph()
+    datosCompras = open('../datos/compras')
+    compras.parse(datosCompras, format='turtle')
+    
     query= """
-        @prefix ns1: <http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#> .
-        @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-        @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-        @prefix xml: <http://www.w3.org/XML/1998/namespace> .
-        @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-        SELECT DISTINCT ?compra ?productos ?tipoProducto
+        prefix rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        prefix xsd:<http://www.w3.org/2001/XMLSchema#>
+        prefix AM2:<http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#>
+        prefix owl:<http://www.w3.org/2002/07/owl#>
+        SELECT DISTINCT ?compra ?productos ?username
         where{ 
             ?compra rdf:type AM2:Compra .
-            ?producto rdf:type AM2:Producto .
-            ?username AM2:Username ?username .
+            ?compra AM2:productos ?productos .
+            ?compra AM2:username ?username .
             FILTER("""
     if username is not None:
         query+= """str(?username) = '""" + username +"""'"""
+
     query+= """ )} order by asc(UCASE(str(?nombre)))"""
-    graph_result = products.query(query)
-    return 0
+    graph_result = compras.query(query)
+    productes = Set()
+    for row in graph_result:
+        if(row.productes not in productes):
+            productes.add(row.productes)
+
+    return productes
 
 def buscaProductosRecomendables(productosCategorias):
     #tiene que devolver los productos de categorias que aparecen en el parametro

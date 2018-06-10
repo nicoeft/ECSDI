@@ -18,6 +18,7 @@ from __future__ import print_function
 from multiprocessing import Process, Queue
 import socket
 import argparse
+import random
 
 from flask import Flask, render_template, request
 from rdflib import Namespace, Graph,Literal,URIRef
@@ -45,7 +46,7 @@ logger = config_logger(level=1)
 
 # Configuration stuff
 hostname = socket.gethostname()
-port = 9030
+port = 9040
 
 # parsing de los parametros de la linea de comandos
 args = parser.parse_args()
@@ -121,7 +122,7 @@ def ponerALaVenta(request):
 
     gmess = Graph()
 
-    sj_contenido = agn[AgenteVendedorExterno.name + 'Add_producto_externo' + str(mss_cnt)]
+    sj_contenido = agn[AgenteVendedorExterno.name + 'Add_producto_externo_' + str(mss_cnt)]
 
     gmess.add((sj_contenido, RDF.type, AM2.Add_producto_externo))
 
@@ -133,7 +134,7 @@ def ponerALaVenta(request):
     tipoEnvio = request.form['tipoEnvio']
 
     if nombre and marca and tipoProducto and precio and modelo and tipoEnvio:
-        sujeto = AM2['Producto_externo' + str(mss_cnt)]
+        sujeto = AM2['Producto_externo_' + str(random.randint(0, 500000))]
         gmess.add((sujeto, RDF.type, AM2.Producto))
         gmess.add((sujeto, AM2.Nombre, Literal(nombre)))
         gmess.add((sujeto ,AM2.Marca, Literal(marca)))
