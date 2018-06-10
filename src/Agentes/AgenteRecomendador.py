@@ -237,11 +237,6 @@ def getCategorias(productes):
     return categories
 
 def buscaCompras(username):
-    # tiene que devolver el tipo y los sujetos de los productos comprados por el cliente identificado por username
-    compras = Graph()
-    datosCompras = open('../datos/compras')
-    compras.parse(datosCompras, format='turtle')
-    
     compras = Graph()
     datosCompras = open('../datos/compras')
     compras.parse(datosCompras, format='turtle')
@@ -262,11 +257,12 @@ def buscaCompras(username):
 
     query+= """ )} order by asc(UCASE(str(?nombre)))"""
     graph_result = compras.query(query)
+
     productes = Set()
     for row in graph_result:
-        if(row.productes not in productes):
-            productes.add(row.productes)
-
+        if(row.productos not in productes):
+            productes.add(row.productos)
+    
     return productes
 
 def buscaProductosRecomendables(username):
@@ -331,7 +327,15 @@ def buscaProductosRecomendables(username):
     
     return result
 
-def graphProductoRecomendar(productoRecomendado,agenteCliente):
+def graphProductoRecomendar(productosRecomendables,agenteCliente):
+    totalProductos = productosRecomendables.__len__()
+    numRandom = randint(0, int(totalProductos)-1)
+    i = 0
+    for s in productosRecomendables.subjects(RDF.type,AM2.Producto):
+        if i == int(numRandom):
+            productoRecomendado = productosRecomendables.triples((s,None,None))
+            break
+        i += 1
     
     grecommend = Graph()
     sj_contenido = AM2[AgenteRecomendador.name + '-Recomendacion-' + str(mss_cnt)]
