@@ -15,6 +15,8 @@ import argparse
 import schedule
 import time
 
+import random
+
 from sets import Set
 
 from random import randint
@@ -221,6 +223,19 @@ def tidyup():
     global cola1
     cola1.put(0)
 
+def getCategorias(productes):
+    categories = Set()
+    products = Graph()
+    datosProductos = open('../datos/productos')
+    products.parse(datosProductos, format='turtle') 
+
+    for s,p,o in products:
+        if(s in productes):
+            categoria = str(products.value(s, AM2.TipoProducto, None))
+            categories.add(categoria)
+    
+    return categories
+
 def buscaCompras(username):
     # tiene que devolver el tipo y los sujetos de los productos comprados por el cliente identificado por username
     compras = Graph()
@@ -254,20 +269,69 @@ def buscaCompras(username):
 
     return productes
 
-def buscaProductosRecomendables(productosCategorias):
-    #tiene que devolver los productos de categorias que aparecen en el parametro
-    # y que no este entre los productos del parametro
-    return 0
+def buscaProductosRecomendables(username):
+    SubjProductes = buscaCompras(username)
+    categorias = getCategorias(SubjProductes)
 
-def graphProductoRecomendar(productosRecomendables,agenteCliente):
-    totalProductos = productosRecomendables.__len__()
-    numRandom = randint(0, int(totalProductos)-1)
-    i = 0
-    for s in productosRecomendables.subjects(RDF.type,AM2.Producto):
-        if i == int(numRandom):
-            productoRecomendado = productosRecomendables.triples((s,None,None))
-            break
-        i += 1
+    products = Graph()
+    datosProductos = open('../datos/productos')
+    products.parse(datosProductos, format='turtle')
+    productesRecomendar = Set()
+
+    for s,p,o in products:
+        categoria = str(products.value(s,AM2.TipoProducto, None))
+        if(categoria in categorias):
+            if(s not in SubjProductes):
+                productesRecomendar.add(s)
+
+    producto = (random.sample(productesRecomendar,1))
+    producto = producto.pop()
+    
+    query= """
+        prefix rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        prefix xsd:<http://www.w3.org/2001/XMLSchema#>
+        prefix AM2:<http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#>
+        prefix owl:<http://www.w3.org/2002/07/owl#>
+        SELECT DISTINCT ?producto ?id ?nombre ?tipoProducto ?precio ?modelo ?marca ?tipoEnvio
+        where{
+            ?producto rdf:type AM2:Producto .
+            ?producto AM2:Id ?id .
+            ?producto AM2:Nombre ?nombre . 
+            ?producto AM2:TipoProducto ?tipoProducto .
+            ?producto AM2:Precio ?precio .
+            ?producto AM2:Modelo ?modelo .
+            ?producto AM2:Marca ?marca .
+            ?producto AM2:TipoEnvio ?tipoEnvio
+            FILTER("""
+    if producto is not None:
+        query+= """str(?producto) = '""" + producto +"""'"""
+    
+    query+= """ )} """
+
+    graph_result = products.query(query)
+    result = Graph()
+    result.bind('AM2', AM2)
+    for row in graph_result:
+        Id = row.id
+        Name = row.nombre
+        Type = row.tipoProducto
+        Price = row.precio
+        Model = row.modelo
+        Brand = row.marca
+        Envio = row.tipoEnvio
+        sujeto = row.producto
+        result.add((sujeto, RDF.type, AM2.Producto))
+        result.add((sujeto,AM2.Id,Literal(Id, datatype=XSD.int)))
+        result.add((sujeto,AM2.Nombre,Literal(Name, datatype=XSD.string)))
+        result.add((sujeto,AM2.TipoProducto,Literal(Type, datatype=XSD.string)))
+        result.add((sujeto,AM2.Precio,Literal(Price, datatype=XSD.int)))
+        result.add((sujeto,AM2.Modelo,Literal(Model, datatype=XSD.string)))
+        result.add((sujeto,AM2.Marca,Literal(Brand, datatype=XSD.string)))
+        result.add((sujeto,AM2.TipoEnvio, Literal(Envio, datatype=XSD.string)))
+    
+    return result
+
+def graphProductoRecomendar(productoRecomendado,agenteCliente):
     
     grecommend = Graph()
     sj_contenido = AM2[AgenteRecomendador.name + '-Recomendacion-' + str(mss_cnt)]
@@ -295,10 +359,8 @@ def graphProductoRecomendar(productosRecomendables,agenteCliente):
 def recomendarProductosClientes():
     agentesCliente = directory_search_agent(DSO.AgenteCliente,AgenteRecomendador,DirectoryAgent,mss_cnt)
     for agenteCliente in agentesCliente:
-        #obtenemos los productos de las compras del cliente
-        comprasCliente = buscaCompras(agenteCliente.name)
         #buscamos los productos de tipo que ha comprado el cliente y que este no haya comprado aun
-        productosRecomendables = buscaProductosRecomendables(comprasCliente)
+        productosRecomendables = buscaProductosRecomendables(agenteCliente.name)
         #elegimos de entre los productos relevantes uno al azar y enviamos la recomendacion al cliente
         graphProductoRecomendar(productosRecomendables,agenteCliente)
 

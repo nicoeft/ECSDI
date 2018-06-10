@@ -4,16 +4,21 @@
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
+ns1:compra-11 a ns1:Compra ;
+    ns1:TipoProducto <Ropa> ;
+    ns1:productos ns1:Camisa ;
+    ns1:username "test" .
+
 ns1:compra-2 a ns1:Compra ;
-    ns1:TipoProducto <Electrodomestico>,
-        <Electronica> ;
+    ns1:TipoProducto <file:///home/eloiroca/FIB/ECSDI/src/datos/Electrodomestico>,
+        <file:///home/eloiroca/FIB/ECSDI/src/datos/Electronica> ;
     ns1:productos ns1:Producto_externo1,
         ns1:Producto_externo365341 ;
     ns1:username "generic" .
 
 ns1:compra-6 a ns1:Compra ;
-    ns1:TipoProducto <Electronica> ;
+    ns1:TipoProducto <file:///home/eloiroca/FIB/ECSDI/src/datos/Electronica> ;
     ns1:productos ns1:Producto_externo0,
         ns1:USB_1 ;
-    ns1:username "generic" .
+    ns1:username "eloi" .
 
