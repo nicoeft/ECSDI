@@ -16,19 +16,6 @@ ns1:compra-18 a ns1:Compra ;
     ns1:productos ns1:Producto_externo_248213 ;
     ns1:username "eloi" .
 
-ns1:compra-2 a ns1:Compra ;
-    ns1:productos ns1:Televisor_3 ;
-    ns1:username "generic" .
-
-ns1:compra-21 a ns1:Compra ;
-    ns1:productos ns1:Camisa ;
-    ns1:username "eloi" .
-
-ns1:compra-24 a ns1:Compra ;
-    ns1:productos ns1:Producto_externo0,
-        ns1:USB_1 ;
-    ns1:username "eloi" .
-
 ns1:compra-28 a ns1:Compra ;
     ns1:productos ns1:Televisor_3 ;
     ns1:username "eloi" .

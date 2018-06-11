@@ -1,9 +1,9 @@
-# ECSDI
+# Amazon2
 ## Sistema distribuido Amazon2
 
-[Report](http://ahuangfeng.ddns.net/) (Actualizado el 2 abril 2018)
+Sistema distribuido con protocolo FIPA-ACL implementado para la asignatura de ECSDI de la FIB-UPC
 
-## TODO:
-El agente Cliente es Agente Venta productos
-
-Hemos separado las devoluciones
+## Equipo
+- [Nico Francisquelo](https://github.com/nicoeft)
+- [Alex Huang Feng](https://github.com/ahuangfeng)
+- [Eloi Roca](https://github.com/eloiiroca)
