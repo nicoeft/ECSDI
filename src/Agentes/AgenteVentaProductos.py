@@ -206,6 +206,7 @@ def addPurchaseToBD(gr, username):
     index = purchases.__len__()
     currentPurchase = Graph()
     sujeto = AM2['compra-'+str(index)]
+    print("IDENTIFICADOR DE LA COMPRA: %s" %(index))
     currentPurchase.add((sujeto, RDF.type, AM2.Compra))
     currentPurchase.add((sujeto,AM2.username,username))
     for s,p,o in gr.triples((None,AM2.TipoProducto,None)):

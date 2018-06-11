@@ -14,6 +14,12 @@ ns1:devolucion-10 ns1:productos ns1:compra-0,
         ns1:compra-4 ;
     ns1:username "generic" .
 
+ns1:devolucion-13 ns1:productos ns1:compra-3 ;
+    ns1:username "generic" .
+
+ns1:devolucion-15 ns1:productos ns1:compra-59 ;
+    ns1:username "generic" .
+
 ns1:devolucion-5 ns1:productos ns1:compra-13,
         ns1:compra-19,
         ns1:compra-31,

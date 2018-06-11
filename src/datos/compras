@@ -57,11 +57,5 @@ ns1:compra-43 a ns1:Compra ;
     ns1:productos ns1:Producto_externo_413507 ;
     ns1:username "eloi" .
 
-ns1:compra-6 a ns1:Compra ;
-    ns1:productos ns1:Televisor_3 ;
-    ns1:username "generic" .
 
-ns1:compra-9 a ns1:Compra ;
-    ns1:productos ns1:Producto_externo0 ;
-    ns1:username "generic" .
 

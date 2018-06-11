@@ -12,655 +12,572 @@
 #    Object Properties
 #################################################################
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#almacenAgrupa
-:almacenAgrupa rdf:type owl:ObjectProperty ;
-               rdfs:domain :Almacen ;
-               rdfs:range :Lote .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2almacenAgrupa
+:amazon2almacenAgrupa rdf:type owl:ObjectProperty ;
+                      rdfs:domain :amazon2Almacen ;
+                      rdfs:range :amazon2Lote .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#almacenEligeTransportista
-:almacenEligeTransportista rdf:type owl:ObjectProperty ;
-                           rdfs:domain :Almacen ;
-                           rdfs:range :Transportista .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2almacenEligeTransportista
+:amazon2almacenEligeTransportista rdf:type owl:ObjectProperty ;
+                                  rdfs:domain :amazon2Almacen ;
+                                  rdfs:range :amazon2Transportista .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#almacena
-:almacena rdf:type owl:ObjectProperty ;
-          rdfs:domain :Almacen ;
-          rdfs:range :Producto .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2almacena
+:amazon2almacena rdf:type owl:ObjectProperty ;
+                 rdfs:domain :amazon2Almacen ;
+                 rdfs:range :amazon2Producto .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#cobrarPedido
-:cobrarPedido rdf:type owl:ObjectProperty ;
-              rdfs:domain :Cobrar_pedido ;
-              rdfs:range :Pedido .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2cobrarPedido
+:amazon2cobrarPedido rdf:type owl:ObjectProperty ;
+                     rdfs:domain :amazon2Cobrar_pedido ;
+                     rdfs:range :amazon2Pedido .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#creaEnvios
-:creaEnvios rdf:type owl:ObjectProperty ;
-            rdfs:domain :Centro_logistico ;
-            rdfs:range :Envio .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2creaEnvios
+:amazon2creaEnvios rdf:type owl:ObjectProperty ;
+                   rdfs:domain :amazon2Centro_logistico ;
+                   rdfs:range :amazon2Envio .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#cumpleRestriccion
-:cumpleRestriccion rdf:type owl:ObjectProperty ;
-                   rdfs:domain :Producto ;
-                   rdfs:range :Restricciones_cliente .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2cumpleRestriccion
+:amazon2cumpleRestriccion rdf:type owl:ObjectProperty ;
+                          rdfs:domain :amazon2Producto ;
+                          rdfs:range :amazon2Restricciones_cliente .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#devolucionAsociada
-:devolucionAsociada rdf:type owl:ObjectProperty ;
-                    rdfs:domain :Devolucion ;
-                    rdfs:range :Producto .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2devolucionAsociada
+:amazon2devolucionAsociada rdf:type owl:ObjectProperty ;
+                           rdfs:domain :amazon2Devolucion ;
+                           rdfs:range :amazon2Producto .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#devolucionContiene
-:devolucionContiene rdf:type owl:ObjectProperty ;
-                    rdfs:domain :Devolucion ;
-                    rdfs:range :Factura_de_compra .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2devolucionContiene
+:amazon2devolucionContiene rdf:type owl:ObjectProperty ;
+                           rdfs:domain :amazon2Devolucion ;
+                           rdfs:range :amazon2Factura_de_compra .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#devolucionProductoConfirmado
-:devolucionProductoConfirmado rdf:type owl:ObjectProperty ;
-                              rdfs:domain :Producto_devuelto ;
-                              rdfs:range :Producto .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2devolucionProductoConfirmado
+:amazon2devolucionProductoConfirmado rdf:type owl:ObjectProperty ;
+                                     rdfs:domain :amazon2Producto_devuelto ;
+                                     rdfs:range :amazon2Producto .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#enviaLote
-:enviaLote rdf:type owl:ObjectProperty ;
-           rdfs:domain :Avisar_transportista_envio ;
-           rdfs:range :Lote .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2enviaLote
+:amazon2enviaLote rdf:type owl:ObjectProperty ;
+                  rdfs:domain :amazon2Avisar_transportista_envio ;
+                  rdfs:range :amazon2Lote .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#enviaRecomendacion
-:enviaRecomendacion rdf:type owl:ObjectProperty ;
-                    rdfs:domain :Enviar_recomendacion ;
-                    rdfs:range :Recomendacion .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2enviaRecomendacion
+:amazon2enviaRecomendacion rdf:type owl:ObjectProperty ;
+                           rdfs:domain :amazon2Enviar_recomendacion ;
+                           rdfs:range :amazon2Recomendacion .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#esEnviadoPor
-:esEnviadoPor rdf:type owl:ObjectProperty ;
-              rdfs:domain :Lote ;
-              rdfs:range :Transportista .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2esEnviadoPor
+:amazon2esEnviadoPor rdf:type owl:ObjectProperty ;
+                     rdfs:domain :amazon2Lote ;
+                     rdfs:range :amazon2Transportista .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#esLocalizadoEn
-:esLocalizadoEn rdf:type owl:ObjectProperty ;
-                rdfs:domain :Almacen ;
-                rdfs:range :Localizacion .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2esLocalizadoEn
+:amazon2esLocalizadoEn rdf:type owl:ObjectProperty ;
+                       rdfs:domain :amazon2Almacen ;
+                       rdfs:range :amazon2Localizacion .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#esProcesadoPor
-:esProcesadoPor rdf:type owl:ObjectProperty ;
-                rdfs:domain :Envio_propio ;
-                rdfs:range :Almacen .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2esProcesadoPor
+:amazon2esProcesadoPor rdf:type owl:ObjectProperty ;
+                       rdfs:domain :amazon2Envio_propio ;
+                       rdfs:range :amazon2Almacen .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#esProcesadoPorExt
-:esProcesadoPorExt rdf:type owl:ObjectProperty ;
-                   rdfs:domain :Envio_externo ;
-                   rdfs:range :Vendedor .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2esProcesadoPorExt
+:amazon2esProcesadoPorExt rdf:type owl:ObjectProperty ;
+                          rdfs:domain :amazon2Envio_externo ;
+                          rdfs:range :amazon2Vendedor .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#estaFormadoPor
-:estaFormadoPor rdf:type owl:ObjectProperty ;
-                rdfs:domain :Envio ;
-                rdfs:range :Producto .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2estaFormadoPor
+:amazon2estaFormadoPor rdf:type owl:ObjectProperty ;
+                       rdfs:domain :amazon2Envio ;
+                       rdfs:range :amazon2Producto .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#loteTiene
-:loteTiene rdf:type owl:ObjectProperty ;
-           rdfs:domain :Lote ;
-           rdfs:range :Envio_propio .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2loteTiene
+:amazon2loteTiene rdf:type owl:ObjectProperty ;
+                  rdfs:domain :amazon2Lote ;
+                  rdfs:range :amazon2Envio_propio .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#negociaCon
-:negociaCon rdf:type owl:ObjectProperty ;
-            rdfs:domain :Almacen ;
-            rdfs:range :Transportista .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2negociaCon
+:amazon2negociaCon rdf:type owl:ObjectProperty ;
+                   rdfs:domain :amazon2Almacen ;
+                   rdfs:range :amazon2Transportista .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#nuevaCompraContiene
-:nuevaCompraContiene rdf:type owl:ObjectProperty ;
-                     rdfs:domain :Nueva_compra_producto ;
-                     rdfs:range :Pedido .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2nuevaCompraContiene
+:amazon2nuevaCompraContiene rdf:type owl:ObjectProperty ;
+                            rdfs:domain :amazon2Nueva_compra_producto ;
+                            rdfs:range :amazon2Pedido .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#nuevaReseñaContiene
-:nuevaReseñaContiene rdf:type owl:ObjectProperty ;
-                     rdfs:domain :Nueva_reseña ;
-                     rdfs:range :Feedback .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2nuevaReseñaContiene
+:amazon2nuevaReseñaContiene rdf:type owl:ObjectProperty ;
+                            rdfs:domain :amazon2Nueva_reseña ;
+                            rdfs:range :amazon2Feedback .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#pedidoContiene
-:pedidoContiene rdf:type owl:ObjectProperty ;
-                rdfs:domain :Pedido ;
-                rdfs:range :Producto .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2pedidoContiene
+:amazon2pedidoContiene rdf:type owl:ObjectProperty ;
+                       rdfs:domain :amazon2Pedido ;
+                       rdfs:range :amazon2Producto .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#pedidoDestinadoA
-:pedidoDestinadoA rdf:type owl:ObjectProperty ;
-                  rdfs:domain :Pedido ;
-                  rdfs:range :Localizacion .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2pedidoDestinadoA
+:amazon2pedidoDestinadoA rdf:type owl:ObjectProperty ;
+                         rdfs:domain :amazon2Pedido ;
+                         rdfs:range :amazon2Localizacion .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#pedidoExterno
-:pedidoExterno rdf:type owl:ObjectProperty ;
-               rdfs:domain :Comunicar_pedido_enviar ;
-               rdfs:range :Pedido .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2pedidoExterno
+:amazon2pedidoExterno rdf:type owl:ObjectProperty ;
+                      rdfs:domain :amazon2Comunicar_pedido_enviar ;
+                      rdfs:range :amazon2Pedido .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#pedidoPerteneceA
-:pedidoPerteneceA rdf:type owl:ObjectProperty ;
-                  rdfs:domain :Pedido ;
-                  rdfs:range :Cliente .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2pedidoPerteneceA
+:amazon2pedidoPerteneceA rdf:type owl:ObjectProperty ;
+                         rdfs:domain :amazon2Pedido ;
+                         rdfs:range :amazon2Cliente .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#perteneceA
-:perteneceA rdf:type owl:ObjectProperty ;
-            rdfs:domain :Producto ;
-            rdfs:range :Categorias .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2peticionDevolucionContiene
+:amazon2peticionDevolucionContiene rdf:type owl:ObjectProperty ;
+                                   rdfs:domain :amazon2Peticion_devolucion ;
+                                   rdfs:range :amazon2Devolucion .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#peticionDevolucionContiene
-:peticionDevolucionContiene rdf:type owl:ObjectProperty ;
-                            rdfs:domain :Peticion_devolucion ;
-                            rdfs:range :Devolucion .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2peticionDevolucionTiene
+:amazon2peticionDevolucionTiene rdf:type owl:ObjectProperty ;
+                                rdfs:domain :amazon2Peticion_devolucion ;
+                                rdfs:range :amazon2Devolucion .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#peticionDevolucionTiene
-:peticionDevolucionTiene rdf:type owl:ObjectProperty ;
-                         rdfs:domain :Peticion_devolucion ;
-                         rdfs:range :Devolucion .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2peticionProductosDisponibles
+:amazon2peticionProductosDisponibles rdf:type owl:ObjectProperty ;
+                                     rdfs:domain :amazon2Peticion_productos_disponibles ;
+                                     rdfs:range :amazon2Restricciones_cliente .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#peticionProductosDisponibles
-:peticionProductosDisponibles rdf:type owl:ObjectProperty ;
-                              rdfs:domain :Peticion_productos_disponibles ;
-                              rdfs:range :Restricciones_cliente .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2preciosEnvioPercep
+:amazon2preciosEnvioPercep rdf:type owl:ObjectProperty ;
+                           rdfs:domain :amazon2Precios_envio ;
+                           rdfs:range :amazon2Pedido .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#preciosEnvioPercep
-:preciosEnvioPercep rdf:type owl:ObjectProperty ;
-                    rdfs:domain :Precios_envio ;
-                    rdfs:range :Pedido .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2productoExternoContiene
+:amazon2productoExternoContiene rdf:type owl:ObjectProperty ;
+                                rdfs:domain :amazon2Añadir_producto_externo ;
+                                rdfs:range :amazon2Producto_externo ,
+                                           :amazon2Vendedor .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#productoExternoContiene
-:productoExternoContiene rdf:type owl:ObjectProperty ;
-                         rdfs:domain :Añadir_producto_externo ;
-                         rdfs:range :Producto_externo ,
-                                    :Vendedor .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2realizaEnvioPedido
+:amazon2realizaEnvioPedido rdf:type owl:ObjectProperty ;
+                           rdfs:domain :amazon2Realiza_envio ;
+                           rdfs:range :amazon2Pedido .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#realizaEnvioPedido
-:realizaEnvioPedido rdf:type owl:ObjectProperty ;
-                    rdfs:domain :Realiza_envio ;
-                    rdfs:range :Pedido .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2recibeOferta
+:amazon2recibeOferta rdf:type owl:ObjectProperty ;
+                     rdfs:domain :amazon2Almacen ;
+                     rdfs:range :amazon2Oferta_transportista .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#recibeOferta
-:recibeOferta rdf:type owl:ObjectProperty ;
-              rdfs:domain :Almacen ;
-              rdfs:range :Oferta_transportista .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2recomienda
+:amazon2recomienda rdf:type owl:ObjectProperty ;
+                   rdfs:domain :amazon2Recomendacion ;
+                   rdfs:range :amazon2Producto .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#recomienda
-:recomienda rdf:type owl:ObjectProperty ;
-            rdfs:domain :Recomendacion ;
-            rdfs:range :Producto .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2resultadoDevolucion
+:amazon2resultadoDevolucion rdf:type owl:ObjectProperty ;
+                            rdfs:subPropertyOf owl:topObjectProperty ;
+                            rdfs:domain :amazon2Comunicacion_resultado_devolucion ;
+                            rdfs:range :amazon2Devolucion .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#resultadoDevolucion
-:resultadoDevolucion rdf:type owl:ObjectProperty ;
-                     rdfs:subPropertyOf owl:topObjectProperty ;
-                     rdfs:domain :Comunicacion_resultado_devolucion ;
-                     rdfs:range :Devolucion .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2tieneFactura
+:amazon2tieneFactura rdf:type owl:ObjectProperty ;
+                     rdfs:domain :amazon2Emitir_factura ;
+                     rdfs:range :amazon2Factura_de_compra .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#tieneFactura
-:tieneFactura rdf:type owl:ObjectProperty ;
-              rdfs:domain :Emitir_factura ;
-              rdfs:range :Factura_de_compra .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2tienePedidos
+:amazon2tienePedidos rdf:type owl:ObjectProperty ;
+                     rdfs:domain :amazon2Centro_logistico ;
+                     rdfs:range :amazon2Pedido .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#tienePedidos
-:tienePedidos rdf:type owl:ObjectProperty ;
-              rdfs:domain :Centro_logistico ;
-              rdfs:range :Pedido .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2tieneRazon
+:amazon2tieneRazon rdf:type owl:ObjectProperty ;
+                   rdfs:domain :amazon2Devolucion ;
+                   rdfs:range :amazon2Razon_devolucion .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#tieneRazon
-:tieneRazon rdf:type owl:ObjectProperty ;
-            rdfs:domain :Devolucion ;
-            rdfs:range :Razon_devolucion .
-
-
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#tieneRestriccion
-:tieneRestriccion rdf:type owl:ObjectProperty ;
-                  rdfs:domain :Cliente ;
-                  rdfs:range :Restricciones_cliente .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2tieneRestriccion
+:amazon2tieneRestriccion rdf:type owl:ObjectProperty ;
+                         rdfs:domain :amazon2Cliente ;
+                         rdfs:range :amazon2Restricciones_cliente .
 
 
 #################################################################
 #    Data properties
 #################################################################
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Email
-:Email rdf:type owl:DatatypeProperty ;
-       rdfs:domain :Cliente ,
-                   :Vendedor ;
-       rdfs:range xsd:string .
-
-
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#EnvioExterno
-:EnvioExterno rdf:type owl:DatatypeProperty ;
-              rdfs:domain :Producto ;
-              rdfs:range xsd:boolean .
-
-
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Id
-:Id rdf:type owl:DatatypeProperty ;
-    rdfs:domain :Producto ;
-    rdfs:range xsd:int .
-
-
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Marca
-:Marca rdf:type owl:DatatypeProperty ;
-       rdfs:domain :Producto ;
-       rdfs:range xsd:string .
-
-
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Modelo
-:Modelo rdf:type owl:DatatypeProperty ;
-        rdfs:domain :Producto ;
-        rdfs:range xsd:string .
-
-
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Nombre
-:Nombre rdf:type owl:DatatypeProperty ;
-        rdfs:domain :Producto ;
-        rdfs:range xsd:string .
-
-
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Precio
-:Precio rdf:type owl:DatatypeProperty ;
-        rdfs:domain :Producto ;
-        rdfs:range xsd:double .
-
-
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#TipoProducto
-:TipoProducto rdf:type owl:DatatypeProperty ;
-              rdfs:domain :Producto ;
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Email
+:amazon2Email rdf:type owl:DatatypeProperty ;
+              rdfs:domain :amazon2Cliente ,
+                          :amazon2Vendedor ;
               rdfs:range xsd:string .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Valoracion
-:Valoracion rdf:type owl:DatatypeProperty ;
-            rdfs:domain :Producto ;
-            rdfs:range xsd:int .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2EnvioExterno
+:amazon2EnvioExterno rdf:type owl:DatatypeProperty ;
+                     rdfs:domain :amazon2Producto ;
+                     rdfs:range xsd:boolean .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#fechaPedido
-:fechaPedido rdf:type owl:DatatypeProperty ;
-             rdfs:domain :Pedido ;
-             rdfs:range xsd:dateTime .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Id
+:amazon2Id rdf:type owl:DatatypeProperty ;
+           rdfs:domain :amazon2Producto ;
+           rdfs:range xsd:int .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#marcaRestriccion
-:marcaRestriccion rdf:type owl:DatatypeProperty ;
-                  rdfs:domain :Restricciones_cliente ;
-                  rdfs:range xsd:string .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Marca
+:amazon2Marca rdf:type owl:DatatypeProperty ;
+              rdfs:domain :amazon2Producto ;
+              rdfs:range xsd:string .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#motivo
-:motivo rdf:type owl:DatatypeProperty ;
-        rdfs:domain :Razon_devolucion ;
-        rdfs:range xsd:string .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Modelo
+:amazon2Modelo rdf:type owl:DatatypeProperty ;
+               rdfs:domain :amazon2Producto ;
+               rdfs:range xsd:string .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#nombreRestriccion
-:nombreRestriccion rdf:type owl:DatatypeProperty ;
-                   rdfs:domain :Restricciones_cliente ;
-                   rdfs:range xsd:string .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Nombre
+:amazon2Nombre rdf:type owl:DatatypeProperty ;
+               rdfs:domain :amazon2Producto ;
+               rdfs:range xsd:string .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#precioMaxRestriccion
-:precioMaxRestriccion rdf:type owl:DatatypeProperty ;
-                      rdfs:domain :Restricciones_cliente ;
-                      rdfs:range xsd:positiveInteger .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Precio
+:amazon2Precio rdf:type owl:DatatypeProperty ;
+               rdfs:domain :amazon2Producto ;
+               rdfs:range xsd:double .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#precioTotal
-:precioTotal rdf:type owl:DatatypeProperty ;
-             rdfs:domain :Pedido ;
-             rdfs:range xsd:double .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2TipoProducto
+:amazon2TipoProducto rdf:type owl:DatatypeProperty ;
+                     rdfs:domain :amazon2Producto ;
+                     rdfs:range xsd:string .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#tieneFecha
-:tieneFecha rdf:type owl:DatatypeProperty ;
-            rdfs:domain :Devolucion ;
-            rdfs:range xsd:dateTime .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Valoracion
+:amazon2Valoracion rdf:type owl:DatatypeProperty ;
+                   rdfs:domain :amazon2Producto ;
+                   rdfs:range xsd:int .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#tipoProductoRestriccion
-:tipoProductoRestriccion rdf:type owl:DatatypeProperty ;
-                         rdfs:domain :Restricciones_cliente ;
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2fechaPedido
+:amazon2fechaPedido rdf:type owl:DatatypeProperty ;
+                    rdfs:domain :amazon2Pedido ;
+                    rdfs:range xsd:dateTime .
+
+
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2marcaRestriccion
+:amazon2marcaRestriccion rdf:type owl:DatatypeProperty ;
+                         rdfs:domain :amazon2Restricciones_cliente ;
                          rdfs:range xsd:string .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#valoracionRestriccion
-:valoracionRestriccion rdf:type owl:DatatypeProperty ;
-                       rdfs:domain :Restricciones_cliente ;
-                       rdfs:range xsd:positiveInteger .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2motivo
+:amazon2motivo rdf:type owl:DatatypeProperty ;
+               rdfs:domain :amazon2Razon_devolucion ;
+               rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2nombreRestriccion
+:amazon2nombreRestriccion rdf:type owl:DatatypeProperty ;
+                          rdfs:domain :amazon2Restricciones_cliente ;
+                          rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2precioMaxRestriccion
+:amazon2precioMaxRestriccion rdf:type owl:DatatypeProperty ;
+                             rdfs:domain :amazon2Restricciones_cliente ;
+                             rdfs:range xsd:positiveInteger .
+
+
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2precioTotal
+:amazon2precioTotal rdf:type owl:DatatypeProperty ;
+                    rdfs:domain :amazon2Pedido ;
+                    rdfs:range xsd:double .
+
+
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2tieneFecha
+:amazon2tieneFecha rdf:type owl:DatatypeProperty ;
+                   rdfs:domain :amazon2Devolucion ;
+                   rdfs:range xsd:dateTime .
+
+
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2tipoProductoRestriccion
+:amazon2tipoProductoRestriccion rdf:type owl:DatatypeProperty ;
+                                rdfs:domain :amazon2Restricciones_cliente ;
+                                rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2valoracionRestriccion
+:amazon2valoracionRestriccion rdf:type owl:DatatypeProperty ;
+                              rdfs:domain :amazon2Restricciones_cliente ;
+                              rdfs:range xsd:positiveInteger .
 
 
 #################################################################
 #    Classes
 #################################################################
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Almacen
-:Almacen rdf:type owl:Class .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Almacen
+:amazon2Almacen rdf:type owl:Class .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Avisar_transportista_envio
-:Avisar_transportista_envio rdf:type owl:Class ;
-                            rdfs:subClassOf :Mensaje .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Avisar_transportista_envio
+:amazon2Avisar_transportista_envio rdf:type owl:Class ;
+                                   rdfs:subClassOf :amazon2Mensaje .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Añadir_producto_externo
-:Añadir_producto_externo rdf:type owl:Class ;
-                         rdfs:subClassOf :Mensaje .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Añadir_producto_externo
+:amazon2Añadir_producto_externo rdf:type owl:Class ;
+                                rdfs:subClassOf :amazon2Mensaje .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Categorias
-:Categorias rdf:type owl:Class .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Centro_logistico
+:amazon2Centro_logistico rdf:type owl:Class .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Centro_logistico
-:Centro_logistico rdf:type owl:Class .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Cliente
+:amazon2Cliente rdf:type owl:Class .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Cliente
-:Cliente rdf:type owl:Class .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Cobrar_pedido
+:amazon2Cobrar_pedido rdf:type owl:Class ;
+                      rdfs:subClassOf :amazon2Mensaje .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Cobrar_pedido
-:Cobrar_pedido rdf:type owl:Class ;
-               rdfs:subClassOf :Mensaje .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Comunicacion_resultado_devolucion
+:amazon2Comunicacion_resultado_devolucion rdf:type owl:Class ;
+                                          rdfs:subClassOf :amazon2Mensaje .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Comunicacion_resultado_devolucion
-:Comunicacion_resultado_devolucion rdf:type owl:Class ;
-                                   rdfs:subClassOf :Mensaje .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Comunicar_pedido_enviar
+:amazon2Comunicar_pedido_enviar rdf:type owl:Class ;
+                                rdfs:subClassOf :amazon2Mensaje .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Comunicar_pedido_enviar
-:Comunicar_pedido_enviar rdf:type owl:Class ;
-                         rdfs:subClassOf :Mensaje .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Confirmacion_cesta
+:amazon2Confirmacion_cesta rdf:type owl:Class ;
+                           rdfs:subClassOf :amazon2Mensaje .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Confirmacion_cesta
-:Confirmacion_cesta rdf:type owl:Class ;
-                    rdfs:subClassOf :Mensaje .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Confirmacion_envio
+:amazon2Confirmacion_envio rdf:type owl:Class ;
+                           rdfs:subClassOf :amazon2Mensaje .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Confirmacion_envio
-:Confirmacion_envio rdf:type owl:Class ;
-                    rdfs:subClassOf :Mensaje .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Confirmacion_envio_externo
+:amazon2Confirmacion_envio_externo rdf:type owl:Class ;
+                                   rdfs:subClassOf :amazon2Mensaje .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Confirmacion_envio_externo
-:Confirmacion_envio_externo rdf:type owl:Class ;
-                            rdfs:subClassOf :Mensaje .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Confirmacion_producto_externo_añadido
+:amazon2Confirmacion_producto_externo_añadido rdf:type owl:Class ;
+                                              rdfs:subClassOf :amazon2Mensaje .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Confirmacion_producto_externo_añadido
-:Confirmacion_producto_externo_añadido rdf:type owl:Class ;
-                                       rdfs:subClassOf :Mensaje .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Contraoferta
+:amazon2Contraoferta rdf:type owl:Class ;
+                     rdfs:subClassOf :amazon2Oferta_transportista .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Contraoferta
-:Contraoferta rdf:type owl:Class ;
-              rdfs:subClassOf :Oferta_transportista .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Devolucion
+:amazon2Devolucion rdf:type owl:Class .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Devolucion
-:Devolucion rdf:type owl:Class .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Devolucion_aceptada
+:amazon2Devolucion_aceptada rdf:type owl:Class ;
+                            rdfs:subClassOf :amazon2Devolucion .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Devolucion_aceptada
-:Devolucion_aceptada rdf:type owl:Class ;
-                     rdfs:subClassOf :Devolucion .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Devolucion_denegada
+:amazon2Devolucion_denegada rdf:type owl:Class ;
+                            rdfs:subClassOf :amazon2Devolucion .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Devolucion_denegada
-:Devolucion_denegada rdf:type owl:Class ;
-                     rdfs:subClassOf :Devolucion .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Devolucion_pendiente
+:amazon2Devolucion_pendiente rdf:type owl:Class ;
+                             rdfs:subClassOf :amazon2Devolucion .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Devolucion_pendiente
-:Devolucion_pendiente rdf:type owl:Class ;
-                      rdfs:subClassOf :Devolucion .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Devolver_dinero_cliente
+:amazon2Devolver_dinero_cliente rdf:type owl:Class ;
+                                rdfs:subClassOf :amazon2Mensaje .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Devolver_dinero_cliente
-:Devolver_dinero_cliente rdf:type owl:Class ;
-                         rdfs:subClassOf :Mensaje .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Emitir_factura
+:amazon2Emitir_factura rdf:type owl:Class ;
+                       rdfs:subClassOf :amazon2Mensaje .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Electronica
-:Electronica rdf:type owl:Class ;
-             rdfs:subClassOf :Categorias .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Enviar_recomendacion
+:amazon2Enviar_recomendacion rdf:type owl:Class ;
+                             rdfs:subClassOf :amazon2Mensaje .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Emitir_factura
-:Emitir_factura rdf:type owl:Class ;
-                rdfs:subClassOf :Mensaje .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Envio
+:amazon2Envio rdf:type owl:Class .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Enviar_recomendacion
-:Enviar_recomendacion rdf:type owl:Class ;
-                      rdfs:subClassOf :Mensaje .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Envio_externo
+:amazon2Envio_externo rdf:type owl:Class ;
+                      rdfs:subClassOf :amazon2Envio .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Envio
-:Envio rdf:type owl:Class .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Envio_propio
+:amazon2Envio_propio rdf:type owl:Class ;
+                     rdfs:subClassOf :amazon2Envio .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Envio_externo
-:Envio_externo rdf:type owl:Class ;
-               rdfs:subClassOf :Envio .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Factura_de_compra
+:amazon2Factura_de_compra rdf:type owl:Class .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Envio_propio
-:Envio_propio rdf:type owl:Class ;
-              rdfs:subClassOf :Envio .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Feedback
+:amazon2Feedback rdf:type owl:Class .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Factura_de_compra
-:Factura_de_compra rdf:type owl:Class .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Informacion_productos_disponibles
+:amazon2Informacion_productos_disponibles rdf:type owl:Class ;
+                                          rdfs:subClassOf :amazon2Mensaje .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Feedback
-:Feedback rdf:type owl:Class .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Ingresar_dinero_vendedor_externo
+:amazon2Ingresar_dinero_vendedor_externo rdf:type owl:Class ;
+                                         rdfs:subClassOf :amazon2Mensaje .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Informacion_productos_disponibles
-:Informacion_productos_disponibles rdf:type owl:Class ;
-                                   rdfs:subClassOf :Mensaje .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Localizacion
+:amazon2Localizacion rdf:type owl:Class .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Ingresar_dinero_vendedor_externo
-:Ingresar_dinero_vendedor_externo rdf:type owl:Class ;
-                                  rdfs:subClassOf :Mensaje .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Lote
+:amazon2Lote rdf:type owl:Class .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Localizacion
-:Localizacion rdf:type owl:Class .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Mensaje
+:amazon2Mensaje rdf:type owl:Class .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Lote
-:Lote rdf:type owl:Class .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Nueva_compra_producto
+:amazon2Nueva_compra_producto rdf:type owl:Class ;
+                              rdfs:subClassOf :amazon2Mensaje .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Mensaje
-:Mensaje rdf:type owl:Class .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Nueva_reseña
+:amazon2Nueva_reseña rdf:type owl:Class ;
+                     rdfs:subClassOf :amazon2Mensaje .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Nueva_compra_producto
-:Nueva_compra_producto rdf:type owl:Class ;
-                       rdfs:subClassOf :Mensaje .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Oferta_transportista
+:amazon2Oferta_transportista rdf:type owl:Class .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Nueva_reseña
-:Nueva_reseña rdf:type owl:Class ;
-              rdfs:subClassOf :Mensaje .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Pedido
+:amazon2Pedido rdf:type owl:Class .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Oferta_transportista
-:Oferta_transportista rdf:type owl:Class .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Pedir_precio_envio
+:amazon2Pedir_precio_envio rdf:type owl:Class ;
+                           rdfs:subClassOf :amazon2Mensaje .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Pedido
-:Pedido rdf:type owl:Class .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Peticion_devolucion
+:amazon2Peticion_devolucion rdf:type owl:Class ;
+                            rdfs:subClassOf :amazon2Mensaje .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Pedir_precio_envio
-:Pedir_precio_envio rdf:type owl:Class ;
-                    rdfs:subClassOf :Mensaje .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Peticion_productos_disponibles
+:amazon2Peticion_productos_disponibles rdf:type owl:Class ;
+                                       rdfs:subClassOf :amazon2Mensaje .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Peticion_devolucion
-:Peticion_devolucion rdf:type owl:Class ;
-                     rdfs:subClassOf :Mensaje .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Precios_envio
+:amazon2Precios_envio rdf:type owl:Class ;
+                      rdfs:subClassOf :amazon2Mensaje .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Peticion_productos_disponibles
-:Peticion_productos_disponibles rdf:type owl:Class ;
-                                rdfs:subClassOf :Mensaje .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Producto
+:amazon2Producto rdf:type owl:Class .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Precios_envio
-:Precios_envio rdf:type owl:Class ;
-               rdfs:subClassOf :Mensaje .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Producto_devuelto
+:amazon2Producto_devuelto rdf:type owl:Class ;
+                          rdfs:subClassOf :amazon2Mensaje .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Producto
-:Producto rdf:type owl:Class .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Producto_externo
+:amazon2Producto_externo rdf:type owl:Class ;
+                         rdfs:subClassOf :amazon2Producto .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Producto_devuelto
-:Producto_devuelto rdf:type owl:Class ;
-                   rdfs:subClassOf :Mensaje .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Razon_devolucion
+:amazon2Razon_devolucion rdf:type owl:Class .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Producto_externo
-:Producto_externo rdf:type owl:Class ;
-                  rdfs:subClassOf :Producto .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Realiza_envio
+:amazon2Realiza_envio rdf:type owl:Class ;
+                      rdfs:subClassOf :amazon2Mensaje .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Razon_devolucion
-:Razon_devolucion rdf:type owl:Class .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Recomendacion
+:amazon2Recomendacion rdf:type owl:Class .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Realiza_envio
-:Realiza_envio rdf:type owl:Class ;
-               rdfs:subClassOf :Mensaje .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Restricciones_cliente
+:amazon2Restricciones_cliente rdf:type owl:Class .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Recomendacion
-:Recomendacion rdf:type owl:Class .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Solicitud_envio
+:amazon2Solicitud_envio rdf:type owl:Class ;
+                        rdfs:subClassOf :amazon2Mensaje .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Restricciones_cliente
-:Restricciones_cliente rdf:type owl:Class .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Toca_enviar_recomendacion
+:amazon2Toca_enviar_recomendacion rdf:type owl:Class ;
+                                  rdfs:subClassOf :amazon2Mensaje .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Ropa
-:Ropa rdf:type owl:Class ;
-      rdfs:subClassOf :Categorias .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Transportista
+:amazon2Transportista rdf:type owl:Class .
 
 
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Solicitud_envio
-:Solicitud_envio rdf:type owl:Class ;
-                 rdfs:subClassOf :Mensaje .
-
-
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Toca_enviar_recomendacion
-:Toca_enviar_recomendacion rdf:type owl:Class ;
-                           rdfs:subClassOf :Mensaje .
-
-
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Transportista
-:Transportista rdf:type owl:Class .
-
-
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Vendedor
-:Vendedor rdf:type owl:Class .
-
-
-#################################################################
-#    Individuals
-#################################################################
-
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#NikeAirMax-1
-:NikeAirMax-1 rdf:type owl:NamedIndividual ,
-                       :Producto ;
-              :EnvioExterno "false"^^xsd:boolean ;
-              :Id "1"^^xsd:int ;
-              :Marca "Nike"^^xsd:string ;
-              :Modelo "AirMax"^^xsd:string ;
-              :Nombre "Zapatilla"^^xsd:string ;
-              :Precio "80.0"^^xsd:double ;
-              :TipoProducto "Ropa"^^xsd:string .
-
-
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Televisor4K-2
-:Televisor4K-2 rdf:type owl:NamedIndividual ,
-                        :Producto ;
-               :EnvioExterno "false"^^xsd:boolean ;
-               :Id "2"^^xsd:int ;
-               :Marca "Samsung"^^xsd:string ;
-               :Modelo "HK990M"^^xsd:string ;
-               :Nombre "Televisor"^^xsd:string ;
-               :Precio "1200.0"^^xsd:double ;
-               :TipoProducto "Electronica"^^xsd:string .
-
-
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#TelevisorHD-1
-:TelevisorHD-1 rdf:type owl:NamedIndividual ,
-                        :Producto ;
-               :EnvioExterno "false"^^xsd:boolean ;
-               :Id "3"^^xsd:int ;
-               :Marca "LG"^^xsd:string ;
-               :Modelo "AZ23-45"^^xsd:string ;
-               :Nombre "Televisor"^^xsd:string ;
-               :Precio "400.0"^^xsd:double ;
-               :TipoProducto "Electronica"^^xsd:string .
-
-
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#Telvisor4K-1
-:Telvisor4K-1 rdf:type owl:NamedIndividual ,
-                       :Producto ;
-              :EnvioExterno "false"^^xsd:boolean ;
-              :Id "4"^^xsd:int ;
-              :Marca "Samsung"^^xsd:string ;
-              :Modelo "HK2345Z"^^xsd:string ;
-              :Nombre "Televisor"^^xsd:string ;
-              :Precio ""^^xsd:double ;
-              :TipoProducto "Electronica" .
-
-
-###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#USB_1
-:USB_1 rdf:type owl:NamedIndividual ,
-                :Producto ;
-       :EnvioExterno "false"^^xsd:boolean ;
-       :Id "5"^^xsd:int ;
-       :Marca "Kingston"^^xsd:string ;
-       :Modelo "32GB"^^xsd:string ;
-       :Nombre "USB"^^xsd:string ;
-       :Precio "9.99"^^xsd:double .
+###  http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2Vendedor
+:amazon2Vendedor rdf:type owl:Class .
 
 
 ###  Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi

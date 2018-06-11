@@ -133,49 +133,68 @@ def buscaProductos(marca, nombre, tipoProducto, modelo, precioMax):
     datosProductos = open('../datos/productos')
     products.parse(datosProductos, format='turtle')
 
-    afegit = False
-    # products.serialize('../path', format='turtle') para guardar
-    query= """
-        prefix rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-        prefix xsd:<http://www.w3.org/2001/XMLSchema#>
-        prefix AM2:<http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#>
-        prefix owl:<http://www.w3.org/2002/07/owl#>
-        SELECT DISTINCT ?producto ?id ?nombre ?tipoProducto ?precio ?modelo ?marca ?tipoEnvio
-        where{
-            ?producto rdf:type AM2:Producto .
-            ?producto AM2:Id ?id .
-            ?producto AM2:Nombre ?nombre . 
-            ?producto AM2:TipoProducto ?tipoProducto .
-            ?producto AM2:Precio ?precio .
-            ?producto AM2:Modelo ?modelo .
-            ?producto AM2:Marca ?marca .
-            ?producto AM2:TipoEnvio ?tipoEnvio
-            FILTER("""
-    if marca is not None:
-        query+= """str(?marca) = '""" + marca +"""'"""
-        afegit = True
-    if nombre is not None:
-        if afegit == True:
-            query+= """ && """
-        query+= """str(?nombre) = '""" + nombre +"""'"""
-        afegit = True
-    if tipoProducto is not None:
-        if afegit == True:
-            query+= """ && """
-        query+= """str(?tipoProducto) = '""" + tipoProducto +"""'"""
-        afegit = True
-    if modelo is not None:
-        if afegit == True:
-            query+= """ && """
-        query+= """str(?modelo) = '""" + modelo +"""'"""
-        afegit = True
-    if precioMax is not None:
-        if afegit == True:
-            query+= """ && """
-        query+= """ ?precio <= """ + str(precioMax)
-    
-    query+= """ )} order by asc(UCASE(str(?nombre)))"""
+    if marca or nombre or tipoProducto or modelo or precioMax:
+        afegit = False
+        # products.serialize('../path', format='turtle') para guardar
+        query= """
+            prefix rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            prefix xsd:<http://www.w3.org/2001/XMLSchema#>
+            prefix AM2:<http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#>
+            prefix owl:<http://www.w3.org/2002/07/owl#>
+            SELECT DISTINCT ?producto ?id ?nombre ?tipoProducto ?precio ?modelo ?marca ?tipoEnvio
+            where{
+                ?producto rdf:type AM2:Producto .
+                ?producto AM2:Id ?id .
+                ?producto AM2:Nombre ?nombre . 
+                ?producto AM2:TipoProducto ?tipoProducto .
+                ?producto AM2:Precio ?precio .
+                ?producto AM2:Modelo ?modelo .
+                ?producto AM2:Marca ?marca .
+                ?producto AM2:TipoEnvio ?tipoEnvio
+                FILTER("""
+        if marca is not None:
+            query+= """str(?marca) = '""" + marca +"""'"""
+            afegit = True
+        if nombre is not None:
+            if afegit == True:
+                query+= """ && """
+            query+= """str(?nombre) = '""" + nombre +"""'"""
+            afegit = True
+        if tipoProducto is not None:
+            if afegit == True:
+                query+= """ && """
+            query+= """str(?tipoProducto) = '""" + tipoProducto +"""'"""
+            afegit = True
+        if modelo is not None:
+            if afegit == True:
+                query+= """ && """
+            query+= """str(?modelo) = '""" + modelo +"""'"""
+            afegit = True
+        if precioMax is not None:
+            if afegit == True:
+                query+= """ && """
+            query+= """ ?precio <= """ + str(precioMax)
+        
+        query+= """ )} order by asc(UCASE(str(?nombre)))"""
 
+    else:
+        query= """
+            prefix rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+            prefix xsd:<http://www.w3.org/2001/XMLSchema#>
+            prefix AM2:<http://www.semanticweb.org/alexh/ontologies/2018/4/amazon2#>
+            prefix owl:<http://www.w3.org/2002/07/owl#>
+            SELECT DISTINCT ?producto ?id ?nombre ?tipoProducto ?precio ?modelo ?marca ?tipoEnvio
+            where{
+                ?producto rdf:type AM2:Producto .
+                ?producto AM2:Id ?id .
+                ?producto AM2:Nombre ?nombre . 
+                ?producto AM2:TipoProducto ?tipoProducto .
+                ?producto AM2:Precio ?precio .
+                ?producto AM2:Modelo ?modelo .
+                ?producto AM2:Marca ?marca .
+                ?producto AM2:TipoEnvio ?tipoEnvio
+                } """
+                
     graph_result = products.query(query)
     result = Graph()
     result.bind('AM2', AM2)
@@ -198,71 +217,7 @@ def buscaProductos(marca, nombre, tipoProducto, modelo, precioMax):
         result.add((sujeto,AM2.TipoEnvio, Literal(Envio, datatype=XSD.string)))
 
     return result
-
-def initProducts():
-    global products
-    # Atención: Ojo, el atributo Id tiene que ser unico
-    subjectProducto = AM2['USB_1']
-    products.add((subjectProducto, RDF.type, AM2.Producto))
-    products.add((subjectProducto, AM2.Id, Literal("1")))
-    products.add((subjectProducto, AM2.Nombre, Literal("USB")))
-    products.add((subjectProducto, AM2.TipoProducto, Literal("Electronica")))
-    products.add((subjectProducto, AM2.Precio, Literal(50)))
-    products.add((subjectProducto, AM2.Modelo, Literal('32GB')))
-    products.add((subjectProducto, AM2.Marca, Literal('Kingston')))
-    products.add((subjectProducto, AM2.TipoEnvio, Literal('Externo')))
-
-
-    subjectProducto2 = AM2['Televisor_1']
-    products.add((subjectProducto2, RDF.type, AM2.Producto))
-    products.add((subjectProducto2, AM2.Id, Literal("2")))
-    products.add((subjectProducto2, AM2.Marca, Literal('Sony')))
-    products.add((subjectProducto2, AM2.Nombre, Literal("Televisor")))
-    products.add((subjectProducto2, AM2.TipoProducto, Literal("Electronica")))
-    products.add((subjectProducto2, AM2.Precio, Literal(300)))
-    products.add((subjectProducto2, AM2.Modelo, Literal('E1234H')))
-    products.add((subjectProducto2, AM2.TipoEnvio, Literal('Interno')))
-
-    subjectProducto3 = AM2['Camisa']
-    products.add((subjectProducto3, RDF.type, AM2.Producto))
-    products.add((subjectProducto3, AM2.Id, Literal("3")))
-    products.add((subjectProducto3, AM2.Nombre, Literal("Camisa")))
-    products.add((subjectProducto3, AM2.TipoProducto, Literal("Ropa")))
-    products.add((subjectProducto3, AM2.Marca, Literal("H&M")))
-    products.add((subjectProducto3, AM2.Precio, Literal(15)))
-    products.add((subjectProducto3, AM2.Modelo, Literal('Hombre-L')))
-    products.add((subjectProducto3, AM2.TipoEnvio, Literal('Interno')))
-
-    subjectProducto4 = AM2['Televisor_2']
-    products.add((subjectProducto4, RDF.type, AM2.Producto))
-    products.add((subjectProducto4, AM2.Id, Literal("4")))
-    products.add((subjectProducto4, AM2.Nombre, Literal('Televisor')))
-    products.add((subjectProducto4, AM2.Marca, Literal('LG')))
-    products.add((subjectProducto4, AM2.TipoProducto, Literal("Electronica")))
-    products.add((subjectProducto4, AM2.Precio, Literal(550)))
-    products.add((subjectProducto4, AM2.Modelo, Literal('H456K')))
-    products.add((subjectProducto4, AM2.TipoEnvio, Literal('Interno')))
-
-    subjectProducto5 = AM2['Televisor_3']
-    products.add((subjectProducto5, RDF.type, AM2.Producto))
-    products.add((subjectProducto5, AM2.Id, Literal("5")))
-    products.add((subjectProducto5, AM2.Nombre, Literal('Televisor')))
-    products.add((subjectProducto5, AM2.Marca, Literal('LG')))
-    products.add((subjectProducto5, AM2.TipoProducto, Literal("Electronica")))
-    products.add((subjectProducto5, AM2.Precio, Literal(749.99)))
-    products.add((subjectProducto5, AM2.Modelo, Literal('H456KHD')))
-    products.add((subjectProducto5, AM2.TipoEnvio, Literal('Interno')))
-
-    subjectProducto5 = AM2['Televisor_4']
-    products.add((subjectProducto5, RDF.type, AM2.Producto))
-    products.add((subjectProducto5, AM2.Id, Literal("6")))
-    products.add((subjectProducto5, AM2.Nombre, Literal('Televisor')))
-    products.add((subjectProducto5, AM2.Marca, Literal('BlauPunkt')))
-    products.add((subjectProducto5, AM2.TipoProducto, Literal("Electronica")))
-    products.add((subjectProducto5, AM2.Precio, Literal(124)))
-    products.add((subjectProducto5, AM2.Modelo, Literal('H4589KHD')))
-    products.add((subjectProducto5, AM2.TipoEnvio, Literal('Interno')))
-    return
+    
 
 @app.route("/iface", methods=['GET', 'POST'])
 def browser_iface():
@@ -391,8 +346,6 @@ def agentbehavior1(cola):
 
 if __name__ == '__main__':
 
-    # Inicializacion de datos
-    initProducts()
     
     # Ponemos en marcha los behaviors
     ab1 = Process(target=agentbehavior1, args=(cola1,))
