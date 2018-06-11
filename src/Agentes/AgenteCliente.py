@@ -379,12 +379,13 @@ def browser_iface():
     Permite la comunicacion con el agente via un navegador
     via un formulario
     """
-    if request.method == 'GET':
-        return render_template('iface.html')
-    else:
-        user = request.form['username']
-        mess = request.form['message']
-        return render_template('riface.html', user=user, mess=mess)
+    return "No implementado"
+    # if request.method == 'GET':
+    #     return render_template('iface.html')
+    # else:
+    #     user = request.form['username']
+    #     mess = request.form['message']
+    #     return render_template('riface.html', user=user, mess=mess)
 
 
 @app.route("/Stop")
@@ -473,6 +474,7 @@ def comunicacion():
     return gr.serialize(format='xml')
 
 def decisionComprar():
+    global recomendado
     if recomendado == 1:
         return True
     elif recomendado == 2:
