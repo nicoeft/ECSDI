@@ -168,7 +168,7 @@ def comunicacion():
 
                 # Aqui realizariamos lo que pide la accion
                 if accion == AM2.Nueva_compra:
-                    time.sleep(10)
+                    time.sleep(15)
                     logger.info("Nueva compra efectuada")
                     productsGraph = Graph()
                     for s in gm.subjects(RDF.type,AM2["Producto"]):
@@ -369,7 +369,7 @@ def agentbehavior1(cola):
 
     # Escuchando la cola hasta que llegue un 0
     fin = False
-    schedule.every(10).seconds.do(recomendarProductosClientes)
+    schedule.every(25).seconds.do(recomendarProductosClientes)
     while not fin:
         while cola.empty():
             schedule.run_pending()
