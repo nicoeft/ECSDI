@@ -14,12 +14,14 @@
             <input type="text" name="precio"  placeholder="Precio del producto..."/><br>
             <input type="text" name="marca"  placeholder="Marca del producto..."/><br>
             <li> Tipo de envio </li>
-            <input type="radio" name="tipoEnvio" value="Externo"> Externo <br>
+            <input type="radio" name="tipoEnvio" value="Externo" checked> Externo <br>
             <input type="radio" name="tipoEnvio" value="Interno"> Interno <br>
             <input type="submit" name="submit" value="Poner a la venta">
         </form>
+    {% elif vendido == "Error" %}
+       <h2>Error en la introducción del producto</h2>
     {% else %}
-       <h2>Productos vendidos correctamente</h2>
+        <h2>Producto vendido correctamente</h2>
     {% endif %}
 </body>
 </html>

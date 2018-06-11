@@ -155,7 +155,6 @@ def addProductoExterno(gr):
     resp = Graph()
     sujeto = AM2['Confirmacion_producto_externo_added']
     resp.add((sujeto, RDF.type, AM2.Confirmacion_producto_externo_added))
-    resp.add((sujeto, AM2.Producto_added, Literal("OK")))
 
     return resp
 
@@ -199,9 +198,10 @@ def comunicacion():
 
                 if accion == AM2.Add_producto_externo: 
                     logger.info("Petición de nuevo producto externo a añadir")
-                    ok = addProductoExterno(gm)
+                    resp = Graph()
+                    resp = addProductoExterno(gm)
 
-                    gr = build_message(ok,
+                    gr = build_message(resp,
                         ACL['inform-done'],
                         sender=AgenteProductosExternos.uri,
                         msgcnt=mss_cnt,

@@ -4,21 +4,64 @@
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ns1:compra-11 a ns1:Compra ;
-    ns1:TipoProducto <Ropa> ;
+ns1:compra-12 a ns1:Compra ;
+    ns1:productos ns1:Producto_externo_22494 ;
+    ns1:username "eloi" .
+
+ns1:compra-15 a ns1:Compra ;
     ns1:productos ns1:Camisa ;
-    ns1:username "test" .
+    ns1:username "eloi" .
+
+ns1:compra-18 a ns1:Compra ;
+    ns1:productos ns1:Producto_externo_248213 ;
+    ns1:username "eloi" .
 
 ns1:compra-2 a ns1:Compra ;
-    ns1:TipoProducto <file:///home/eloiroca/FIB/ECSDI/src/datos/Electrodomestico>,
-        <file:///home/eloiroca/FIB/ECSDI/src/datos/Electronica> ;
-    ns1:productos ns1:Producto_externo1,
-        ns1:Producto_externo365341 ;
+    ns1:productos ns1:Televisor_3 ;
     ns1:username "generic" .
 
-ns1:compra-6 a ns1:Compra ;
-    ns1:TipoProducto <file:///home/eloiroca/FIB/ECSDI/src/datos/Electronica> ;
+ns1:compra-21 a ns1:Compra ;
+    ns1:productos ns1:Camisa ;
+    ns1:username "eloi" .
+
+ns1:compra-24 a ns1:Compra ;
     ns1:productos ns1:Producto_externo0,
         ns1:USB_1 ;
     ns1:username "eloi" .
+
+ns1:compra-28 a ns1:Compra ;
+    ns1:productos ns1:Televisor_3 ;
+    ns1:username "eloi" .
+
+ns1:compra-3 a ns1:Compra ;
+    ns1:productos ns1:Televisor_3 ;
+    ns1:username "generic" .
+
+ns1:compra-31 a ns1:Compra ;
+    ns1:productos ns1:Televisor_4 ;
+    ns1:username "eloi" .
+
+ns1:compra-34 a ns1:Compra ;
+    ns1:productos ns1:Producto_externo1 ;
+    ns1:username "eloi" .
+
+ns1:compra-37 a ns1:Compra ;
+    ns1:productos ns1:Televisor_2 ;
+    ns1:username "eloi" .
+
+ns1:compra-40 a ns1:Compra ;
+    ns1:productos ns1:Televisor_1 ;
+    ns1:username "eloi" .
+
+ns1:compra-43 a ns1:Compra ;
+    ns1:productos ns1:Producto_externo_413507 ;
+    ns1:username "eloi" .
+
+ns1:compra-6 a ns1:Compra ;
+    ns1:productos ns1:Televisor_3 ;
+    ns1:username "generic" .
+
+ns1:compra-9 a ns1:Compra ;
+    ns1:productos ns1:Producto_externo0 ;
+    ns1:username "generic" .
 

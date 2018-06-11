@@ -142,21 +142,24 @@ def ponerALaVenta(request):
         gmess.add((sujeto, AM2.Precio, Literal(precio)))
         gmess.add((sujeto, AM2.Modelo, Literal(modelo)))
         gmess.add((sujeto, AM2.TipoEnvio, Literal(tipoEnvio)))
-    else:
-        logger.info('Falta algun camp')
-    
-    mostrador = directory_search_agent(DSO.AgenteProductosExternos,AgenteVendedorExterno,DirectoryAgent,mss_cnt)[0]
-    msg = build_message(gmess, perf=ACL.request,
+
+        mostrador = directory_search_agent(DSO.AgenteProductosExternos,AgenteVendedorExterno,DirectoryAgent,mss_cnt)[0]
+        msg = build_message(gmess, perf=ACL.request,
                 sender=AgenteVendedorExterno.uri,
                 receiver=mostrador.uri,
                 content=sj_contenido,
                 msgcnt=mss_cnt)
-    puesto_a_la_venta = send_message(msg, mostrador.address)
-    mss_cnt += 1
+        puesto_a_la_venta = send_message(msg, mostrador.address)
+        mss_cnt += 1
 
-    logger.info('Recibimos respuesta a la peticion al servicio de informacion')
+        logger.info('Recibimos respuesta a la peticion al servicio de informacion')
+        return render_template('ponerALaVenta.html', vendido = puesto_a_la_venta)
+    else:
+        return render_template('ponerALaVenta.html', vendido = "Error")
+    
+    
 
-    return render_template('ponerALaVenta.html', vendido = puesto_a_la_venta)
+    
 
 
 @app.route("/comm")
@@ -193,11 +196,8 @@ def comunicacion():
                 content = msgdic['content']
                 accion = gm.value(subject=content, predicate=RDF.type)
                 # Aqui realizariamos lo que pide la accion
-                if accion == AM2.Avisar_vendedor_externo_envio:
-                    logger.info('He vendido productos, tengo que enviarlos')
-                    gr = build_message(Graph(), ACL['inform-done'], sender=AgenteVendedorExterno.uri, msgcnt=mss_cnt)
-                else:
-                    gr = build_message(Graph(), ACL['not-understood'], sender=AgenteVendedorExterno.uri, msgcnt=mss_cnt)
+                
+                gr = build_message(Graph(), ACL['not-understood'], sender=AgenteVendedorExterno.uri, msgcnt=mss_cnt)
 
             else:
                 gr = build_message(Graph(), ACL['not-understood'], sender=AgenteVendedorExterno.uri, msgcnt=mss_cnt)

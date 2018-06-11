@@ -40,6 +40,33 @@ ns1:Producto_externo365341 a ns1:Producto ;
     ns1:TipoEnvio "Interno" ;
     ns1:TipoProducto "Electrodomestico" .
 
+ns1:Producto_externo_22494 a ns1:Producto ;
+    ns1:Id 215899 ;
+    ns1:Marca "Nike" ;
+    ns1:Modelo "Roshe-44" ;
+    ns1:Nombre "Zapatilla" ;
+    ns1:Precio "65" ;
+    ns1:TipoEnvio "Interno" ;
+    ns1:TipoProducto "Ropa" .
+
+ns1:Producto_externo_248213 a ns1:Producto ;
+    ns1:Id 322610 ;
+    ns1:Marca "Nike" ;
+    ns1:Modelo "AirMax-43" ;
+    ns1:Nombre "Zapatilla" ;
+    ns1:Precio "74.99" ;
+    ns1:TipoEnvio "Interno" ;
+    ns1:TipoProducto "Ropa" .
+
+ns1:Producto_externo_413507 a ns1:Producto ;
+    ns1:Id 469951 ;
+    ns1:Marca "Kingston" ;
+    ns1:Modelo "128GB" ;
+    ns1:Nombre "USB" ;
+    ns1:Precio "64" ;
+    ns1:TipoEnvio "Interno" ;
+    ns1:TipoProducto "Electronica" .
+
 ns1:Televisor_1 a ns1:Producto ;
     ns1:Id "2" ;
     ns1:Marca "Sony" ;
